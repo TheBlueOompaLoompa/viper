@@ -1,2 +1,9 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script>
+	import WideButton from "../components/WideButton.svelte";
+
+	window.location.href = "sign";
+</script>
+
+<div class="center">
+	<WideButton text="Test Button"></WideButton>
+</div>
