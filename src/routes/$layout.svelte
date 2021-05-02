@@ -1,11 +1,40 @@
 <script lang="ts">
-	import { onMount } from "svelte";
+	import { onMount, } from "svelte";
 
-	import { supabase } from '../supa';
+	import supabase from '$lib/db';
+
+	import Navbar from '../components/Navbar.svelte';
+
+	let showNav = true;
+	let page = 'home';
 
 	onMount(() => {
-		if(!supabase.auth.session() && window.location.href != '/sign')
-			window.location.href = '/sign';
+		showNav = false;
+
+		if(!supabase.auth.user() && !window.location.href.includes('sign')) window.location.href = '/sign';
+		
+		setInterval(() => {
+			if(!window.location.href.includes('sign')) showNav = true;
+			page = window.location.href.split('/')[3];
+		}, 300);
+	});
+
+	supabase.auth.onAuthStateChange((event, session) => {
+		switch(event) {
+			case 'SIGNED_IN':
+				window.location.href = '/';
+				break;
+		}
 	});
 </script>
+
+<svelte:head>
+	<link rel="shortcut icon" href="/favicon.png">
+	<title>Viper</title>
+</svelte:head>
+
 <slot></slot>
+
+{#if showNav}
+	<Navbar on:profile={() => {showNav = false}} page={page}></Navbar>
+{/if}
