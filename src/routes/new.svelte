@@ -4,6 +4,8 @@
 	import Dropzone from "svelte-file-dropzone";
 	import WideButton from "../components/WideButton.svelte";
 
+	import supabase from '$lib/db';
+
 	let iFiles = {	// Image files
 		accepted: [],
 		rejected: []
@@ -67,12 +69,29 @@
 					accepted: [],
 					rejected: []
 				};
-			}catch(e){
-			}
+			}catch(e){}
 		}, 50);
 	}
 	$: if(type == 'video'){
 		reset();
+	}
+
+	async function post(){
+		console.log(type)
+		switch(type){
+			case 'text':
+				await supabase.from('posts').insert([{ title, content: body, type: 0}]);
+				break;
+			case 'image':
+				const { data, error } = await supabase.from('posts').insert([{ title, content: body, type: 1}]);
+				await supabase
+					.storage
+					.from('media')
+					.upload(data[0]['id'], iFiles.accepted[0]);
+				break;
+		}
+
+		window.location.href = '/';
 	}
 </script>
 
@@ -110,7 +129,7 @@
 </div>
 
 <div style="display: flex; justify-content: center; position:fixed; bottom: 60px; width: 100%;">
-	<WideButton text="Post"></WideButton>
+	<WideButton text="Post" on:click={post}></WideButton>
 </div>
 
 <style>
