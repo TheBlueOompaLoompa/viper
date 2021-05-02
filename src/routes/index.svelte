@@ -31,6 +31,10 @@
 <div class="center" style="display: flex; flex-direction:column;">
 	<h2>Home</h2>
 	
+	{#if posts.length < 1}
+	<p>There aren't any posts here, maybe your should <a href="/new">make your own!</a> ;)</p>
+	{/if}
+
 	{#each posts as post}
 	<div class='post {post['type'] != 1 ? 'text' : ''}'>
 		<h4>{post['title']}</h4>
