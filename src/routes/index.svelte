@@ -2,4 +2,9 @@
 	import WideButton from "../components/WideButton.svelte"
 </script>
 
-<WideButton text="Placeholder"></WideButton>
+<div class="center">
+	<h2>Home</h2>
+</div>
+
+<style>
+</style>
