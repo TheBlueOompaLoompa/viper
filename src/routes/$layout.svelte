@@ -33,8 +33,18 @@
 	<title>Viper</title>
 </svelte:head>
 
-<slot></slot>
+<main>
+	<slot></slot>
+</main>
 
 {#if showNav}
 	<Navbar on:profile={() => {showNav = false}} page={page}></Navbar>
 {/if}
+
+<style>
+	main {
+		overflow: scroll;
+
+		margin-bottom: 42px;
+	}
+</style>
