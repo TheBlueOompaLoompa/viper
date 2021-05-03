@@ -1,5 +1,7 @@
 <script lang="typescript">
-	import WideButton from "../components/WideButton.svelte"
+	import Post from '../components/Post.svelte'
+	import Loading from '../components/Loading.svelte'
+	let loading = true;
 
 	import { onMount } from 'svelte';
 	import supabase from '$lib/db';
@@ -18,16 +20,37 @@
 	});
 
 	onMount(async () => {
-		let { data, error } = await supabase
-			.from('posts')
-			.select('*')
-			.order('timestamp', {ascending: false});
+		let data = (await supabase
+			.from('users')
+			.select('id,username')).data;
 
-		posts = data;
+		let exists = false;
+		data.forEach(acct => {
+			exists = supabase.auth.user().id == acct['id'] || exists;
+		});
+
+		if(!exists) window.location.href = '/setup';
+
+		setTimeout(() => {
+			if(loading) window.location.reload();
+		}, 20000)
+
+		{
+			const { data, error } = await supabase
+				.from('posts')
+				.select('*')
+				.limit(35)
+				.order('timestamp', {ascending: false});
+
+			posts = data;
+		}
+		loading = false;
 	});
 </script>
 
-<!-- svelte-ignore a11y-missing-attribute -->
+<Loading fullscreen={true} loading={loading} />
+
+{#if !loading}
 <div class="center" style="display: flex; flex-direction:column;">
 	<h2>Home</h2>
 	
@@ -36,47 +59,7 @@
 	{/if}
 
 	{#each posts as post}
-	<div class='post {post['type'] != 1 ? 'text' : ''}'>
-		<h4>{post['title']}</h4>
-
-		{#if post['type'] == 0}
-		<p>{post['content']}</p>
-		{:else if post['type'] == 1}
-		<img src={images[post['id']]}>
-		{/if}
-	</div>
+		<Post post={post} img={images[post['id']]} />
 	{/each}
 </div>
-
-<style>
-	.post {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-
-		width: 95%;
-		max-width: 400px;
-
-		border: 1px solid var(--theme-color-outline);
-		border-radius: 6px;
-
-		margin-bottom: 30px;
-
-		box-shadow: 0px 4px 4px var(--theme-color-accent-mid);
-		overflow: hidden;
-
-		--padding: 8px;
-		padding-left: var(--padding);
-		padding-right: var(--padding);
-		padding-bottom: var(--padding);
-	}
-
-	.post.text {
-		align-items: flex-start;
-	}
-
-	.post img {
-		width: 100%;
-		border-radius: 6px;
-	}
-</style>
+{/if}
