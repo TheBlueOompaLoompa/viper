@@ -7,11 +7,19 @@ html, body {
 	--theme-color-accent-low: #57FAD4;
 
 	--theme-font-main: #000;
-	--theme-font-gray: #5e5e5e;
+	--theme-font-gray: rgb(150, 150, 150);
+
+	--theme-color-background: rgb(25, 25, 25);
+	--theme-color-font: white;	
 
 	font-family: sans-serif;
 
 	margin: 0px;
+
+	background-color: var(--theme-color-background);
+	color: var(--theme-color-font);
+
+	height: 100%;
 }
 
 .center {
@@ -119,4 +127,21 @@ textarea {
 	--icon-size: 20px;
 	min-width: var(--icon-size);
 	min-height: var(--icon-size);
+}
+
+.active {
+	background-color: var(--theme-color-main);
+	padding: 5px;
+	width: 21px;
+	height: 21px;
+	border-style: solid;
+	border-color: var(--theme-color-outline);
+	border-width: 1px;
+	border-radius: 100%;
+
+	box-shadow: 0px 1px 4px var(--theme-color-accent-mid);
+}
+
+.active * {
+	filter: invert(0.5);
 }
