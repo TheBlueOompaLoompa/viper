@@ -6,11 +6,13 @@
 		"build": "svelte-kit build",
 		"preview": "svelte-kit preview",
 		"lint": "prettier --check . && eslint --ignore-path .gitignore .",
-		"format": "prettier --write ."
+		"format": "prettier --write .",
+		"deploy": "npm run build && firebase deploy"
 	},
 	"devDependencies": {
 		"@supabase/supabase-js": "^1.8.0",
 		"@sveltejs/adapter-node": "*",
+		"@sveltejs/adapter-static": "^1.0.0-next.7",
 		"@sveltejs/kit": "next",
 		"@typescript-eslint/eslint-plugin": "^4.19.0",
 		"@typescript-eslint/parser": "^4.19.0",
