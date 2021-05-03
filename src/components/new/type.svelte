@@ -47,5 +47,6 @@
 		border-style: solid;
 		border-color: var(--theme-color-outline);
 		border-width: 1px;
+		color: black;
 	}
 </style>
