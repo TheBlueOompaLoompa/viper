@@ -33,7 +33,7 @@
 	<a id="home" href="/"><House /></a>
 	{/if}
 	<a id="profile" href="/sign" on:click={onProfile}><Person /></a>
-	{#if page == 'chat'}
+	{#if page == 'dm'}
 	<a class="active" id="dm" href="/dm"><Chat /></a>
 	{:else}
 	<a id="dm" href="/dm"><Chat /></a>
