@@ -136,12 +136,14 @@
 
 		{:else}
 
-			{#if !isVideoUploaded}
+			<!--{#if !isVideoUploaded}
 				<div class="left" id="marker">Video</div>
 				<Dropzone accept={'video/*'} on:drop={handleVideoFilesSelect} />
 			{/if}
-			<!-- svelte-ignore a11y-media-has-caption -->
-			<video bind:this={videoElement} controls={vFiles.accepted.length > 0}></video>
+			<video bind:this={videoElement} controls={vFiles.accepted.length > 0}></video>-->
+			<p>
+				Our coding snakes are hard at work building this feature, please bear with us while we develop this new part of the Viper app.
+			</p>
 		{/if}
 	</div>
 </div>
