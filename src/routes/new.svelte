@@ -3,6 +3,7 @@
 
 	import Dropzone from "svelte-file-dropzone";
 	import WideButton from "../components/WideButton.svelte";
+	import Loading from '../components/Loading.svelte';
 
 	import supabase from '$lib/db';
 
@@ -24,6 +25,7 @@
 	let images = [];
 	
 	let isVideoUploaded = false;
+	let isImageUploaded = false;
 
 	let videoElement = { setAttribute: (a, b)=>{}, removeAttribute: (a)=>{} };
 
@@ -41,6 +43,8 @@
 
 			reader.readAsDataURL(acceptedFiles[i]);
 		}
+
+		isImageUploaded = true;
 	}
 
 	function handleVideoFilesSelect(e) {
@@ -53,7 +57,6 @@
 		videoElement.src = window.URL.createObjectURL(acceptedFiles[0]);
 
 		isVideoUploaded = true;
-		console.log(!isVideoUploaded)
 		setTimeout(() => {
 			videoElement.setAttribute('controls', '');
 		}, 1000);
@@ -76,24 +79,37 @@
 		reset();
 	}
 
+	let loading = false;
+
 	async function post(){
-		console.log(type)
+		loading = true;
+		const username = (await supabase
+			.from('users')
+			.select('*')
+			.filter('id', 'eq', supabase.auth.user().id)).data[0]['username'];
 		switch(type){
 			case 'text':
-				await supabase.from('posts').insert([{ title, content: body, type: 0}]);
+				await supabase.from('posts').insert([{ title, content: body, type: 0, uid: supabase.auth.user().id, username }]);
 				break;
 			case 'image':
-				const { data, error } = await supabase.from('posts').insert([{ title, content: body, type: 1}]);
-				await supabase
-					.storage
-					.from('media')
-					.upload(data[0]['id'], iFiles.accepted[0]);
+				const { data, error } = await supabase.from('posts').insert([{ title, content: body, type: 1, uid: supabase.auth.user().id, username, comments: '{}' }]);
+				if(error){
+					alert(error)
+				}else{
+					await supabase
+						.storage
+						.from('media')
+						.upload(data[0]['id'], iFiles.accepted[0]);
+				}
 				break;
 		}
 
 		window.location.href = '/';
 	}
 </script>
+
+
+<Loading fullscreen={true} loading={loading} />
 
 <div class="center" style="flex-direction: column;">
 	<div id="postbox">
@@ -109,7 +125,9 @@
 		{:else if type == 'image'}
 
 			<div class="left" id="marker">Photos</div>
+			{#if !isImageUploaded}
 			<Dropzone accept={'image/*'} on:drop={handleImageFilesSelect} />
+			{/if}
 			
 			{#each images as image}
 				<!-- svelte-ignore a11y-missing-attribute -->
