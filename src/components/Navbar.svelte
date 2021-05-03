@@ -42,19 +42,6 @@
 </div>
 
 <style>
-	.active {
-		background-color: var(--theme-color-main);
-		padding: 5px;
-		width: 21px;
-		height: 21px;
-		border-style: solid;
-		border-color: var(--theme-color-outline);
-		border-width: 1px;
-		border-radius: 100%;
-
-		box-shadow: 0px 1px 4px var(--theme-color-accent-mid);
-	}
-
 	.nav-container {
 		display: flex;
 		flex-direction: row;
@@ -69,18 +56,14 @@
 
 		box-shadow: 0px -2px 4px var(--theme-color-accent-mid);
 
-		background-color: white;
+		background-color: var(--theme-color-background);
 		opacity: 100%;
 	}
 
-	a {
+	a, a:visited {
 		display: flex;
 		align-items: center;
-		height: 16px;
-		color: black;
-	}
-
-	a:visited {
-		color: black;
+		height: 21px;
+		color: var(--theme-color-font);
 	}
 </style>
