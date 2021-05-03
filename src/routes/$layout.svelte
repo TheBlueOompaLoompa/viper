@@ -14,7 +14,7 @@
 		if(!supabase.auth.user() && !window.location.href.includes('sign')) window.location.href = '/sign';
 		
 		setInterval(() => {
-			if(!window.location.href.includes('sign')) showNav = true;
+			if(!window.location.href.includes('sign') && !window.location.href.includes('setup')) showNav = true;
 			page = window.location.href.split('/')[3];
 		}, 300);
 	});
@@ -43,8 +43,6 @@
 
 <style>
 	main {
-		overflow: scroll;
-
-		margin-bottom: 42px;
+		padding-bottom: 42px;
 	}
 </style>
