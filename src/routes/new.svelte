@@ -155,7 +155,7 @@
 <style>
 	#postbox {
 
-		margin-top: 10px;
+		margin-top: 35px;
 
 		border-width: 1px;
 		border-style: solid;
