@@ -35,7 +35,9 @@
 		padding-left: var(--padding);
 		padding-right: var(--padding);
 		padding-bottom: var(--padding);
-
+		-webkit-user-select: none;  
+		-moz-user-select: none;    
+		-ms-user-select: none;      
 		user-select: none;
 	}
 
