@@ -5,7 +5,7 @@
 
 	import Navbar from '../components/Navbar.svelte';
 
-	let showNav = true;
+	let showNav = false;
 	let page = 'home';
 
 	onMount(() => {
