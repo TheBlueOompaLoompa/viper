@@ -20,7 +20,7 @@
 		flex-direction: column;
 		align-items: center;
 
-		width: 95%;
+		width: 88%;
 		max-width: 700px;
 
 		border: 1px solid var(--theme-color-outline);
@@ -46,7 +46,8 @@
 	}
 
 	.post img {
-		width: 100%;
+		max-width: 100%;
 		border-radius: 6px;
+		max-height: 700px;
 	}
 </style>
