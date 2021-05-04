@@ -8,19 +8,55 @@
 
 <div>
 	{#if value == 'text'}
-	<div class="highlighted type"><Fonts on:click={() => {value = 'text'}} /></div>
+		<div class="highlighted type">
+			<Fonts
+				on:click={() => {
+					value = 'text';
+				}}
+			/>
+		</div>
 	{:else}
-	<div class="type"><Fonts on:click={() => {value = 'text'}} /></div>
+		<div class="type">
+			<Fonts
+				on:click={() => {
+					value = 'text';
+				}}
+			/>
+		</div>
 	{/if}
 	{#if value == 'image'}
-	<div class="highlighted type"><Image on:click={() => {value = 'image'}} /></div>
+		<div class="highlighted type">
+			<Image
+				on:click={() => {
+					value = 'image';
+				}}
+			/>
+		</div>
 	{:else}
-	<div class="type"><Image on:click={() => {value = 'image'}} /></div>
+		<div class="type">
+			<Image
+				on:click={() => {
+					value = 'image';
+				}}
+			/>
+		</div>
 	{/if}
 	{#if value == 'video'}
-	<div class="highlighted type"><CameraVideo on:click={() => {value = 'video'}} /></div>
+		<div class="highlighted type">
+			<CameraVideo
+				on:click={() => {
+					value = 'video';
+				}}
+			/>
+		</div>
 	{:else}
-	<div class="type"><CameraVideo on:click={() => {value = 'video'}} /></div>
+		<div class="type">
+			<CameraVideo
+				on:click={() => {
+					value = 'video';
+				}}
+			/>
+		</div>
 	{/if}
 </div>
 

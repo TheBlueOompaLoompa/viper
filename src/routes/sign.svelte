@@ -1,7 +1,7 @@
 <script lang="ts">
-	import Back from "svelte-bootstrap-icons/lib/ChevronLeft";
+	import Back from 'svelte-bootstrap-icons/lib/ChevronLeft';
 
-	import WideButton from "../components/WideButton.svelte";
+	import WideButton from '../components/WideButton.svelte';
 	import Loading from '../components/Loading.svelte';
 
 	import supabase from '$lib/db';
@@ -18,10 +18,13 @@
 
 	async function signUp() {
 		loading = true;
-		let { user, error } = await supabase.auth.signUp({
-			email,
-			password,
-		}, { redirectTo: '/setup' });
+		let { user, error } = await supabase.auth.signUp(
+			{
+				email,
+				password
+			},
+			{ redirectTo: '/setup' }
+		);
 		loading = false;
 		alert('Check your email for a confirmation email to continue setup.');
 	}
@@ -30,45 +33,64 @@
 		loading = true;
 		const { user, error } = await supabase.auth.signIn({
 			email,
-			password,
+			password
 		});
 	}
 
 	async function signOut() {
 		loading = true;
 		const error = (await supabase.auth.signOut())['error'];
-		if(!error) authStage = 'viper';
-		else alert('ERROR: Unable to logout')
+		if (!error) authStage = 'viper';
+		else alert('ERROR: Unable to logout');
 	}
 </script>
 
-<Loading fullscreen={true} loading={loading} />
+<Loading fullscreen={true} {loading} />
 
 <div class="center" style="flex-direction: column;">
-	
 	<h1>{authStage.toUpperCase()}</h1>
 	{#if authStage == 'viper'}
-		<p style="width:100%; text-align:center;">Viper is a privacy focused social media app for everyone</p>
+		<p style="width:100%; text-align:center;">
+			Viper is a privacy focused social media app for everyone
+		</p>
 	{/if}
 	<div class="center-control">
 		{#if authStage == 'viper'}
-			<WideButton text="Register" on:click={() => {changeAuthStage('register')}} style="margin-bottom: 40px;"></WideButton>
-			<WideButton text="Login" on:click={() => {changeAuthStage('login')} }></WideButton>
+			<WideButton
+				text="Register"
+				on:click={() => {
+					changeAuthStage('register');
+				}}
+				style="margin-bottom: 40px;"
+			/>
+			<WideButton
+				text="Login"
+				on:click={() => {
+					changeAuthStage('login');
+				}}
+			/>
 		{:else if authStage == 'register'}
-		<h4>Email</h4>
-		<input type="email" placeholder="python@snakemail.com" class="w-wide" bind:value={email}>
-		<h4>Password</h4>
-		<input type="password" class="w-wide" bind:value={password}>
-		<WideButton text="Register" on:click={signUp}></WideButton>
+			<h4>Email</h4>
+			<input type="email" placeholder="python@snakemail.com" class="w-wide" bind:value={email} />
+			<h4>Password</h4>
+			<input type="password" class="w-wide" bind:value={password} />
+			<WideButton text="Register" on:click={signUp} />
 		{:else if authStage == 'login'}
 			<h4>Email</h4>
-			<input type="email" placeholder="python@snakemail.com" class="w-wide" bind:value={email}>
+			<input type="email" placeholder="python@snakemail.com" class="w-wide" bind:value={email} />
 			<h4>Password</h4>
-			<input type="password" class="w-wide" bind:value={password}>
-			<WideButton text="Login" on:click={signIn}></WideButton>
+			<input type="password" class="w-wide" bind:value={password} />
+			<WideButton text="Login" on:click={signIn} />
 		{:else if authStage == 'logout'}
-			<WideButton text="Logout" on:click={signOut}></WideButton>
-			<div class="bi-chevron-left" on:click={() => {window.history.back();}}><Back /></div>
+			<WideButton text="Logout" on:click={signOut} />
+			<div
+				class="bi-chevron-left"
+				on:click={() => {
+					window.history.back();
+				}}
+			>
+				<Back />
+			</div>
 		{/if}
 	</div>
 </div>

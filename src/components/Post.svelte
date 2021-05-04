@@ -3,14 +3,14 @@
 	export let img;
 </script>
 
-<div class='post {post['type'] != 1 ? 'text' : ''}'>
+<div class="post {post['type'] != 1 ? 'text' : ''}">
 	<h5 style="width: 100%; margin-bottom: 10px; margin-top: 6px;">{post['title']}</h5>
 	<span class="gray" style="width: 100%;">@{post['username']}</span>
 
 	{#if post['type'] == 0}
-	<p>{post['content']}</p>
+		<p>{post['content']}</p>
 	{:else if post['type'] == 1}
-	<img loading="lazy" alt={post['title']} src={img}>
+		<img loading="lazy" alt={post['title']} src={img} />
 	{/if}
 </div>
 
@@ -35,9 +35,9 @@
 		padding-left: var(--padding);
 		padding-right: var(--padding);
 		padding-bottom: var(--padding);
-		-webkit-user-select: none;  
-		-moz-user-select: none;    
-		-ms-user-select: none;      
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
 		user-select: none;
 	}
 

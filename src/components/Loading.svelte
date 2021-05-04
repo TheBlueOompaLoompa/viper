@@ -3,23 +3,21 @@
 	export let loading = false;
 </script>
 
-
 {#if loading}
-{#if fullscreen}
-<div class="center fullscreen" style="flex-direction: column;">
-	<div class="center fullscreen" style="flex-direction: row;">
-		<img src="load.svg" alt="loading">
-	</div>
-</div>
-{:else}
-<div class="center" style="flex-direction: column;">
-	<div class="center" style="flex-direction: row;">
-		<img src="load.svg" alt="loading">
-	</div>
-</div>
+	{#if fullscreen}
+		<div class="center fullscreen" style="flex-direction: column;">
+			<div class="center fullscreen" style="flex-direction: row;">
+				<img src="load.svg" alt="loading" />
+			</div>
+		</div>
+	{:else}
+		<div class="center" style="flex-direction: column;">
+			<div class="center" style="flex-direction: row;">
+				<img src="load.svg" alt="loading" />
+			</div>
+		</div>
+	{/if}
 {/if}
-{/if}
-
 
 <style>
 	div.fullscreen {
@@ -34,14 +32,27 @@
 		z-index: 1;
 	}
 
-	@-moz-keyframes spin { 100% { -moz-transform: rotate(-360deg); } }
-	@-webkit-keyframes spin { 100% { -webkit-transform: rotate(-360deg); } }
-	@keyframes spin { 100% { -webkit-transform: rotate(-360deg); transform:rotate(-360deg); } }
+	@-moz-keyframes spin {
+		100% {
+			-moz-transform: rotate(-360deg);
+		}
+	}
+	@-webkit-keyframes spin {
+		100% {
+			-webkit-transform: rotate(-360deg);
+		}
+	}
+	@keyframes spin {
+		100% {
+			-webkit-transform: rotate(-360deg);
+			transform: rotate(-360deg);
+		}
+	}
 
 	img {
 		color: var(--theme-color-font);
-		-webkit-animation:spin 4s linear infinite;
-		-moz-animation:spin 4s linear infinite;
-		animation:spin 4s linear infinite;
+		-webkit-animation: spin 4s linear infinite;
+		-moz-animation: spin 4s linear infinite;
+		animation: spin 4s linear infinite;
 	}
 </style>

@@ -18,7 +18,7 @@ jobs:
           projectId: viper-312216
         env:
           FIREBASE_CLI_PREVIEWS: hostingchannels
-  
+
   prettier_lint:
     runs-on: ubuntu-latest
     steps:
