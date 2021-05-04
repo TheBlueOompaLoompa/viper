@@ -1,5 +1,5 @@
 <script>
-	import WideButton from '../components/WideButton.svelte';
+	import Button from '../components/Button.svelte';
 	import Loading from '../components/Loading.svelte';
 	import supabase from '$lib/db';
 
@@ -7,39 +7,40 @@
 	let loading = false;
 
 	async function onFinish() {
-		if(username.length < 4 || username.length > 32){
+		if (username.length < 4 || username.length > 32) {
 			alert('Usernames have to be between 4 and 32 characters!');
 			return;
 		}
-		
+
 		loading = true;
-		const { data, error } = await supabase
-			.from('users')
-			.select('*');
+		const { data, error } = await supabase.from('users').select('*');
+		if (error) {
+			alert('Internal Error:\nFailed to load users for username verification.');
+			loading = false;
+			return;
+		}
 
 		let exists = false;
 		let alreadySetup = false;
 
 		const user = supabase.auth.user();
 
-		data.forEach(usr => {
+		data.forEach((usr) => {
 			exists = usr['username'] == username || exists;
 			alreadySetup = usr['id'] == user || alreadySetup;
 		});
-		if(exists) {
+		if (exists) {
 			alert('Someone already has that username!');
 			loading = false;
 			return;
 		}
-		if(alreadySetup) {
+		if (alreadySetup) {
 			alert('You already setup your account!');
 			window.location.href = '/';
 			return;
 		}
 
-		await supabase
-			.from('users')
-			.insert([{ id: user.id, username }]);
+		await supabase.from('users').insert([{ id: user.id, username }]);
 
 		window.location.href = '/';
 
@@ -47,12 +48,19 @@
 	}
 </script>
 
+<Loading fullscreen={true} bind:loading />
+
 <div class="center" style="flex-direction: column;">
 	<h2>Setup</h2>
 	<div class="center-control">
-		<input type="text" class="w-wide" placeholder="Username eg. Snakelover42" bind:value={username}>
+		<input
+			type="text"
+			class="w-wide"
+			placeholder="Username eg. Snakelover42"
+			bind:value={username}
+		/>
 		<shift>
-			<WideButton text="Finish" on:click={onFinish} />
+			<Button wide={true} text="Finish" on:click={onFinish} />
 		</shift>
 	</div>
 </div>

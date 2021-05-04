@@ -1,18 +1,20 @@
-<script>
-	import Type from "../components/new/type.svelte";
+<script lang="typescript">
+	import Type from '../components/new/type.svelte';
 
-	import Dropzone from "svelte-file-dropzone";
-	import WideButton from "../components/WideButton.svelte";
+	import Dropzone from 'svelte-file-dropzone';
+	import Button from '../components/Button.svelte';
 	import Loading from '../components/Loading.svelte';
 
 	import supabase from '$lib/db';
 
-	let iFiles = {	// Image files
+	let iFiles = {
+		// Image files
 		accepted: [],
 		rejected: []
 	};
 
-	let vFiles = {	// Video files
+	let vFiles = {
+		// Video files
 		accepted: [],
 		rejected: []
 	};
@@ -20,26 +22,33 @@
 	let type = 'text';
 
 	let title = '';
-	let body =  '';
+	let body = '';
 
 	let images = [];
-	
+
 	let isVideoUploaded = false;
 	let isImageUploaded = false;
 
-	let videoElement = { setAttribute: (a, b)=>{}, removeAttribute: (a)=>{} };
+	let videoElement = {
+		setAttribute: (a, b) => {
+			console.log(a, b);
+		},
+		removeAttribute: (a) => {
+			console.log(a);
+		}
+	};
 
 	function handleImageFilesSelect(e) {
 		const { acceptedFiles, fileRejections } = e.detail;
 		iFiles.accepted = [...iFiles.accepted, ...acceptedFiles];
 		iFiles.rejected = [...iFiles.rejected, ...fileRejections];
-		
-		for(let i = 0; i < acceptedFiles.length; i++){
-			var reader  = new FileReader();
-			reader.onload = function(ev){
+
+		for (let i = 0; i < acceptedFiles.length; i++) {
+			var reader = new FileReader();
+			reader.onload = function (ev) {
 				images = [ev.target.result, ...images];
-				console.log(images)
-			}
+				console.log(images);
+			};
 
 			reader.readAsDataURL(acceptedFiles[i]);
 		}
@@ -47,12 +56,13 @@
 		isImageUploaded = true;
 	}
 
+	/*
 	function handleVideoFilesSelect(e) {
 		const { acceptedFiles, fileRejections } = e.detail;
 		vFiles.accepted = [...vFiles.accepted, ...acceptedFiles];
 		vFiles.rejected = [...vFiles.rejected, ...fileRejections];
 
-		console.log(vFiles.accepted.length < 1)
+		console.log(vFiles.accepted.length < 1);
 
 		videoElement.src = window.URL.createObjectURL(acceptedFiles[0]);
 
@@ -61,10 +71,11 @@
 			videoElement.setAttribute('controls', '');
 		}, 1000);
 	}
+	*/
 
-	function reset(){
+	function reset() {
 		setTimeout(() => {
-			try{
+			try {
 				isVideoUploaded = false;
 				videoElement.removeAttribute('controls');
 
@@ -72,34 +83,47 @@
 					accepted: [],
 					rejected: []
 				};
-			}catch(e){}
+			} catch (e) {
+				return e;
+			}
 		}, 50);
 	}
-	$: if(type == 'video'){
+	$: if (type == 'video') {
 		reset();
 	}
 
 	let loading = false;
 
-	async function post(){
+	async function post() {
 		loading = true;
-		const username = (await supabase
-			.from('users')
-			.select('*')
-			.filter('id', 'eq', supabase.auth.user().id)).data[0]['username'];
-		switch(type){
+		const username = (
+			await supabase.from('users').select('*').filter('id', 'eq', supabase.auth.user().id)
+		).data[0]['username'];
+
+		let outval = {
+			data: undefined,
+			error: undefined
+		};
+
+		switch (type) {
 			case 'text':
-				await supabase.from('posts').insert([{ title, content: body, type: 0, uid: supabase.auth.user().id, username }]);
+				await supabase
+					.from('posts')
+					.insert([{ title, content: body, type: 0, uid: supabase.auth.user().id, username }]);
 				break;
 			case 'image':
-				const { data, error } = await supabase.from('posts').insert([{ title, content: body, type: 1, uid: supabase.auth.user().id, username, }]);
-				if(error){
-					alert(error)
-				}else{
-					await supabase
-						.storage
+				outval = await supabase
+					.from('posts')
+					.insert([{ title, content: body, type: 1, uid: supabase.auth.user().id, username }]);
+				if (outval.error) {
+					alert('Failed to post');
+				} else {
+					const { error } = await supabase.storage
 						.from('media')
-						.upload(data[0]['id'], iFiles.accepted[0]);
+						.upload(outval.data[0]['id'], iFiles.accepted[0]);
+					if (error) {
+						alert('Failed to upload your image for the post. The image will be empty.');
+					}
 				}
 				break;
 		}
@@ -108,53 +132,47 @@
 	}
 </script>
 
-
-<Loading fullscreen={true} loading={loading} />
+<Loading fullscreen={true} {loading} />
 
 <div class="center" style="flex-direction: column;">
 	<div id="postbox">
 		<div class="left"><Type bind:value={type} /></div>
 		<div class="left" id="marker">Title</div>
-		<input type="text" bind:value={title}>
+		<input type="text" bind:value={title} />
 
 		{#if type == 'text'}
-
 			<div class="left" id="marker">Body</div>
-			<textarea style="width: 95%; resize:none;" rows=3 bind:value={body}></textarea>
-
+			<textarea style="width: 95%; resize:none;" rows="3" bind:value={body} />
 		{:else if type == 'image'}
-
 			<div class="left" id="marker">Photos</div>
 			{#if !isImageUploaded}
-			<Dropzone accept={'image/*'} on:drop={handleImageFilesSelect} />
+				<Dropzone accept={'image/*'} on:drop={handleImageFilesSelect} />
 			{/if}
-			
+
 			{#each images as image}
 				<!-- svelte-ignore a11y-missing-attribute -->
-				<img src={image}>
+				<img src={image} />
 			{/each}
-
 		{:else}
-
 			<!--{#if !isVideoUploaded}
 				<div class="left" id="marker">Video</div>
 				<Dropzone accept={'video/*'} on:drop={handleVideoFilesSelect} />
 			{/if}
 			<video bind:this={videoElement} controls={vFiles.accepted.length > 0}></video>-->
 			<p>
-				Our coding snakes are hard at work building this feature, please bear with us while we develop this new part of the Viper app.
+				Our coding snakes are hard at work building this feature, please bear with us while we
+				develop this new part of the Viper app.
 			</p>
 		{/if}
 	</div>
 </div>
 
 <div style="display: flex; justify-content: center; position:fixed; bottom: 60px; width: 100%;">
-	<WideButton text="Post" on:click={post}></WideButton>
+	<Button wide={true} text="Post" on:click={post} />
 </div>
 
 <style>
 	#postbox {
-
 		margin-top: 35px;
 
 		border-width: 1px;
@@ -165,10 +183,10 @@
 		width: 90%;
 		max-width: 800px;
 		padding: 5px;
-		
+
 		margin-bottom: 50px;
 	}
-	
+
 	textarea {
 		margin-bottom: 7px;
 	}
@@ -180,7 +198,7 @@
 	}
 
 	.left {
-		width: 98%
+		width: 98%;
 	}
 
 	#marker {
@@ -192,8 +210,8 @@
 		margin: 5%;
 	}
 
-	video {
+	/*video {
 		width: 90%;
 		margin: 5%;
-	}
+	}*/
 </style>
