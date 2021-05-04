@@ -92,7 +92,7 @@
 				await supabase.from('posts').insert([{ title, content: body, type: 0, uid: supabase.auth.user().id, username }]);
 				break;
 			case 'image':
-				const { data, error } = await supabase.from('posts').insert([{ title, content: body, type: 1, uid: supabase.auth.user().id, username, comments: '{}' }]);
+				const { data, error } = await supabase.from('posts').insert([{ title, content: body, type: 1, uid: supabase.auth.user().id, username, }]);
 				if(error){
 					alert(error)
 				}else{
