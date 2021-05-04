@@ -23,7 +23,7 @@
 			password,
 		}, { redirectTo: '/setup' });
 		loading = false;
-		alert('Check your email for a conformation email to continue setup.');
+		alert('Check your email for a confirmation email to continue setup.');
 	}
 
 	async function signIn() {
