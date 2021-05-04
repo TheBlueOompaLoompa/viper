@@ -1,5 +1,6 @@
 <script>
 	import PostContext from './PostContext.svelte';
+	import PostTime from './PostTime.svelte';
 
 	export let post;
 	export let img;
@@ -15,6 +16,7 @@
 	{:else if post['type'] == 1}
 		<img loading="lazy" alt={post['title']} src={img} />
 	{/if}
+	<PostTime timestamp={post['timestamp']} />
 </div>
 
 <style>
