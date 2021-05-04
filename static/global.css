@@ -52,6 +52,11 @@ html, body {
 	margin-bottom: 6px;
 }
 
+.button:not(.w-wide) {
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
 .button:hover {
 	background-color: var(--theme-color-accent-top);
 }
