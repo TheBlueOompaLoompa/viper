@@ -21,7 +21,7 @@
 		}, 300);
 	});
 
-	supabase.auth.onAuthStateChange((event, session) => {
+	supabase.auth.onAuthStateChange((event) => {
 		switch (event) {
 			case 'SIGNED_IN':
 				window.location.href = '/';

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Back from 'svelte-bootstrap-icons/lib/ChevronLeft';
 
-	import WideButton from '../components/WideButton.svelte';
+	import Button from '../components/Button.svelte';
 	import Loading from '../components/Loading.svelte';
 
 	import supabase from '$lib/db';
@@ -18,7 +18,7 @@
 
 	async function signUp() {
 		loading = true;
-		let { user, error } = await supabase.auth.signUp(
+		let { error } = await supabase.auth.signUp(
 			{
 				email,
 				password
@@ -26,22 +26,28 @@
 			{ redirectTo: '/setup' }
 		);
 		loading = false;
+		if (error) {
+			alert('Sign up failed!');
+		}
 		alert('Check your email for a confirmation email to continue setup.');
 	}
 
 	async function signIn() {
 		loading = true;
-		const { user, error } = await supabase.auth.signIn({
+		const { error } = await supabase.auth.signIn({
 			email,
 			password
 		});
+		if (error) {
+			alert('Sign in failed!');
+		}
 	}
 
 	async function signOut() {
 		loading = true;
 		const error = (await supabase.auth.signOut())['error'];
 		if (!error) authStage = 'viper';
-		else alert('ERROR: Unable to logout');
+		else alert('Unable to logout!');
 	}
 </script>
 
@@ -56,14 +62,16 @@
 	{/if}
 	<div class="center-control">
 		{#if authStage == 'viper'}
-			<WideButton
+			<Button
+				wide={true}
 				text="Register"
 				on:click={() => {
 					changeAuthStage('register');
 				}}
 				style="margin-bottom: 40px;"
 			/>
-			<WideButton
+			<Button
+				wide={true}
 				text="Login"
 				on:click={() => {
 					changeAuthStage('login');
@@ -74,15 +82,15 @@
 			<input type="email" placeholder="python@snakemail.com" class="w-wide" bind:value={email} />
 			<h4>Password</h4>
 			<input type="password" class="w-wide" bind:value={password} />
-			<WideButton text="Register" on:click={signUp} />
+			<Button wide={true} text="Register" on:click={signUp} />
 		{:else if authStage == 'login'}
 			<h4>Email</h4>
 			<input type="email" placeholder="python@snakemail.com" class="w-wide" bind:value={email} />
 			<h4>Password</h4>
 			<input type="password" class="w-wide" bind:value={password} />
-			<WideButton text="Login" on:click={signIn} />
+			<Button wide={true} text="Login" on:click={signIn} />
 		{:else if authStage == 'logout'}
-			<WideButton text="Logout" on:click={signOut} />
+			<Button wide={true} text="Logout" on:click={signOut} />
 			<div
 				class="bi-chevron-left"
 				on:click={() => {

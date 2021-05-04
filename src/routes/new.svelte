@@ -1,8 +1,8 @@
-<script>
+<script lang="typescript">
 	import Type from '../components/new/type.svelte';
 
 	import Dropzone from 'svelte-file-dropzone';
-	import WideButton from '../components/WideButton.svelte';
+	import Button from '../components/Button.svelte';
 	import Loading from '../components/Loading.svelte';
 
 	import supabase from '$lib/db';
@@ -29,7 +29,14 @@
 	let isVideoUploaded = false;
 	let isImageUploaded = false;
 
-	let videoElement = { setAttribute: (a, b) => {}, removeAttribute: (a) => {} };
+	let videoElement = {
+		setAttribute: (a, b) => {
+			console.log(a, b);
+		},
+		removeAttribute: (a) => {
+			console.log(a);
+		}
+	};
 
 	function handleImageFilesSelect(e) {
 		const { acceptedFiles, fileRejections } = e.detail;
@@ -49,6 +56,7 @@
 		isImageUploaded = true;
 	}
 
+	/*
 	function handleVideoFilesSelect(e) {
 		const { acceptedFiles, fileRejections } = e.detail;
 		vFiles.accepted = [...vFiles.accepted, ...acceptedFiles];
@@ -63,6 +71,7 @@
 			videoElement.setAttribute('controls', '');
 		}, 1000);
 	}
+	*/
 
 	function reset() {
 		setTimeout(() => {
@@ -74,7 +83,9 @@
 					accepted: [],
 					rejected: []
 				};
-			} catch (e) {}
+			} catch (e) {
+				return e;
+			}
 		}, 50);
 	}
 	$: if (type == 'video') {
@@ -88,6 +99,12 @@
 		const username = (
 			await supabase.from('users').select('*').filter('id', 'eq', supabase.auth.user().id)
 		).data[0]['username'];
+
+		let outval = {
+			data: undefined,
+			error: undefined
+		};
+
 		switch (type) {
 			case 'text':
 				await supabase
@@ -95,13 +112,18 @@
 					.insert([{ title, content: body, type: 0, uid: supabase.auth.user().id, username }]);
 				break;
 			case 'image':
-				const { data, error } = await supabase
+				outval = await supabase
 					.from('posts')
 					.insert([{ title, content: body, type: 1, uid: supabase.auth.user().id, username }]);
-				if (error) {
-					alert(error);
+				if (outval.error) {
+					alert('Failed to post');
 				} else {
-					await supabase.storage.from('media').upload(data[0]['id'], iFiles.accepted[0]);
+					const { error } = await supabase.storage
+						.from('media')
+						.upload(outval.data[0]['id'], iFiles.accepted[0]);
+					if (error) {
+						alert('Failed to upload your image for the post. The image will be empty.');
+					}
 				}
 				break;
 		}
@@ -146,7 +168,7 @@
 </div>
 
 <div style="display: flex; justify-content: center; position:fixed; bottom: 60px; width: 100%;">
-	<WideButton text="Post" on:click={post} />
+	<Button wide={true} text="Post" on:click={post} />
 </div>
 
 <style>
@@ -188,8 +210,8 @@
 		margin: 5%;
 	}
 
-	video {
+	/*video {
 		width: 90%;
 		margin: 5%;
-	}
+	}*/
 </style>

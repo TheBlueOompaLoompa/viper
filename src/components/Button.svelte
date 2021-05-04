@@ -10,4 +10,6 @@
 	}
 </script>
 
-<div class="button {wide ? 'w-wide' : ''}" style={style} on:click={onClick}><span class="gray">{text}</span></div>
+<div class="button {wide ? 'w-wide' : ''}" {style} on:click={onClick}>
+	<span class="gray">{text}</span>
+</div>

@@ -12,6 +12,10 @@
 	$: posts.forEach(async (post) => {
 		if (post['type'] == 1) {
 			const { data, error } = await supabase.storage.from('media').download(`${post['id']}`);
+			if (error) {
+				alert('Failed to show image!');
+				return;
+			}
 			images[post['id']] = window.URL.createObjectURL(data);
 		}
 	});
@@ -36,6 +40,11 @@
 				.select('*')
 				.limit(35)
 				.order('timestamp', { ascending: false });
+
+			if (error) {
+				alert('Failed to load posts. Are you connected to the internet?');
+				return;
+			}
 
 			posts = data;
 		}

@@ -1,5 +1,5 @@
 <script>
-	import WideButton from '../components/WideButton.svelte';
+	import Button from '../components/Button.svelte';
 	import Loading from '../components/Loading.svelte';
 	import supabase from '$lib/db';
 
@@ -14,6 +14,11 @@
 
 		loading = true;
 		const { data, error } = await supabase.from('users').select('*');
+		if (error) {
+			alert('Internal Error:\nFailed to load users for username verification.');
+			loading = false;
+			return;
+		}
 
 		let exists = false;
 		let alreadySetup = false;
@@ -43,6 +48,8 @@
 	}
 </script>
 
+<Loading fullscreen={true} bind:loading />
+
 <div class="center" style="flex-direction: column;">
 	<h2>Setup</h2>
 	<div class="center-control">
@@ -53,7 +60,7 @@
 			bind:value={username}
 		/>
 		<shift>
-			<WideButton text="Finish" on:click={onFinish} />
+			<Button wide={true} text="Finish" on:click={onFinish} />
 		</shift>
 	</div>
 </div>

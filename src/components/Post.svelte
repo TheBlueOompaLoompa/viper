@@ -7,7 +7,7 @@
 
 <div class="post {post['type'] != 1 ? 'text' : ''}">
 	<h5 style="width: 100%; margin-bottom: 10px; margin-top: 6px;">{post['title']}</h5>
-	<PostContext post={post} />
+	<PostContext {post} />
 	<span class="gray" style="width: 100%;">@{post['username']}</span>
 
 	{#if post['type'] == 0}
