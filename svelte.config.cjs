@@ -1,8 +1,8 @@
-import preprocess from 'svelte-preprocess';
-import static from '@sveltejs/adapter-static';
+const preprocess = require('svelte-preprocess');
+const static = require('@sveltejs/adapter-static');
 
 /** @type {import('@sveltejs/kit').Config} */
-const config = {
+module.exports = {
 	// Consult https://github.com/sveltejs/svelte-preprocess
 	// for more information about preprocessors
 	preprocess: preprocess(),
@@ -14,5 +14,3 @@ const config = {
 		adapter: static(),
 	}
 };
-
-export default config;
