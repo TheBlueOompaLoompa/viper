@@ -10,9 +10,8 @@
 		"deploy": "npm run build && firebase deploy"
 	},
 	"devDependencies": {
-		"@supabase/supabase-js": "^1.8.0",
-		"@sveltejs/adapter-node": "*",
-		"@sveltejs/adapter-static": "^1.0.0-next.7",
+		"@supabase/supabase-js": "^1.11.9",
+		"@sveltejs/adapter-static": "1.0.0-next.7",
 		"@sveltejs/kit": "next",
 		"@typescript-eslint/eslint-plugin": "^4.19.0",
 		"@typescript-eslint/parser": "^4.19.0",
@@ -21,7 +20,7 @@
 		"eslint-plugin-svelte3": "^3.2.0",
 		"prettier": "~2.2.1",
 		"prettier-plugin-svelte": "^2.2.0",
-		"svelte": "^3.29.0",
+		"svelte": "^3.34.0",
 		"svelte-bootstrap-icons": "^1.4.1",
 		"svelte-file-dropzone": "^0.0.15",
 		"svelte-preprocess": "^4.0.0",
@@ -29,8 +28,5 @@
 		"typescript": "^4.0.0",
 		"vite": "^2.2.3"
 	},
-	"type": "module",
-	"dependencies": {
-		"@supabase/supabase-js": "^1.11.8"
-	}
+	"type": "module"
 }
