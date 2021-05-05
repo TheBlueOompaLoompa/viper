@@ -46,7 +46,7 @@
 	async function signInWithGoogle() {
 		loading = true;
 		const { error } = await supabase.auth.signIn({
-			provider: 'google',
+			provider: 'google'
 		});
 		if (error) {
 			alert('Sign in failed!');
