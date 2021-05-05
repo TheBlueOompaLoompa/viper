@@ -114,7 +114,7 @@
 			case 'image':
 				outval = await supabase
 					.from('posts')
-					.insert([{ title, content: body, type: 1, uid: supabase.auth.user().id, username, hearts: 0 }]);
+					.insert([{ title, content: body, type: 1, uid: supabase.auth.user().id, hearts: 0 }]);
 				if (outval.error) {
 					alert('Failed to post');
 				} else {
