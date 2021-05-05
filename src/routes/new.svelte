@@ -126,6 +126,13 @@
 					}
 				}
 				break;
+			case 'group':
+				const { error } = await supabase.from('groups')
+					.insert([{ id: title, users: [supabase.auth.user().id] }]);
+				if (error) {
+					alert(`Failed to create group, are you sure there isn't already a group with the same name?`);
+				}
+				break;
 		}
 
 		window.location.href = '/';
