@@ -43,6 +43,16 @@
 		}
 	}
 
+	async function signInWithGoogle() {
+		loading = true;
+		const { error } = await supabase.auth.signIn({
+			provider: 'google'
+		});
+		if (error) {
+			alert('Sign in failed!');
+		}
+	}
+
 	async function signOut() {
 		loading = true;
 		const error = (await supabase.auth.signOut())['error'];
@@ -84,6 +94,7 @@
 			<input type="password" class="w-wide" bind:value={password} />
 			<Button wide={true} text="Register" on:click={signUp} />
 		{:else if authStage == 'login'}
+			<Button wide={true} text="Login with Google" on:click={signInWithGoogle} />
 			<h4>Email</h4>
 			<input type="email" placeholder="python@snakemail.com" class="w-wide" bind:value={email} />
 			<h4>Password</h4>
