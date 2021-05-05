@@ -23,11 +23,10 @@
 	}
 
 	async function cacheUsername(post) {
-		if(!Object.keys(usernameCache).includes(post['uid'])) {
-			usernameCache[post['uid']] = (await supabase
-				.from('users')
-				.select('*')
-				.eq('id', post['uid'])).data[0]['username'];
+		if (!Object.keys(usernameCache).includes(post['uid'])) {
+			usernameCache[post['uid']] = (
+				await supabase.from('users').select('*').eq('id', post['uid'])
+			).data[0]['username'];
 		}
 	}
 
@@ -79,7 +78,7 @@
 		{/if}
 
 		{#each posts as post}
-			<Post post={post} cache={usernameCache} img={images[post['id']]} />
+			<Post {post} cache={usernameCache} img={images[post['id']]} />
 		{/each}
 	</div>
 {/if}
