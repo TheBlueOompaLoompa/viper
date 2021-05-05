@@ -9,7 +9,9 @@
 	let posts = [];
 	let images = {};
 
-	$: posts.forEach(async (post) => {
+	let usernameCache = {};
+
+	async function fetchImage(post) {
 		if (post['type'] == 1) {
 			const { data, error } = await supabase.storage.from('media').download(`${post['id']}`);
 			if (error) {
@@ -18,6 +20,19 @@
 			}
 			images[post['id']] = window.URL.createObjectURL(data);
 		}
+	}
+
+	async function cacheUsername(post) {
+		if (!Object.keys(usernameCache).includes(post['uid'])) {
+			usernameCache[post['uid']] = (
+				await supabase.from('users').select('*').eq('id', post['uid'])
+			).data[0]['username'];
+		}
+	}
+
+	$: posts.forEach(async (post) => {
+		await fetchImage(post);
+		await cacheUsername(post);
 	});
 
 	onMount(async () => {
@@ -63,7 +78,7 @@
 		{/if}
 
 		{#each posts as post}
-			<Post {post} img={images[post['id']]} />
+			<Post {post} cache={usernameCache} img={images[post['id']]} />
 		{/each}
 	</div>
 {/if}
