@@ -23,7 +23,7 @@
 	}
 
 	async function cacheUsername(post) {
-		if (!Object.keys(usernameCache).includes(post['uid'])) {
+		if (!Object.keys(usernameCache)[post['uid']]) {
 			usernameCache[post['uid']] = (
 				await supabase.from('users').select('*').eq('id', post['uid'])
 			).data[0]['username'];
@@ -53,8 +53,8 @@
 			const { data, error } = await supabase
 				.from('posts')
 				.select('*')
-				.limit(35)
-				.order('timestamp', { ascending: false });
+				.order('timestamp', { ascending: false })
+				.range(0, 29);
 
 			if (error) {
 				alert('Failed to load posts. Are you connected to the internet?');
