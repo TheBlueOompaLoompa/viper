@@ -5,6 +5,7 @@
 	import Search from 'svelte-bootstrap-icons/lib/Search';
 	import PlusSquare from 'svelte-bootstrap-icons/lib/PlusSquare';
 	import Chat from 'svelte-bootstrap-icons/lib/Chat';
+	import People from 'svelte-bootstrap-icons/lib/People';
 
 	import { createEventDispatcher } from 'svelte';
 
@@ -17,37 +18,42 @@
 	export let page;
 </script>
 
-<div id="nav" class="nav-container">
-	{#if page == 'new'}
-		<a id="new" class="active" href="/new"><PlusSquare /></a>
-	{:else}
-		<a id="new" href="/new"><PlusSquare /></a>
-	{/if}
-	{#if page == 'search'}
-		<a id="search" class="active" href="/search"><Search /></a>
-	{:else}
-		<a id="search" href="/search"><Search /></a>
-	{/if}
-	{#if page == ''}
-		<a class="active" id="home" href="/"><House /></a>
-	{:else}
-		<a id="home" href="/"><House /></a>
-	{/if}
-	<a id="profile" href="/sign" on:click={onProfile}><Person /></a>
-	{#if page == 'dm'}
-		<a class="active" id="dm" href="/dm"><Chat /></a>
-	{:else}
-		<a id="dm" href="/dm"><Chat /></a>
-	{/if}
-</div>
+<nav>
+	<div id="nav" class="nav-container">
+		{#if page == ''}
+			<a class="active" id="home" href="/"><House /></a>
+		{:else}
+			<a id="home" href="/"><House /></a>
+		{/if}
+		{#if page == 'new'}
+			<a id="new" class="active" href="/new"><PlusSquare /></a>
+		{:else}
+			<a id="new" href="/new"><PlusSquare /></a>
+		{/if}
+		{#if page == 'groups'}
+			<a id="groups" class="active" href="/groups"><People /></a>
+		{:else}
+			<a id="groups" href="/groups"><People /></a>
+		{/if}
+		{#if page == 'dm'}
+			<a class="active" id="dm" href="/dm"><Chat /></a>
+		{:else}
+			<a id="dm" href="/dm"><Chat /></a>
+		{/if}
+		{#if page == 'search'}
+			<a id="search" class="active" href="/search"><Search /></a>
+		{:else}
+			<a id="search" href="/search"><Search /></a>
+		{/if}
+		<a id="profile" href="/sign" on:click={onProfile}><Person /></a>
+	</div>
+</nav>
 
 <style>
-	.nav-container {
+	nav {
 		display: flex;
 		flex-direction: row;
-
-		align-items: center;
-		justify-content: space-evenly;
+		justify-content: center;
 
 		position: fixed;
 		bottom: 0px;
@@ -58,6 +64,16 @@
 
 		background-color: var(--theme-color-background);
 		opacity: 100%;
+	}
+	.nav-container {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-evenly;
+
+		align-items: center;
+
+		width: 100%;
+		max-width: 650px;
 	}
 
 	a,
