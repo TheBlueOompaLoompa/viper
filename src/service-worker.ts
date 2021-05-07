@@ -1,12 +1,9 @@
-import { build, files, timestamp } from '$service-worker';
+import { build, files } from '$service-worker';
 
 const CACHE_NAME = 'static-cache-v2';
 
 // Add list of files to cache here.
-const FILES_TO_CACHE = [
-	...build,
-	...files
-];
+const FILES_TO_CACHE = [...build, ...files];
 
 self.addEventListener('install', (evt: any) => {
 	console.log('[ServiceWorker] Install');

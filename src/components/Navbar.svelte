@@ -17,6 +17,7 @@
 
 	export let page;
 </script>
+
 <nav>
 	<div id="nav" class="nav-container">
 		{#if page == ''}
