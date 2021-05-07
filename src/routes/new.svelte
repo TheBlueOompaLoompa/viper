@@ -127,9 +127,7 @@
 			case 'group':
 				outval = await supabase
 					.from('groups')
-					.insert([
-						{ id: title, owner: supabase.auth.user().id }
-					]);
+					.insert([{ id: title, owner: supabase.auth.user().id }]);
 				if (outval.error) {
 					console.log(outval.error);
 					alert(

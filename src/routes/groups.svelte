@@ -10,9 +10,7 @@
 
 <div class="center" style="display: flex; flex-direction:column;">
 	<h2>Groups</h2>
-	{#await supabase
-		.from('groups')
-		.select('*') then data}
+	{#await supabase.from('groups').select('*') then data}
 		{#each data.data as group}
 			<Button
 				text={group['id']}
