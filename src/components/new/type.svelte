@@ -2,6 +2,7 @@
 	import Fonts from 'svelte-bootstrap-icons/lib/Fonts';
 	import Image from 'svelte-bootstrap-icons/lib/Image';
 	import CameraVideo from 'svelte-bootstrap-icons/lib/CameraVideo';
+	import People from 'svelte-bootstrap-icons/lib/People';
 
 	export let value = 'text';
 </script>
@@ -54,6 +55,23 @@
 			<CameraVideo
 				on:click={() => {
 					value = 'video';
+				}}
+			/>
+		</div>
+	{/if}
+	{#if value == 'group'}
+		<div class="highlighted type">
+			<People
+				on:click={() => {
+					value = 'group';
+				}}
+			/>
+		</div>
+	{:else}
+		<div class="type">
+			<People
+				on:click={() => {
+					value = 'group';
 				}}
 			/>
 		</div>
