@@ -22,6 +22,7 @@
 	let type = 'text';
 
 	let title = '';
+	let group = '';
 	let body = '';
 
 	let images = [];
@@ -96,9 +97,6 @@
 
 	async function post() {
 		loading = true;
-		const username = (
-			await supabase.from('users').select('*').filter('id', 'eq', supabase.auth.user().id)
-		).data[0]['username'];
 
 		let outval = {
 			data: undefined,
@@ -109,28 +107,34 @@
 			case 'text':
 				await supabase
 					.from('posts')
-					.insert([{ title, content: body, type: 0, uid: supabase.auth.user().id }]);
+					.insert([{ title, content: body, type: 0, uid: supabase.auth.user().id, group }]);
 				break;
 			case 'image':
 				outval = await supabase
 					.from('posts')
-					.insert([{ title, content: body, type: 1, uid: supabase.auth.user().id }]);
+					.insert([{ title, content: body, type: 1, uid: supabase.auth.user().id, group }]);
 				if (outval.error) {
 					alert('Failed to post');
 				} else {
-					const { error } = await supabase.storage
+					outval = await supabase.storage
 						.from('media')
 						.upload(outval.data[0]['id'], iFiles.accepted[0]);
-					if (error) {
+					if (outval.error) {
 						alert('Failed to upload your image for the post. The image will be empty.');
 					}
 				}
 				break;
 			case 'group':
-				const { error } = await supabase.from('groups')
-					.insert([{ id: title, users: [supabase.auth.user().id] }]);
-				if (error) {
-					alert(`Failed to create group, are you sure there isn't already a group with the same name?`);
+				outval = await supabase
+					.from('groups')
+					.insert([
+						{ id: title, owner: supabase.auth.user().id }
+					]);
+				if (outval.error) {
+					console.log(outval.error);
+					alert(
+						`Failed to create group, are you sure there isn't already a group with the same name?`
+					);
 				}
 				break;
 		}
@@ -145,7 +149,11 @@
 	<div id="postbox">
 		<div class="left"><Type bind:value={type} /></div>
 		<div class="left" id="marker">Title</div>
-		<input type="text" bind:value={title} />
+		<input type="text" placeholder="A Fantastic Title" bind:value={title} />
+		{#if type != 'group'}
+			<div class="left" id="marker">Group</div>
+			<input type="text" placeholder="Leave this empty for a public post." bind:value={group} />
+		{/if}
 
 		{#if type == 'text'}
 			<div class="left" id="marker">Body</div>
@@ -160,6 +168,8 @@
 				<!-- svelte-ignore a11y-missing-attribute -->
 				<img src={image} />
 			{/each}
+		{:else if type == 'group'}
+			<p>^ Group Name</p>
 		{:else}
 			<!--{#if !isVideoUploaded}
 				<div class="left" id="marker">Video</div>
