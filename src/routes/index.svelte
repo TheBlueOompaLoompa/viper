@@ -46,8 +46,10 @@
 		if (!exists) window.location.href = '/setup';
 
 		setTimeout(() => {
-			if (loading){
-				alert(`Unable to load posts within 20 seconds, are you sure you're connected to the internet?`);
+			if (loading) {
+				alert(
+					`Unable to load posts within 20 seconds, are you sure you're connected to the internet?`
+				);
 				window.location.reload();
 			}
 		}, 20000);
