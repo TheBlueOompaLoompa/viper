@@ -13,3 +13,9 @@
 <div class="button {wide ? 'w-wide' : ''}" {style} on:click={onClick}>
 	<span class="gray">{text}</span>
 </div>
+
+<style>
+	div {
+		height: 35px;
+	}
+</style>
