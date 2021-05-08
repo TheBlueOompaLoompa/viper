@@ -61,7 +61,7 @@
 		position: absolute;
 		transform: translateY(24px) translateX(-6px);
 		padding: 5px;
-		max-width: 100px;
+		width: 100px;
 
 		background-color: var(--theme-color-background);
 		filter: invert(0.07);
