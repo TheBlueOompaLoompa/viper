@@ -5,45 +5,24 @@
 
 	import { onMount } from 'svelte';
 	import supabase from '$lib/db';
+	import vfetch from '$lib/vfetch';
 
 	let posts = [];
 	let images = {};
 
 	let usernameCache = {};
 
-	async function fetchImage(post) {
-		if (post['type'] == 1) {
-			const { data, error } = await supabase.storage.from('media').download(`${post['id']}`);
-			if (error) {
-				alert('Failed to show image!');
-				return;
-			}
-			images[post['id']] = window.URL.createObjectURL(data);
-		}
-	}
-
-	async function cacheUsername(post) {
-		if (!Object.keys(usernameCache)[post['uid']]) {
-			usernameCache[post['uid']] = (
-				await supabase.from('users').select('*').eq('id', post['uid'])
-			).data[0]['username'];
-		}
-	}
-
 	$: posts.forEach(async (post) => {
-		await fetchImage(post);
-		await cacheUsername(post);
+		if (post['type'] == 1) {
+			images[post['id']] = await vfetch.fetchImage(post);
+		}
+		if (!Object.keys(usernameCache)[post['uid']]) {
+			usernameCache[post['uid']] = await vfetch.getUsernameFromPost(post);
+		}
 	});
 
 	onMount(async () => {
-		let data = (await supabase.from('users').select('id,username')).data;
-
-		let exists = false;
-		data.forEach((acct) => {
-			exists = supabase.auth.user().id == acct['id'] || exists;
-		});
-
-		if (!exists) window.location.href = '/setup';
+		if (!(await vfetch.hasUsername())) window.location.href = '/setup';
 
 		setTimeout(() => {
 			if (loading) {
@@ -53,21 +32,9 @@
 				window.location.reload();
 			}
 		}, 20000);
-
-		{
-			const { data, error } = await supabase
-				.from('posts')
-				.select('*')
-				.order('timestamp', { ascending: false })
-				.range(0, 29);
-
-			if (error) {
-				alert('Failed to load posts. Are you connected to the internet?');
-				return;
-			}
-
-			posts = data;
-		}
+		
+		posts = await vfetch.posts(0, 34);
+		
 		loading = false;
 	});
 </script>
