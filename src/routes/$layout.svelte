@@ -40,12 +40,7 @@
 </main>
 
 {#if showNav}
-	<Navbar
-		on:profile={() => {
-			showNav = false;
-		}}
-		{page}
-	/>
+	<Navbar {page} />
 {/if}
 
 <style>

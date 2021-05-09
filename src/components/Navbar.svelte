@@ -7,14 +7,6 @@
 	import Chat from 'svelte-bootstrap-icons/lib/Chat';
 	import People from 'svelte-bootstrap-icons/lib/People';
 
-	import { createEventDispatcher } from 'svelte';
-
-	let dispatch = createEventDispatcher();
-
-	function onProfile() {
-		dispatch('profile');
-	}
-
 	export let page;
 </script>
 
@@ -46,9 +38,9 @@
 			<a id="search" href="/search"><Search /></a>
 		{/if}
 		{#if page == 'profile'}
-			<a id="profile" class="active" href="/profile" on:click={onProfile}><Person /></a>
+			<a id="profile" class="active" href="/profile"><Person /></a>
 		{:else}
-			<a id="profile" href="/profile" on:click={onProfile}><Person /></a>
+			<a id="profile" href="/profile"><Person /></a>
 		{/if}
 	</div>
 </nav>
