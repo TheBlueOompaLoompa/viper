@@ -15,6 +15,7 @@
 	tmp2[4] = `${time.join(':')} ${isAfternoon ? 'PM' : 'AM'}`;
 
 	tmp2.splice(4, 0, 'at');
+	tmp2.splice(-2, 2);
 
 	let date = tmp2.join(' ');
 </script>
