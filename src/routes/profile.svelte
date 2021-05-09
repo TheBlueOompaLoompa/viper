@@ -35,8 +35,21 @@
 		id: undefined,
 		username: ''
 	};
+
+	let page = '';
+
+	async function fetchPosts(uid: string) {
+		posts = await vfetch.userPosts(0, 34, uid);
+
+		loading = false;
+	}
+
 	onMount(async () => {
-		user = await vfetch.getUser();
+		if (window.location.href.includes('?p=')) {
+			user = await vfetch.getUser(window.location.href.split('?p=')[1]);
+		} else {
+			user = await vfetch.getUser();
+		}
 
 		usernameCache[user['id']] = user['username'];
 
@@ -49,7 +62,15 @@
 			}
 		}, 20000);
 
-		posts = await vfetch.userPosts(0, 34, user['id']);
+		page = window.location.href;
+
+		setInterval(() => {
+			if (window.location.href != page) {
+				fetchPosts(user.id);
+			}
+			page = window.location.href;
+		}, 100);
+		await fetchPosts(user.id);
 
 		loading = false;
 	});

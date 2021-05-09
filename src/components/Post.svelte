@@ -13,7 +13,7 @@
 <div class="post {post['type'] != 1 ? 'text' : ''}">
 	<h5 style="width: 100%; margin-bottom: 10px; margin-top: 6px;">{post['title']}</h5>
 	<PostContext {post} />
-	<span class="gray" style="width: 100%;">@{username}</span>
+	<a href="/profile?p={post['uid']}" style="width: 100%;"><span class="gray">@{username}</span></a>
 
 	{#if post['type'] == 0}
 		<p>{post['content']}</p>
@@ -58,5 +58,9 @@
 		max-width: 100%;
 		border-radius: 6px;
 		max-height: 700px;
+	}
+
+	a:visited {
+		color: rgb(23, 1, 218);
 	}
 </style>
