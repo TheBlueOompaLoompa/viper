@@ -2,38 +2,53 @@ import supabase from '$lib/db';
 
 export default {
 	posts: async (start, end) => {
-		let group;
-		if(window.location.href.includes('?g=')){
-			group = decodeURI(window.location.href.split('?g=')[1]);
-		}
+		const {data, error} = await supabase
+			.from('posts')
+			.select('*')
+			.is('group_id', null)
+			.order('timestamp', { ascending: false })
+			.range(start, end);
 
-		let out = {
-			data: undefined,
-			error: undefined
-		}
-
-		if(group){
-			out = await supabase
-				.from('posts')
-				.select('*')
-				.eq('group_id', group)
-				.order('timestamp', { ascending: false })
-				.range(start, end);
-		}else{
-			out = await supabase
-				.from('posts')
-				.select('*')
-				.is('group_id', null)
-				.order('timestamp', { ascending: false })
-				.range(start, end);
-		}
-
-		if (out.error) {
+		if (error) {
 			alert('Failed to load posts. Are you connected to the internet?');
 			return;
 		}
 		
-		return out.data;
+		return data;
+	},
+	userPosts: async (start, end, id) => {
+		console.log(id)
+		const {data, error} = await supabase
+			.from('posts')
+			.select('*')
+			.filter('uid', 'eq', id)
+			.is('group_id', null)
+			.order('timestamp', { ascending: false })
+			.range(start, end);
+
+		if (error) {
+			alert('Failed to load posts. Are you connected to the internet?');
+			console.log(error)
+			return;
+		}
+		
+		return data;
+	},
+	groupPosts: async (start, end, group) => {		
+		group = decodeURI(window.location.href.split('?g=')[1]);
+		const {data, error} = await supabase
+			.from('posts')
+			.select('*')
+			.eq('group_id', group)
+			.order('timestamp', { ascending: false })
+			.range(start, end);
+
+		if (error) {
+			alert('Failed to load posts. Are you connected to the internet?');
+			return;
+		}
+		
+		return data;
 	},
 	hasUsername: async () => {
 		let data = (await supabase.from('users').select('id,username')).data;
@@ -44,6 +59,14 @@ export default {
 		});
 
 		return exists;
+	},
+	getUser: async (id) => {
+		const {data, error} = await supabase
+			.from('users')
+			.select('*')
+			.eq('id', id ? id : supabase.auth.user().id);
+
+		return data[0];
 	},
 	fetchImage: async (post) => {
 		const { data, error } = await supabase.storage.from('media').download(`${post['id']}`);
