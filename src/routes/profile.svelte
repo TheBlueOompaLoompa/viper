@@ -33,7 +33,7 @@
 
 	let user = {
 		id: undefined,
-		username: '',
+		username: ''
 	};
 	onMount(async () => {
 		user = await vfetch.getUser();
@@ -63,7 +63,7 @@
 	async function signOut() {
 		loading = true;
 		const error = (await supabase.auth.signOut())['error'];
-		if(error) alert('Unable to logout!');
+		if (error) alert('Unable to logout!');
 	}
 </script>
 
@@ -72,7 +72,7 @@
 {#if !loading}
 	{#if shadeThrown}
 		<shade>
-			<Button text="Logout" />
+			<Button text="Logout" on:click={signOut} />
 		</shade>
 	{/if}
 	<Dots style="float: right; margin-top: 20px; margin-right: 10px;" on:click={throwShade} />
