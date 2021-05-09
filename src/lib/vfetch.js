@@ -2,18 +2,38 @@ import supabase from '$lib/db';
 
 export default {
 	posts: async (start, end) => {
-		const { data, error } = await supabase
+		let group;
+		if(window.location.href.includes('?g=')){
+			group = decodeURI(window.location.href.split('?g=')[1]);
+		}
+
+		let out = {
+			data: undefined,
+			error: undefined
+		}
+
+		if(group){
+			out = await supabase
 				.from('posts')
 				.select('*')
+				.eq('group_id', group)
 				.order('timestamp', { ascending: false })
 				.range(start, end);
+		}else{
+			out = await supabase
+				.from('posts')
+				.select('*')
+				.is('group_id', null)
+				.order('timestamp', { ascending: false })
+				.range(start, end);
+		}
 
-		if (error) {
+		if (out.error) {
 			alert('Failed to load posts. Are you connected to the internet?');
 			return;
 		}
 		
-		return data;
+		return out.data;
 	},
 	hasUsername: async () => {
 		let data = (await supabase.from('users').select('id,username')).data;
