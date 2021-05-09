@@ -4,7 +4,6 @@
 	let loading = true;
 
 	import { onMount } from 'svelte';
-	import supabase from '$lib/db';
 	import vfetch from '$lib/vfetch';
 
 	let posts = [];
@@ -40,8 +39,13 @@
 				window.location.reload();
 			}
 		}, 20000);
-		
-		posts = await vfetch.posts(0, 34);
+
+		if(window.location.href.includes('?g=')){
+			const group = decodeURI(window.location.href.split('?g=')[1]);
+			posts = await vfetch.groupPosts(0, 34, group)
+		}else{
+			posts = await vfetch.posts(0, 34);
+		}
 		
 		loading = false;
 	});
@@ -51,7 +55,11 @@
 
 {#if !loading}
 	<posts class="center" style="display: flex; flex-direction:column;">
-		<h2>Home</h2>
+		{#if !window.location.href.includes('?g=')}
+			<h2>Home</h2>
+		{:else}
+			<h2>{decodeURI(window.location.href.split('?g=')[1])}</h2>
+		{/if}
 
 		{#if posts.length < 1}
 			<p>There aren't any posts here, maybe your should <a href="/new">make your own!</a> ;)</p>
