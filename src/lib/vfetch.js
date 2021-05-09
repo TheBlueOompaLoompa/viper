@@ -29,6 +29,8 @@ export default {
 		const { data, error } = await supabase.storage.from('media').download(`${post['id']}`);
 		if (error) {
 			console.log(error)
+			if(window.location.href.includes('localhost:3000'))
+				return;
 			alert('Failed to show image!');
 			return;
 		}
