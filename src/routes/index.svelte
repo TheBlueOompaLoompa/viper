@@ -31,10 +31,10 @@
 	});
 
 	async function fetchPosts() {
-		if (window.location.href.includes('?g=')) {
+		if(window.location.href.includes('?g=')) {
 			const group = decodeURI(window.location.href.split('?g=')[1]);
 			posts = await vfetch.groupPosts(0, 34, group);
-		} else {
+		}else {
 			posts = await vfetch.posts(0, 34);
 		}
 
