@@ -1,7 +1,9 @@
 import supabase from '$lib/db';
+import type post from './post';
+import type user from './user';
 
 export default {
-	posts: async (start, end) => {
+	posts: async (start: number, end: number): Promise<post[]> => {
 		const { data, error } = await supabase
 			.from('posts')
 			.select('*')
@@ -16,8 +18,7 @@ export default {
 
 		return data;
 	},
-	userPosts: async (start, end, id) => {
-		console.log(id);
+	userPosts: async (start: number, end: number, id: string): Promise<post[]> => {
 		const { data, error } = await supabase
 			.from('posts')
 			.select('*')
@@ -34,7 +35,7 @@ export default {
 
 		return data;
 	},
-	groupPosts: async (start, end, group) => {
+	groupPosts: async (start: number, end: number, group: string): Promise<post[]> => {
 		group = decodeURI(window.location.href.split('?g=')[1]);
 		const { data, error } = await supabase
 			.from('posts')
@@ -50,8 +51,8 @@ export default {
 
 		return data;
 	},
-	hasUsername: async () => {
-		let data = (await supabase.from('users').select('id,username')).data;
+	hasUsername: async (): Promise<boolean> => {
+		const data = (await supabase.from('users').select('id,username')).data;
 
 		let exists = false;
 		data.forEach((acct) => {
@@ -60,15 +61,20 @@ export default {
 
 		return exists;
 	},
-	getUser: async (id) => {
+	getUser: async (id?: string): Promise<user> => {
 		const { data, error } = await supabase
 			.from('users')
 			.select('*')
 			.eq('id', id ? id : supabase.auth.user().id);
 
+		if (error) {
+			alert('Failed to load user!');
+			return;
+		}
+
 		return data[0];
 	},
-	fetchImage: async (post) => {
+	fetchImage: async (post: post): Promise<string> => {
 		const { data, error } = await supabase.storage.from('media').download(`${post['id']}`);
 		if (error) {
 			console.log(error);
@@ -78,7 +84,7 @@ export default {
 		}
 		return window.URL.createObjectURL(data);
 	},
-	getUsernameFromPost: async (post) => {
+	getUsernameFromPost: async (post: post): Promise<string> => {
 		return (await supabase.from('users').select('*').eq('id', post['uid'])).data[0]['username'];
 	}
 };
