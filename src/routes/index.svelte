@@ -1,4 +1,6 @@
 <script lang="typescript">
+	export const ssr = false;
+
 	import Post from '../components/Post.svelte';
 	import Loading from '../components/Loading.svelte';
 	let loading = true;
@@ -28,6 +30,19 @@
 		cacheUsername(post);
 	});
 
+	async function fetchPosts() {
+		if (window.location.href.includes('?g=')) {
+			const group = decodeURI(window.location.href.split('?g=')[1]);
+			posts = await vfetch.groupPosts(0, 34, group);
+		} else {
+			posts = await vfetch.posts(0, 34);
+		}
+
+		loading = false;
+	}
+
+	let page = '';
+
 	onMount(async () => {
 		if (!(await vfetch.hasUsername())) window.location.href = '/setup';
 
@@ -40,14 +55,15 @@
 			}
 		}, 20000);
 
-		if (window.location.href.includes('?g=')) {
-			const group = decodeURI(window.location.href.split('?g=')[1]);
-			posts = await vfetch.groupPosts(0, 34, group);
-		} else {
-			posts = await vfetch.posts(0, 34);
-		}
-
-		loading = false;
+		page = window.location.href;
+		
+		setInterval(() => {
+			if(window.location.href != page){
+				fetchPosts();
+			}
+			page = window.location.href;
+		}, 100);
+		await fetchPosts();
 	});
 </script>
 
