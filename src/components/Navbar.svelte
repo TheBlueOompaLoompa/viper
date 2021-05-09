@@ -45,7 +45,11 @@
 		{:else}
 			<a id="search" href="/search"><Search /></a>
 		{/if}
-		<a id="profile" href="/sign" on:click={onProfile}><Person /></a>
+		{#if page == 'profile'}
+			<a id="profile" class="active" href="/profile" on:click={onProfile}><Person /></a>
+		{:else}
+			<a id="profile" href="/profile" on:click={onProfile}><Person /></a>
+		{/if}
 	</div>
 </nav>
 
