@@ -56,9 +56,9 @@
 		}, 20000);
 
 		page = window.location.href;
-		
+
 		setInterval(() => {
-			if(window.location.href != page){
+			if (window.location.href != page) {
 				fetchPosts();
 			}
 			page = window.location.href;

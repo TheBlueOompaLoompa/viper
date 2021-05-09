@@ -40,9 +40,7 @@
 </main>
 
 {#if showNav}
-	<Navbar
-		{page}
-	/>
+	<Navbar {page} />
 {/if}
 
 <style>
