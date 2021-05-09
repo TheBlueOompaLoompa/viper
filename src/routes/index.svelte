@@ -12,13 +12,21 @@
 
 	let usernameCache = {};
 
-	$: posts.forEach(async (post) => {
-		if (post['type'] == 1) {
+	async function fetchImage(post) {
+		if (post['type'] == 1 && !images[post['id']]) {
 			images[post['id']] = await vfetch.fetchImage(post);
 		}
+	}
+
+	async function cacheUsername(post) {
 		if (!Object.keys(usernameCache)[post['uid']]) {
 			usernameCache[post['uid']] = await vfetch.getUsernameFromPost(post);
 		}
+	}
+
+	$: posts.forEach(async (post) => {
+		fetchImage(post);
+		cacheUsername(post);
 	});
 
 	onMount(async () => {
@@ -42,7 +50,7 @@
 <Loading fullscreen={true} {loading} />
 
 {#if !loading}
-	<div class="center" style="display: flex; flex-direction:column;">
+	<posts class="center" style="display: flex; flex-direction:column;">
 		<h2>Home</h2>
 
 		{#if posts.length < 1}
@@ -52,5 +60,11 @@
 		{#each posts as post}
 			<Post {post} cache={usernameCache} img={images[post['id']]} />
 		{/each}
-	</div>
+	</posts>
 {/if}
+
+<style>
+	posts {
+		overscroll-behavior: contain;
+	}
+</style>
