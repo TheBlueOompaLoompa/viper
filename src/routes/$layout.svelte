@@ -41,9 +41,6 @@
 
 {#if showNav}
 	<Navbar
-		on:profile={() => {
-			showNav = false;
-		}}
 		{page}
 	/>
 {/if}
