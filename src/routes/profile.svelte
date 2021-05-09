@@ -45,9 +45,9 @@
 	}
 
 	onMount(async () => {
-		if(window.location.href.includes('?p=')) {
+		if (window.location.href.includes('?p=')) {
 			user = await vfetch.getUser(window.location.href.split('?p=')[1]);
-		}else{
+		} else {
 			user = await vfetch.getUser();
 		}
 
