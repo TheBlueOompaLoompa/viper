@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Dots from 'svelte-bootstrap-icons/lib/ThreeDotsVertical';
+	import Gear from 'svelte-bootstrap-icons/lib/Gear';
 	import Post from '../components/Post.svelte';
 	import Loading from '../components/Loading.svelte';
 	import Button from '../components/Button.svelte';
@@ -96,7 +96,7 @@
 			<Button text="Logout" on:click={signOut} />
 		</shade>
 	{/if}
-	<Dots style="float: right; margin-top: 20px; margin-right: 10px;" on:click={throwShade} />
+	<Gear style="float: right; margin-top: 10px; margin-right: 10px;" on:click={throwShade} />
 
 	<posts class="center" style="display: flex; flex-direction:column;">
 		<h3>@{user.username}</h3>
