@@ -41,7 +41,7 @@
 			posts = await vfetch.posts(0, 9);
 		}
 
-		window.onscroll = async function (ev) {
+		window.onscroll = async function () {
 			if (
 				window.innerHeight + window.scrollY >= document.body.scrollHeight &&
 				!scrollLoadDisabled
