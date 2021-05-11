@@ -13,6 +13,23 @@
 		showContext = !showContext;
 	}
 
+	function share() {
+		var copyInput = document.createElement('input');
+		document.body.appendChild(copyInput);
+
+		let tmp = window.location.href.split('/');
+		tmp.splice(3, tmp.length - 3);
+
+		copyInput.value = `${tmp.join('/')}/post?p=${post['id']}`;
+
+		copyInput.select();
+		copyInput.setSelectionRange(0, 99999);
+
+		document.execCommand('copy');
+
+		document.body.removeChild(copyInput);
+	}
+
 	async function deletePost() {
 		const { error } = await supabase.from('posts').delete().match({ id: post['id'] });
 
@@ -39,8 +56,10 @@
 	<Dots on:click={toggleContext} />
 	{#if showContext}
 		<context-menu>
+			<Button text="Share" on:click={share} />
+			<div style="margin: 15px;" />
 			{#if isOwner}
-				<Button text={'Delete'} on:click={deletePost} />
+				<Button textStyle="color: red;" text={'Delete'} on:click={deletePost} />
 			{/if}
 		</context-menu>
 	{/if}
