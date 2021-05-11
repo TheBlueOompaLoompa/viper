@@ -30,13 +30,30 @@
 		cacheUsername(post);
 	});
 
+	let greatestPost = 9;
+
 	async function fetchPosts() {
 		if (window.location.href.includes('?g=')) {
 			const group = decodeURI(window.location.href.split('?g=')[1]);
-			posts = await vfetch.groupPosts(0, 34, group);
+			posts = await vfetch.groupPosts(0, 9, group);
 		} else {
-			posts = await vfetch.posts(0, 34);
+			posts = await vfetch.posts(0, 9);
 		}
+		
+		window.onscroll = async function(ev) {
+			if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight) {
+				console.log('thing')
+				if (window.location.href.includes('?g=')) {
+					const group = decodeURI(window.location.href.split('?g=')[1]);
+					posts = [...posts, ...await vfetch.groupPosts(greatestPost + 1, greatestPost + 10, group)];
+				} else {
+					posts = [...posts, ...await vfetch.posts(greatestPost + 1, greatestPost + 10)];
+				}
+				posts = [...posts, ...await vfetch.posts(greatestPost + 1, greatestPost + 10)];
+				console.log(posts)
+				greatestPost += 10;
+			}
+		};
 
 		loading = false;
 	}
