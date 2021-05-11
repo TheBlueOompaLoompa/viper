@@ -105,18 +105,26 @@
 
 		switch (type) {
 			case 'text':
-				await supabase
-					.from('posts')
-					.insert([
-						{ title, content: body, type: 0, uid: supabase.auth.user().id, group_id: group }
-					]);
+				await supabase.from('posts').insert([
+					{
+						title,
+						content: body,
+						type: 0,
+						uid: supabase.auth.user().id,
+						group_id: group.length > 0 ? group : null
+					}
+				]);
 				break;
 			case 'image':
-				outval = await supabase
-					.from('posts')
-					.insert([
-						{ title, content: body, type: 1, uid: supabase.auth.user().id, group_id: group }
-					]);
+				outval = await supabase.from('posts').insert([
+					{
+						title,
+						content: body,
+						type: 1,
+						uid: supabase.auth.user().id,
+						group_id: group.length > 0 ? group : null
+					}
+				]);
 				if (outval.error) {
 					alert('Failed to post');
 				} else {
