@@ -31,6 +31,7 @@
 	});
 
 	let greatestPost = 9;
+	let scrollLoadDisabled = false;
 
 	async function fetchPosts() {
 		if (window.location.href.includes('?g=')) {
@@ -41,8 +42,12 @@
 		}
 
 		window.onscroll = async function (ev) {
-			if (window.innerHeight + window.scrollY >= document.body.scrollHeight) {
-				console.log('thing');
+			if (
+				window.innerHeight + window.scrollY >= document.body.scrollHeight &&
+				!scrollLoadDisabled
+			) {
+				scrollLoadDisabled = true;
+
 				if (window.location.href.includes('?g=')) {
 					const group = decodeURI(window.location.href.split('?g=')[1]);
 					posts = [
@@ -52,9 +57,10 @@
 				} else {
 					posts = [...posts, ...(await vfetch.posts(greatestPost + 1, greatestPost + 10))];
 				}
-				posts = [...posts, ...(await vfetch.posts(greatestPost + 1, greatestPost + 10))];
-				console.log(posts);
+
 				greatestPost += 10;
+
+				scrollLoadDisabled = false;
 			}
 		};
 
