@@ -4,11 +4,8 @@ import type user from './user';
 
 export default {
 	post: async (id: string): Promise<post> => {
-		const { data, error } = await supabase
-			.from('posts')
-			.select('*')
-			.eq('id', id);
-		
+		const { data, error } = await supabase.from('posts').select('*').eq('id', id);
+
 		if (error) {
 			alert('Failed to load post. Are you connected to the internet?');
 			return;

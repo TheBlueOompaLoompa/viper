@@ -40,7 +40,7 @@
 <div class="center" style="flex-direction: column; position:fixed; top: 0px; bottom: 12px;">
 	<div class="center" style="flex-direction: row; height: 100%;">
 		{#if post}
-			<Post post={post} cache={usernameCache} img={images[post['id']]} />
+			<Post {post} cache={usernameCache} img={images[post['id']]} />
 		{/if}
 	</div>
 </div>
