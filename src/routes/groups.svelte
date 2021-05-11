@@ -19,7 +19,7 @@
 					gotoGroup(group['id']);
 				}}
 			/>
-			<div class="bpad"></div>
+			<div class="bpad" />
 		{/each}
 	{/await}
 </div>
