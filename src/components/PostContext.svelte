@@ -28,6 +28,8 @@
 		document.execCommand('copy');
 
 		document.body.removeChild(copyInput);
+
+		alert('Copied link to clipboard.');
 	}
 
 	async function deletePost() {
