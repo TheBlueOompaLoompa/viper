@@ -157,46 +157,51 @@
 
 <div class="center" style="flex-direction: column;">
 	<div id="postbox">
-		<div class="left"><Type bind:value={type} /></div>
-		<div class="left" id="marker">Title</div>
-		<input type="text" placeholder="A Fantastic Title" bind:value={title} />
-		{#if type != 'group'}
-			<div class="left" id="marker">Group</div>
-			<input type="text" placeholder="Leave this empty for a public post." bind:value={group} />
-		{/if}
-
-		{#if type == 'text'}
-			<div class="left" id="marker">Body</div>
-			<textarea style="width: 95%; resize:none;" rows="3" bind:value={body} />
-		{:else if type == 'image'}
-			<div class="left" id="marker">Photos</div>
-			{#if !isImageUploaded}
-				<Dropzone accept={'image/*'} on:drop={handleImageFilesSelect} />
+		<div class="center" style="flex-direction: column;">
+			<div class="left"><Type bind:value={type} /></div>
+			{#if type != 'group'}
+				<div class="left" id="marker">Title</div>
+				<input type="text" placeholder="A Fantastic Title" bind:value={title} />
+				<div class="left" id="marker">Group</div>
+				<input type="text" placeholder="Leave this empty for a public post." bind:value={group} />
 			{/if}
 
-			{#each images as image}
-				<!-- svelte-ignore a11y-missing-attribute -->
-				<img src={image} />
-			{/each}
-		{:else if type == 'group'}
-			<p>^ Group Name</p>
-		{:else}
-			<!--{#if !isVideoUploaded}
-				<div class="left" id="marker">Video</div>
-				<Dropzone accept={'video/*'} on:drop={handleVideoFilesSelect} />
+			{#if type == 'text'}
+				<div class="left" id="marker">Body</div>
+				<textarea style="width: 95%; resize:none;" rows="3" bind:value={body} />
+			{:else if type == 'image'}
+				<div class="left" id="marker">Photos</div>
+				{#if !isImageUploaded}
+					<Dropzone accept={'image/*'} on:drop={handleImageFilesSelect} />
+				{/if}
+
+				{#each images as image}
+					<!-- svelte-ignore a11y-missing-attribute -->
+					<img src={image} />
+				{/each}
+			{:else if type == 'group'}
+				<div class="left" id="marker">Group Name</div>
+				<input type="text" placeholder="Name" bind:value={title} />
+			{:else}
+				<!--{#if !isVideoUploaded}
+					<div class="left" id="marker">Video</div>
+					<Dropzone accept={'video/*'} on:drop={handleVideoFilesSelect} />
+				{/if}
+				<video bind:this={videoElement} controls={vFiles.accepted.length > 0}></video>-->
+				<p>
+					Our coding snakes are hard at work building this feature, please bear with us while we
+					develop this new part of the Viper app.
+				</p>
 			{/if}
-			<video bind:this={videoElement} controls={vFiles.accepted.length > 0}></video>-->
-			<p>
-				Our coding snakes are hard at work building this feature, please bear with us while we
-				develop this new part of the Viper app.
-			</p>
-		{/if}
+		</div>
 	</div>
 </div>
 
-<div style="display: flex; justify-content: center; position:fixed; bottom: 60px; width: 100%;">
-	<Button wide={true} text="Post" on:click={post} />
-</div>
+{#if type != 'video'}
+	<div style="display: flex; justify-content: center; position:fixed; bottom: 60px; width: 100%;">
+		<Button wide={true} text="Post" on:click={post} />
+	</div>
+{/if}
 
 <style>
 	#postbox {

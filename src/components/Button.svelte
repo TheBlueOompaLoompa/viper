@@ -2,6 +2,7 @@
 	import { createEventDispatcher } from 'svelte';
 	export let text;
 	export let style = '';
+	export let textStyle = '';
 	export let wide = false;
 	let dispatch = createEventDispatcher();
 
@@ -11,7 +12,7 @@
 </script>
 
 <div class="button {wide ? 'w-wide' : ''}" {style} on:click={onClick}>
-	<span class="gray">{text}</span>
+	<span class="gray" style={textStyle}>{text}</span>
 </div>
 
 <style>
