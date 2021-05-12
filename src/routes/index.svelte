@@ -61,7 +61,10 @@
 						...(await vfetch.groupPosts(greatestPost + 1, greatestPost + postFetchCount, group))
 					];
 				} else {
-					posts = [...posts, ...(await vfetch.posts(greatestPost + 1, greatestPost + postFetchCount))];
+					posts = [
+						...posts,
+						...(await vfetch.posts(greatestPost + 1, greatestPost + postFetchCount))
+					];
 				}
 
 				greatestPost += postFetchCount;
@@ -154,7 +157,10 @@
 		{/if}
 
 		{#each posts as post, i}
-			<div class="trans" in:fly={{ x: -200, duration: 1000, delay: (i - greatestPost + postFetchCount) * 200 }}>
+			<div
+				class="trans"
+				in:fly={{ x: -200, duration: 1000, delay: (i - greatestPost + postFetchCount) * 200 }}
+			>
 				<Post {post} cache={usernameCache} img={images[post['id']]} />
 			</div>
 		{/each}
