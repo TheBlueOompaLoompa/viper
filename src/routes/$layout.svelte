@@ -6,7 +6,6 @@
 
 	import supabase from '$lib/db';
 
-
 	let showNav = false;
 	let showLogMsg = false;
 	let page = 'home';
@@ -18,8 +17,7 @@
 	onMount(() => {
 		showNav = false;
 
-		if (!supabase.auth.user() && !window.location.href.includes('sign'))
-			showLogMsg = true;
+		if (!supabase.auth.user() && !window.location.href.includes('sign')) showLogMsg = true;
 
 		setInterval(() => {
 			if (!window.location.href.includes('sign') && !window.location.href.includes('setup'))
@@ -51,10 +49,17 @@
 {/if}
 
 {#if showLogMsg}
-	<p id="close" on:click={() => { showLogMsg = !showLogMsg; }}>X</p>
+	<p
+		id="close"
+		on:click={() => {
+			showLogMsg = !showLogMsg;
+		}}
+	>
+		X
+	</p>
 	<div class="logmsg center" style="flex-direction: column;">
 		<p>You aren't currently logged in.</p>
-		<br>
+		<br />
 		<Button text="Signup or Login" wide={true} on:click={gotoSign} />
 	</div>
 {/if}
