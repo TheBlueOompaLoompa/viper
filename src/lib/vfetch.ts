@@ -65,14 +65,69 @@ export default {
 		const { data, error } = await supabase
 			.from('permissions')
 			.select('level')
-			.eq('id', group_id)
-			.eq('uid', uid);
+			.eq('uid', uid)
+			.eq('group_id', group_id);
 
-		if (error) {
+		console.log(uid, group_id)
+
+		if (error || data.length < 1) {
 			alert('Failed to get permission level.');
+			return -1;
 		}
 
 		return data[0]['level'];
+	},
+	addUserToGroup: async (username: string, group_id: string, level: number): Promise<void> => {
+		let uid: string;
+		{
+			const { data, error } = await supabase
+				.from('users')
+				.select('id')
+				.eq('username', username);
+
+			if (error) {
+				alert('Failed to get user id!');
+				return;
+			}
+
+			uid = data[0]['id'];
+		}
+
+		const { error } = await supabase
+			.from('permissions')
+			.insert([{ uid, group_id, level }]);
+
+		if (error) {
+			alert('Failed to give user permissions!');
+			return;
+		}
+	},
+	removeUserFromGroup: async (username: string, group_id: string): Promise<void> => {
+		let uid: string;
+		{
+			const { data, error } = await supabase
+				.from('users')
+				.select('id')
+				.eq('username', username);
+
+			if (error) {
+				alert('Failed to get user id!');
+				return;
+			}
+
+			uid = data[0]['id'];
+		}
+
+		const { error } = await supabase
+			.from('permissions')
+			.delete()
+			.eq('uid', uid)
+			.eq('group_id', group_id);
+
+		if (error) {
+			alert('Failed to remove user permissions!');
+			return;
+		}
 	},
 	hasUsername: async (): Promise<boolean> => {
 		const data = (await supabase.from('users').select('id,username')).data;
@@ -96,6 +151,9 @@ export default {
 		}
 
 		return data[0];
+	},
+	getUid: async(): Promise<string> => {
+		return supabase.auth.user().id;
 	},
 	fetchImage: async (post: post): Promise<string> => {
 		const { data, error } = await supabase.storage.from('media').download(`${post['id']}`);
