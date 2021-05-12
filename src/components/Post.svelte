@@ -20,7 +20,7 @@
 </script>
 
 <div class="post {post['type'] != 1 ? 'text' : ''}">
-	<h5 style="width: 100%; margin-bottom: 10px; margin-top: 6px;">{post['title']}</h5>
+	<h5 style="width: 95%; margin-bottom: 10px; margin-top: 6px; text-align: left; margin-right: 5%;">{post['title']}</h5>
 	<PostContext {post} />
 	<a href="/profile?p={post['uid']}" style="width: 100%;"><span class="gray">@{username}</span></a>
 
