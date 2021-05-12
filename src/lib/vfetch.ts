@@ -61,6 +61,19 @@ export default {
 
 		return data;
 	},
+	getPermissionLevel: async(group_id: string, uid: string): Promise<number> => {
+		const { data, error } = await supabase
+			.from('permissions')
+			.select('level')
+			.eq('id', group_id)
+			.eq('uid', uid);
+
+		if (error) {
+			alert('Failed to get permission level.');
+		}
+
+		return data[0]['level'];
+	},
 	hasUsername: async (): Promise<boolean> => {
 		const data = (await supabase.from('users').select('id,username')).data;
 
