@@ -36,11 +36,18 @@
 </script>
 
 <Loading fullscreen={true} {loading} />
+<container>
+	{#if post}
+		<Post {post} cache={usernameCache} img={images[post['id']]} />
+	{/if}
+</container>
 
-<div class="center" style="flex-direction: column; position:fixed; top: 0px; bottom: 12px;">
-	<div class="center" style="flex-direction: row; height: 100%;">
-		{#if post}
-			<Post {post} cache={usernameCache} img={images[post['id']]} />
-		{/if}
-	</div>
-</div>
+<style>
+	container {
+		display: flex;
+		justify-content: center;
+
+		padding-top: 20px;
+		width: 100%;
+	}
+</style>
