@@ -19,8 +19,8 @@
 		showNav = false;
 
 		if (!supabase.auth.user() && !window.location.href.includes('sign')) showLogMsg = true;
-		if(supabase.auth.user()) {
-			if(!await vfetch.hasUsername()) {
+		if (supabase.auth.user()) {
+			if (!(await vfetch.hasUsername())) {
 				window.location.href = '/setup';
 			}
 		}
