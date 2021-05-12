@@ -107,7 +107,7 @@
 		{/if}
 
 		{#each posts as post, i}
-			<div class="trans" in:fly="{{x: -200,duration: 1000,delay:i*200 }}">
+			<div class="trans" in:fly={{ x: -200, duration: 1000, delay: i * 200 }}>
 				<Post {post} cache={usernameCache} img={images[post['id']]} />
 			</div>
 		{/each}
@@ -122,5 +122,6 @@
 	.trans {
 		display: flex;
 		justify-content: center;
-		width: 100%;	}
+		width: 100%;
+	}
 </style>
