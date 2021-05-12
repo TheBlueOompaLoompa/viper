@@ -1,6 +1,7 @@
 <script lang="typescript">
 	export const ssr = false;
 
+	import { fly } from 'svelte/transition';
 	import Post from '../components/Post.svelte';
 	import Loading from '../components/Loading.svelte';
 	let loading = true;
@@ -105,8 +106,10 @@
 			<p>There aren't any posts here, maybe your should <a href="/new">make your own!</a> ;)</p>
 		{/if}
 
-		{#each posts as post}
-			<Post {post} cache={usernameCache} img={images[post['id']]} />
+		{#each posts as post, i}
+			<div class="trans" in:fly="{{x: -200,duration: 1000,delay:i*200 }}">
+				<Post {post} cache={usernameCache} img={images[post['id']]} />
+			</div>
 		{/each}
 	</posts>
 {/if}
@@ -115,4 +118,9 @@
 	posts {
 		overscroll-behavior: contain;
 	}
+
+	.trans {
+		display: flex;
+		justify-content: center;
+		width: 100%;	}
 </style>
