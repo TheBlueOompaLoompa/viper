@@ -6,6 +6,12 @@ fetch('https://viper.hfstudios.us/version.txt').then((value) => {
 	// Add list of files to cache here.
 	const FILES_TO_CACHE = [...build, ...files];
 
+	for(var i = 0; i < FILES_TO_CACHE.length; i++) {
+		if(FILES_TO_CACHE[i].includes('version.txt')) {
+			FILES_TO_CACHE.splice(i, 1);
+		}
+	}
+
 	self.addEventListener('install', (evt: any) => {
 		console.log('[ServiceWorker] Install');
 
