@@ -70,8 +70,6 @@
 	let page = '';
 
 	onMount(async () => {
-		if (!(await vfetch.hasUsername())) window.location.href = '/setup';
-
 		setTimeout(() => {
 			if (loading) {
 				alert(

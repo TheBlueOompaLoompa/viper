@@ -5,6 +5,7 @@
 	import { onMount } from 'svelte';
 
 	import supabase from '$lib/db';
+	import vfetch from '$lib/vfetch';
 
 	let showNav = false;
 	let showLogMsg = false;
@@ -14,10 +15,15 @@
 		window.location.href = '/sign';
 	}
 
-	onMount(() => {
+	onMount(async () => {
 		showNav = false;
 
 		if (!supabase.auth.user() && !window.location.href.includes('sign')) showLogMsg = true;
+		if(supabase.auth.user()) {
+			if(!await vfetch.hasUsername()) {
+				window.location.href = '/setup';
+			}
+		}
 
 		setInterval(() => {
 			if (!window.location.href.includes('sign') && !window.location.href.includes('setup'))
