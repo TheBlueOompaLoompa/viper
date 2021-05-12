@@ -34,15 +34,17 @@
 		cacheUsername(post);
 	});
 
-	let greatestPost = 9;
+	const postFetchCount = 5;
+
+	let greatestPost = postFetchCount - 1;
 	let scrollLoadDisabled = false;
 
 	async function fetchPosts() {
 		if (window.location.href.includes('?g=')) {
 			const group = decodeURI(window.location.href.split('?g=')[1]);
-			posts = await vfetch.groupPosts(0, 9, group);
+			posts = await vfetch.groupPosts(0, postFetchCount - 1, group);
 		} else {
-			posts = await vfetch.posts(0, 9);
+			posts = await vfetch.posts(0, postFetchCount - 1);
 		}
 
 		window.onscroll = async function () {
@@ -56,13 +58,16 @@
 					const group = decodeURI(window.location.href.split('?g=')[1]);
 					posts = [
 						...posts,
-						...(await vfetch.groupPosts(greatestPost + 1, greatestPost + 10, group))
+						...(await vfetch.groupPosts(greatestPost + 1, greatestPost + postFetchCount, group))
 					];
 				} else {
-					posts = [...posts, ...(await vfetch.posts(greatestPost + 1, greatestPost + 10))];
+					posts = [
+						...posts,
+						...(await vfetch.posts(greatestPost + 1, greatestPost + postFetchCount))
+					];
 				}
 
-				greatestPost += 10;
+				greatestPost += postFetchCount;
 
 				scrollLoadDisabled = false;
 			}
@@ -152,7 +157,10 @@
 		{/if}
 
 		{#each posts as post, i}
-			<div class="trans" in:fly={{ x: -200, duration: 1000, delay: i * 200 }}>
+			<div
+				class="trans"
+				in:fly={{ x: -200, duration: 1000, delay: (i - greatestPost + postFetchCount) * 200 }}
+			>
 				<Post {post} cache={usernameCache} img={images[post['id']]} />
 			</div>
 		{/each}
