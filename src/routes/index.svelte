@@ -102,9 +102,11 @@
 
 	function addUser() {
 		let username = prompt(`What's their username?`);
-		let level = parseInt(prompt('What permission level\n0: View Posts\n1: Comment\n2: Comment and Post\n 3: Moderator'));
+		let level = parseInt(
+			prompt('What permission level\n0: View Posts\n1: Comment\n2: Comment and Post\n 3: Moderator')
+		);
 
-		if(level > 3 || level < 0){
+		if (level > 3 || level < 0) {
 			alert('Their level has to be between 0 and 3!');
 			return;
 		}
@@ -126,12 +128,12 @@
 		{#if shadeThrown}
 			<shade>
 				{#await vfetch.getUid() then uid}
-				{#await vfetch.getPermissionLevel(decodeURI(window.location.href.split('?g=')[1]), uid) then level}
-				{#if level == 4}
-					<Button text="Add User" style="margin-bottom: 15px;" on:click={addUser} />
-					<Button text="Remove User" on:click={removeUser} />
-				{/if}
-				{/await}
+					{#await vfetch.getPermissionLevel(decodeURI(window.location.href.split('?g=')[1]), uid) then level}
+						{#if level == 4}
+							<Button text="Add User" style="margin-bottom: 15px;" on:click={addUser} />
+							<Button text="Remove User" on:click={removeUser} />
+						{/if}
+					{/await}
 				{/await}
 			</shade>
 		{/if}

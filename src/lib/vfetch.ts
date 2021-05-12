@@ -61,14 +61,14 @@ export default {
 
 		return data;
 	},
-	getPermissionLevel: async(group_id: string, uid: string): Promise<number> => {
+	getPermissionLevel: async (group_id: string, uid: string): Promise<number> => {
 		const { data, error } = await supabase
 			.from('permissions')
 			.select('level')
 			.eq('uid', uid)
 			.eq('group_id', group_id);
 
-		console.log(uid, group_id)
+		console.log(uid, group_id);
 
 		if (error || data.length < 1) {
 			alert('Failed to get permission level.');
@@ -80,10 +80,7 @@ export default {
 	addUserToGroup: async (username: string, group_id: string, level: number): Promise<void> => {
 		let uid: string;
 		{
-			const { data, error } = await supabase
-				.from('users')
-				.select('id')
-				.eq('username', username);
+			const { data, error } = await supabase.from('users').select('id').eq('username', username);
 
 			if (error) {
 				alert('Failed to get user id!');
@@ -93,9 +90,7 @@ export default {
 			uid = data[0]['id'];
 		}
 
-		const { error } = await supabase
-			.from('permissions')
-			.insert([{ uid, group_id, level }]);
+		const { error } = await supabase.from('permissions').insert([{ uid, group_id, level }]);
 
 		if (error) {
 			alert('Failed to give user permissions!');
@@ -105,10 +100,7 @@ export default {
 	removeUserFromGroup: async (username: string, group_id: string): Promise<void> => {
 		let uid: string;
 		{
-			const { data, error } = await supabase
-				.from('users')
-				.select('id')
-				.eq('username', username);
+			const { data, error } = await supabase.from('users').select('id').eq('username', username);
 
 			if (error) {
 				alert('Failed to get user id!');
@@ -152,7 +144,7 @@ export default {
 
 		return data[0];
 	},
-	getUid: async(): Promise<string> => {
+	getUid: async (): Promise<string> => {
 		return supabase.auth.user().id;
 	},
 	fetchImage: async (post: post): Promise<string> => {
