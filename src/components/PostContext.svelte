@@ -7,7 +7,7 @@
 	export let post;
 	let isOwner = false;
 
-	if (post) isOwner = post['uid'] == supabase.auth.user().id;
+	if (post) isOwner = post['uid'] == (supabase.auth.user() ? supabase.auth.user().id : '');
 
 	function toggleContext() {
 		showContext = !showContext;
