@@ -1,6 +1,7 @@
 <script>
 	import PostContext from './PostContext.svelte';
 	import PostTime from './PostTime.svelte';
+	import Loading from '../components/Loading.svelte';
 
 	export let post;
 	export let cache;
@@ -8,6 +9,14 @@
 
 	let username = 'Loading...';
 	$: username = cache[post['uid']] ? cache[post['uid']] : 'Loading...';
+
+	let loading = true;
+	let imgClass = 'loading';
+
+	function hideLoad() {
+		loading = false;
+		imgClass = '';
+	}
 </script>
 
 <div class="post {post['type'] != 1 ? 'text' : ''}">
@@ -18,7 +27,8 @@
 	{#if post['type'] == 0}
 		<p>{post['content']}</p>
 	{:else if post['type'] == 1}
-		<img loading="lazy" alt={post['title']} src={img} />
+		<Loading {loading} />
+		<img class={imgClass} loading="lazy" alt={post['title']} src={img} on:load={hideLoad} />
 	{/if}
 	<PostTime timestamp={post['timestamp']} />
 </div>
@@ -62,5 +72,9 @@
 
 	a:visited {
 		color: rgb(23, 1, 218);
+	}
+
+	.loading {
+		visibility: hidden;
 	}
 </style>
