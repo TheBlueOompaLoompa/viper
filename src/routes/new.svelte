@@ -145,7 +145,21 @@
 					alert(
 						`Failed to create group, are you sure there isn't already a group with the same name?`
 					);
+
+					break;
 				}
+
+				outval = await supabase
+					.from('permissions')
+					.insert([{ uid: supabase.auth.user().id, group_id: title, level: 4 }]);
+
+				if (outval.error) {
+					console.log(outval.error);
+					alert(`Failed to give owner permission, please contect support to get this corrected.`);
+
+					break;
+				}
+
 				break;
 		}
 
