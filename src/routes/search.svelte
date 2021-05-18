@@ -7,7 +7,14 @@
 	let results = [];
 	
 	async function onUpdateSearch(search) {
-		results = await supabase.from('posts').like('name', `%${search}%`);
+		alert('Update search');
+		results = await supabase
+			.from('posts')
+			.select('*')
+			.textSearch('name', `'%${search}%'`, {
+				type: 'websearch',
+				config: 'english'
+			});
 		
 	}
 	
