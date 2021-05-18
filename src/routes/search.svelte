@@ -6,19 +6,24 @@
 	
 	let results = [];
 	
-	async function onUpdateSearch(search) {
+	async function onUpdateSearch(srch) {
 		alert('Update search');
-		results = await supabase
-			.from('posts')
-			.select('*')
-			.textSearch('name', `'%${search}%'`, {
-				type: 'websearch',
-				config: 'english'
-			});
+		try {
+			results = await supabase
+				.from('posts')
+				.select('*')
+				.textSearch('name', `'%${srch}%'`, {
+					type: 'websearch',
+					config: 'english'
+				});
+		}catch(e) {
+			alert(e);
+		}
 		
 	}
 	
 	$: {
+		console.log(search);
 		onUpdateSearch(search);
 	}
 	
