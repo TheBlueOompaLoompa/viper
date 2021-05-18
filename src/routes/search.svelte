@@ -18,7 +18,9 @@
 		
 	}
 	
-	$: onUpdateSearch(search);
+	$: {
+		onUpdateSearch(search);
+	}
 	
 	let posts = [];
 	let images = {};
