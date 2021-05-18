@@ -1,4 +1,38 @@
+<script lang="typescript">
+	import supabase from '$lib/db';
+	import vfetch from '$lib/vfetch';
+	
+	let search = "";
+	
+	let results = [];
+	
+	async function onUpdateSearch() {
+		results = await supabase.from('posts').like('name', `%${search}%`);
+		
+	}
+	
+	$: onUpdateSearch(search);
+	
+	let posts = [];
+	let images = {};
+	let usernameCache = {};
+	async function fetchImage(post) {
+		if (post['type'] == 1 && !images[post['id']]) {
+			images[post['id']] = await vfetch.fetchImage(post);
+		}
+	}
+	async function cacheUsername(post) {
+		if (!Object.keys(usernameCache)[post['uid']]) {
+			usernameCache[post['uid']] = await vfetch.getUsernameFromPost(post);
+		}
+	}
+	$: results.forEach(async (post) => {
+		fetchImage(post);
+		cacheUsername(post);
+	});
+</script>
+
 <div class="center" style="flex-direction: column;">
 	<h2>Search</h2>
-	<input type="text" class="w-wide" placeholder="Users, posts, groups, etc..." />
+	<input type="text" class="w-wide" bind:value={search} placeholder="Users, posts, groups, etc..." />
 </div>
