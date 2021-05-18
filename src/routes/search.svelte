@@ -6,7 +6,7 @@
 	
 	let results = [];
 	
-	async function onUpdateSearch() {
+	async function onUpdateSearch(search) {
 		results = await supabase.from('posts').like('name', `%${search}%`);
 		
 	}
