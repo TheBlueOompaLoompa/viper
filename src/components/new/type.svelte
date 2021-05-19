@@ -8,74 +8,34 @@
 </script>
 
 <div>
-	{#if value == 'text'}
-		<div class="highlighted type">
-			<Fonts
-				on:click={() => {
-					value = 'text';
-				}}
-			/>
-		</div>
-	{:else}
-		<div class="type">
-			<Fonts
-				on:click={() => {
-					value = 'text';
-				}}
-			/>
-		</div>
-	{/if}
-	{#if value == 'image'}
-		<div class="highlighted type">
-			<Image
-				on:click={() => {
-					value = 'image';
-				}}
-			/>
-		</div>
-	{:else}
-		<div class="type">
-			<Image
-				on:click={() => {
-					value = 'image';
-				}}
-			/>
-		</div>
-	{/if}
-	{#if value == 'video'}
-		<div class="highlighted type">
-			<CameraVideo
-				on:click={() => {
-					value = 'video';
-				}}
-			/>
-		</div>
-	{:else}
-		<div class="type">
-			<CameraVideo
-				on:click={() => {
-					value = 'video';
-				}}
-			/>
-		</div>
-	{/if}
-	{#if value == 'group'}
-		<div class="highlighted type">
-			<People
-				on:click={() => {
-					value = 'group';
-				}}
-			/>
-		</div>
-	{:else}
-		<div class="type">
-			<People
-				on:click={() => {
-					value = 'group';
-				}}
-			/>
-		</div>
-	{/if}
+	<div class="type {value == 'text' ? 'bg-green-300 border-green-900 border-2' : ''}">
+		<Fonts
+			on:click={() => {
+				value = 'text';
+			}}
+		/>
+	</div>
+	<div class="type {value == 'image' ? 'bg-green-300 border-green-900 border-2' : ''}">
+		<Image
+			on:click={() => {
+				value = 'image';
+			}}
+		/>
+	</div>
+	<div class="type {value == 'video' ? 'bg-green-300 border-green-900 border-2' : ''}">
+		<CameraVideo
+			on:click={() => {
+				value = 'video';
+			}}
+		/>
+	</div>
+	<div class="type {value == 'group' ? 'bg-green-300 border-green-900 border-2' : ''}">
+		<People
+			on:click={() => {
+				value = 'group';
+			}}
+		/>
+	</div>
 </div>
 
 <style>
@@ -88,19 +48,9 @@
 	}
 
 	.type {
-		width: calc(6px + 16px);
-		height: calc(6px + 16px);
+		width: 30px;
 
 		align-items: center;
 		justify-content: center;
-	}
-
-	.highlighted {
-		background-color: var(--theme-color-accent-low);
-
-		border-style: solid;
-		border-color: var(--theme-color-outline);
-		border-width: 1px;
-		color: black;
 	}
 </style>

@@ -14,6 +14,7 @@
 	}
 
 	function share() {
+		toggleContext();
 		var copyInput = document.createElement('input');
 		document.body.appendChild(copyInput);
 
@@ -29,7 +30,9 @@
 
 		document.body.removeChild(copyInput);
 
-		alert('Copied link to clipboard.');
+		setTimeout(() => {
+			alert('Copied link to clipboard.');
+		}, 5);
 	}
 
 	async function deletePost() {
@@ -59,8 +62,8 @@
 	{#if showContext}
 		<context-menu>
 			<Button text="Share" on:click={share} />
-			<div style="margin: 15px;" />
 			{#if isOwner}
+				<div style="margin: 15px;" />
 				<Button textStyle="color: red;" text={'Delete'} on:click={deletePost} />
 			{/if}
 		</context-menu>
@@ -68,19 +71,9 @@
 </container>
 
 <style>
-	container {
-		position: absolute;
-		transform: translateY(13px);
-
-		display: flex;
-		justify-content: flex-end;
-		width: 88%;
-		max-width: 700px;
-	}
-
 	context-menu {
 		position: absolute;
-		transform: translateY(24px) translateX(-6px);
+		transform: translateY(5px) translateX(-185px);
 		padding: 5px;
 		width: 200px;
 

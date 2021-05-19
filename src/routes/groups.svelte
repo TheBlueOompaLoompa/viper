@@ -8,7 +8,7 @@
 	}
 </script>
 
-<div class="center" style="display: flex; flex-direction:column;">
+<div class="flex flex-col justify-center items-center">
 	<h2>Groups</h2>
 	{#await supabase.from('groups').select('*') then data}
 		{#each data.data as group}

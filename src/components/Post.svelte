@@ -19,11 +19,13 @@
 	}
 </script>
 
-<div class="post {post['type'] != 1 ? 'text' : ''}">
-	<h5 style="width: 95%; margin-bottom: 10px; margin-top: 6px; text-align: left; margin-right: 5%;">
-		{post['title']}
-	</h5>
-	<PostContext {post} />
+<div class="flex flex-col post {post['type'] != 1 ? 'text' : ''}">
+	<div class="flex flex-row items-center justify-between w-full">
+		<h5 style="margin-bottom: 10px; margin-top: 6px; text-align: left; margin-right: 5%;">
+			{post['title']}
+		</h5>
+		<PostContext {post} />
+	</div>
 	<a href="/profile?p={post['uid']}" style="width: 100%;"><span class="gray">@{username}</span></a>
 
 	{#if post['type'] == 0}
@@ -37,8 +39,6 @@
 
 <style>
 	.post {
-		display: flex;
-		flex-direction: column;
 		align-items: center;
 
 		width: 88%;

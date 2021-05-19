@@ -84,7 +84,12 @@
 	async function signOut() {
 		loading = true;
 		const error = (await supabase.auth.signOut())['error'];
-		if (error) alert('Unable to logout!');
+		if (error) {
+			alert('Unable to logout!');
+			return;
+		} else {
+			window.location.href = '/sign';
+		}
 	}
 </script>
 
