@@ -1,15 +1,18 @@
 <script lang="ts">
 	import Navbar from '../components/Navbar.svelte';
 	import Button from '../components/Button.svelte';
+	import PageTransitions from '../components/PageTransitions.svelte';
 
 	import { onMount } from 'svelte';
+	import { fly } from 'svelte/transition';
+	import { page } from '$app/stores';
 
 	import supabase from '$lib/db';
 	import vfetch from '$lib/vfetch';
 
 	let showNav = false;
 	let showLogMsg = false;
-	let page = 'home';
+	let pg = 'home';
 
 	function gotoSign() {
 		window.location.href = '/sign';
@@ -28,7 +31,7 @@
 		setInterval(() => {
 			if (!window.location.href.includes('sign') && !window.location.href.includes('setup'))
 				showNav = true;
-			page = window.location.href.split('/')[3];
+			pg = window.location.href.split('/')[3];
 		}, 300);
 	});
 
@@ -46,12 +49,15 @@
 	<title>Viper</title>
 </svelte:head>
 
+
 <main>
-	<slot />
+	<PageTransitions refresh={$page.path} page={pg}>
+		<slot />
+	</PageTransitions>
 </main>
 
 {#if showNav}
-	<Navbar {page} />
+	<Navbar page={pg} />
 {/if}
 
 {#if showLogMsg}
@@ -73,6 +79,7 @@
 <style>
 	main {
 		padding-bottom: 42px;
+		min-height: 600px;
 	}
 
 	.logmsg {

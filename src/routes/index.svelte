@@ -145,7 +145,7 @@
 		<Gear style="float: right; margin-top: 10px; margin-right: 10px;" on:click={throwShade} />
 	{/if}
 
-	<posts class="center" style="display: flex; flex-direction:column;">
+	<posts class="flex flex-col items-center">
 		{#if !window.location.href.includes('?g=')}
 			<h2>Home</h2>
 		{:else}
