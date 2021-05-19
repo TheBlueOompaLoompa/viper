@@ -7,10 +7,7 @@ module.exports = {
 	// for more information about preprocessors
 	preprocess: preprocess({
 		postcss: {
-			plugins: [
-				require('@tailwindcss/jit'),
-				require('autoprefixer')
-			]
+			plugins: [require('@tailwindcss/jit'), require('autoprefixer')]
 		}
 	}),
 

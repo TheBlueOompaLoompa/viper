@@ -14,12 +14,12 @@
 
 <nav class="flex flex-row justify-center fixed bottom-0 w-full h-10">
 	<div class="flex flex-row justify-evenly items-center w-full max-w-screen-sm">
-		<a transition:fade class='{page == '' ? 'active' : ''}' id="home" href="/"><House /></a>
-		<a id="new" class='{page == 'new' ? 'active' : ''}' href="/new"><PlusSquare /></a>
-		<a id="groups" class='{page == 'groups' ? 'active' : ''}' href="/groups"><People /></a>
-		<a class='{page == 'dm' ? 'active' : ''}' id="dm" href="/dm"><Chat /></a>
-		<a id="search" class='{page == 'search' ? 'active' : ''}' href="/search"><Search /></a>
-		<a id="profile" class='{page == 'profile' ? 'active' : ''}' href="/profile"><Person /></a>
+		<a transition:fade class={page == '' ? 'active' : ''} id="home" href="/"><House /></a>
+		<a id="new" class={page == 'new' ? 'active' : ''} href="/new"><PlusSquare /></a>
+		<a id="groups" class={page == 'groups' ? 'active' : ''} href="/groups"><People /></a>
+		<a class={page == 'dm' ? 'active' : ''} id="dm" href="/dm"><Chat /></a>
+		<a id="search" class={page == 'search' ? 'active' : ''} href="/search"><Search /></a>
+		<a id="profile" class={page == 'profile' ? 'active' : ''} href="/profile"><Person /></a>
 	</div>
 </nav>
 

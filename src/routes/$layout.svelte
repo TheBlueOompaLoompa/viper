@@ -49,7 +49,6 @@
 	<title>Viper</title>
 </svelte:head>
 
-
 <main>
 	<PageTransitions refresh={$page.path} page={pg}>
 		<slot />
