@@ -82,11 +82,11 @@
 		setTimeout(() => {
 			if (loading) {
 				alert(
-					`Unable to load posts within 20 seconds, are you sure you're connected to the internet?`
+					`Unable to load posts within 2 minutes, are you sure you're connected to the internet?`
 				);
 				window.location.reload();
 			}
-		}, 20000);
+		}, 2*60000);
 
 		page = window.location.href;
 
