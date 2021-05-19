@@ -72,17 +72,13 @@ html, body {
 	-webkit-user-select: none;
 }
 
-input {
-	height: 30px;
-	border-radius: 6px;
+input {	
 	border-color: var(--theme-color-accent-mid);
 	border-style: solid;
 
 	box-shadow: 0px 4px 4px var(--theme-color-accent-mid);
 
 	font-size: medium;
-
-	padding: 6px;
 }
 
 textarea {

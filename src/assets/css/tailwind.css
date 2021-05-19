@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+h1 {
+	@apply text-2xl;
+}
+h2 {
+	@apply text-xl;
+	margin: 15px;
+}
+h3 {
+	@apply text-lg;
+}
+input {
+	@apply h-11;
+	@apply rounded-md;
+	@apply p-4;
+	@apply text-black;
+}
+
+textarea {
+	@apply text-black;
+}

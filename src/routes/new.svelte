@@ -169,10 +169,10 @@
 
 <Loading fullscreen={true} {loading} />
 
-<div class="center" style="flex-direction: column;">
+<div class="flex flex-col justify-center items-center">
 	<div id="postbox">
-		<div class="center" style="flex-direction: column;">
-			<div class="left"><Type bind:value={type} /></div>
+		<div class="flex flex-col justify-center items-center">
+			<div style="width: 98%;"><Type bind:value={type} /></div>
 			{#if type != 'group'}
 				<div class="left" id="marker">Title</div>
 				<input type="text" placeholder="A Fantastic Title" bind:value={title} />
@@ -212,7 +212,7 @@
 </div>
 
 {#if type != 'video'}
-	<div style="display: flex; justify-content: center; position:fixed; bottom: 60px; width: 100%;">
+	<div class="flex flex-row justify-center fixed bottom-16 w-full">
 		<Button wide={true} text="Post" on:click={post} />
 	</div>
 {/if}

@@ -7,76 +7,36 @@
 	import Chat from 'svelte-bootstrap-icons/lib/Chat';
 	import People from 'svelte-bootstrap-icons/lib/People';
 
+	import { fade } from 'svelte/transition';
+
 	export let page;
 </script>
 
-<nav>
-	<div id="nav" class="nav-container">
-		{#if page == ''}
-			<a class="active" id="home" href="/"><House /></a>
-		{:else}
-			<a id="home" href="/"><House /></a>
-		{/if}
-		{#if page == 'new'}
-			<a id="new" class="active" href="/new"><PlusSquare /></a>
-		{:else}
-			<a id="new" href="/new"><PlusSquare /></a>
-		{/if}
-		{#if page == 'groups'}
-			<a id="groups" class="active" href="/groups"><People /></a>
-		{:else}
-			<a id="groups" href="/groups"><People /></a>
-		{/if}
-		{#if page == 'dm'}
-			<a class="active" id="dm" href="/dm"><Chat /></a>
-		{:else}
-			<a id="dm" href="/dm"><Chat /></a>
-		{/if}
-		{#if page == 'search'}
-			<a id="search" class="active" href="/search"><Search /></a>
-		{:else}
-			<a id="search" href="/search"><Search /></a>
-		{/if}
-		{#if page == 'profile'}
-			<a id="profile" class="active" href="/profile"><Person /></a>
-		{:else}
-			<a id="profile" href="/profile"><Person /></a>
-		{/if}
+<nav class="flex flex-row justify-center fixed bottom-0 w-full h-10">
+	<div class="flex flex-row justify-evenly items-center w-full max-w-screen-sm">
+		<a transition:fade class={page == '' ? 'active' : ''} id="home" href="/"><House /></a>
+		<a id="new" class={page == 'new' ? 'active' : ''} href="/new"><PlusSquare /></a>
+		<a id="groups" class={page == 'groups' ? 'active' : ''} href="/groups"><People /></a>
+		<a class={page == 'dm' ? 'active' : ''} id="dm" href="/dm"><Chat /></a>
+		<a id="search" class={page == 'search' ? 'active' : ''} href="/search"><Search /></a>
+		<a id="profile" class={page == 'profile' ? 'active' : ''} href="/profile"><Person /></a>
 	</div>
 </nav>
 
 <style>
 	nav {
-		display: flex;
-		flex-direction: row;
-		justify-content: center;
-
-		position: fixed;
-		bottom: 0px;
-		width: 100%;
-		height: 42px;
-
 		box-shadow: 0px -2px 4px var(--theme-color-accent-mid);
 
 		background-color: var(--theme-color-background);
-		opacity: 100%;
-	}
-	.nav-container {
-		display: flex;
-		flex-direction: row;
-		justify-content: space-evenly;
-
-		align-items: center;
-
-		width: 100%;
-		max-width: 650px;
 	}
 
 	a,
 	a:visited {
-		display: flex;
-		align-items: center;
-		height: 21px;
-		color: var(--theme-color-font);
+		@apply flex;
+		@apply items-center;
+		@apply justify-center;
+		@apply h-8;
+		@apply w-8;
+		@apply text-gray-300;
 	}
 </style>
