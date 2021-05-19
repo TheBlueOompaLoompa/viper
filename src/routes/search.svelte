@@ -2,7 +2,6 @@
 	import supabase from '$lib/db';
 	import vfetch from '$lib/vfetch';
 
-	import { fly } from 'svelte/transition';
 	import Post from '../components/Post.svelte';
 
 	let search = '';
