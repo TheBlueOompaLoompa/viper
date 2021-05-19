@@ -2,8 +2,6 @@
 	import { fly } from 'svelte/transition';
 	export let refresh = '';
 
-	export let page;
-
 	const pageIndex = {
 		'/': 0,
 		'/new': 1,

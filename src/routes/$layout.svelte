@@ -4,7 +4,6 @@
 	import PageTransitions from '../components/PageTransitions.svelte';
 
 	import { onMount } from 'svelte';
-	import { fly } from 'svelte/transition';
 	import { page } from '$app/stores';
 
 	import supabase from '$lib/db';
@@ -50,7 +49,7 @@
 </svelte:head>
 
 <main>
-	<PageTransitions refresh={$page.path} page={pg}>
+	<PageTransitions refresh={$page.path}>
 		<slot />
 	</PageTransitions>
 </main>
