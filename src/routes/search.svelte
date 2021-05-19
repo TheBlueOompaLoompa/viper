@@ -4,11 +4,11 @@
 
 	import { fly } from 'svelte/transition';
 	import Post from '../components/Post.svelte';
-	
-	let search = "";
-	
+
+	let search = '';
+
 	let results = [];
-	
+
 	function thing() {
 		window.onscroll = async function () {
 			if (
@@ -20,29 +20,31 @@
 
 				results = [
 					...results,
-					...((await supabase.rpc('srch', {term: search.replace(' ', ' or '), req_offset: offset})).data)
+					...(await supabase.rpc('srch', { term: search.replace(' ', ' or '), req_offset: offset }))
+						.data
 				];
 
 				scrollLoadDisabled = false;
 			}
-		};	
+		};
 	}
 
 	let first = true;
 	async function onUpdateSearch() {
-		if(first){
+		if (first) {
 			first = false;
 			thing();
 		}
 		try {
-			results = (await supabase.rpc('srch', {term: search.replace(' ', ' or '), req_offset: 0})).data;
-		}catch(e) {
+			results = (await supabase.rpc('srch', { term: search.replace(' ', ' or '), req_offset: 0 }))
+				.data;
+		} catch (e) {
 			alert(e);
 		}
 	}
 
 	$: {
-		if(search.replace(' ', '') != ''){
+		if (search.replace(' ', '') != '') {
 			onUpdateSearch();
 		}
 	}
@@ -64,7 +66,7 @@
 	}
 
 	var i = 0;
-	$: for(i = 0; i < results.length; i++){
+	$: for (i = 0; i < results.length; i++) {
 		fetchImage(results[i]);
 		cacheUsername(results[i]);
 	}
@@ -72,13 +74,16 @@
 
 <div class="center" style="flex-direction: column;">
 	<h2>Search</h2>
-	<input type="text" class="w-wide" bind:value={search} placeholder="Users, posts, groups, etc..." />
+	<input
+		type="text"
+		class="w-wide"
+		bind:value={search}
+		placeholder="Users, posts, groups, etc..."
+	/>
 </div>
 <posts class="center" style="display: flex; flex-direction:column; margin-top: 30px;">
-
 	{#each results as post, i}
-		<div
-			class="trans">
+		<div class="trans">
 			<Post {post} cache={usernameCache} img={images[post['id']]} />
 		</div>
 	{/each}
