@@ -48,8 +48,10 @@
 		}
 
 		window.onscroll = async function () {
+			const scrollLoadPad = 200;
+
 			if (
-				window.innerHeight + window.scrollY >= document.body.scrollHeight &&
+				window.innerHeight + window.scrollY + scrollLoadPad >= document.body.scrollHeight &&
 				!scrollLoadDisabled
 			) {
 				scrollLoadDisabled = true;
@@ -86,7 +88,7 @@
 				);
 				window.location.reload();
 			}
-		}, 2*60000);
+		}, 2 * 60000);
 
 		page = window.location.href;
 
