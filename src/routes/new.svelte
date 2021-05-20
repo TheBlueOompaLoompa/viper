@@ -172,8 +172,8 @@
 	let groups = [];
 
 	async function updateGroups() {
-		if(!group) return;
-		var resp = (await supabase.rpc('find_groups', { term: group, req_offset: 0 }));
+		if (!group) return;
+		var resp = await supabase.rpc('find_groups', { term: group, req_offset: 0 });
 		groups = resp.data;
 	}
 </script>
@@ -188,16 +188,35 @@
 				<div class="left" id="marker">Title</div>
 				<input type="text" placeholder="A Fantastic Title" bind:value={title} />
 				<div class="left" id="marker">Group</div>
-				<input type="text" on:blur={updateGroups} on:change={updateGroups} on:click={ () => { showGroupPredict = true} } bind:this={groupInput} id="group" placeholder="Leave this empty for a public post." bind:value={group} />
+				<input
+					type="text"
+					on:blur={updateGroups}
+					on:change={updateGroups}
+					on:click={() => {
+						showGroupPredict = true;
+					}}
+					bind:this={groupInput}
+					id="group"
+					placeholder="Leave this empty for a public post."
+					bind:value={group}
+				/>
 				{#if showGroupPredict}
 					<div
 						class="flex flex-col items-center"
-						style="background-color: var(--theme-color-background); box-shadow: 0px 4px 4px var(--theme-color-accent-mid); max-height: 200px; max-width: 800px; width: 85%; height: 200px; position: absolute; transform: translateY(111px); overflow-y:scroll; border-radius: 6px; padding: 6px;"
+						style="border-width: 1px; border-color: var(--theme-color-outline); background-color: var(--theme-color-background); box-shadow: 0px 4px 4px var(--theme-color-accent-mid); max-height: 200px; max-width: 800px; width: 84%; height: 200px; position: absolute; transform: translateY(111px); overflow-y:scroll; border-radius: 6px; padding: 6px;"
 						use:closable={{ exclude: [groupInput] }}
-						on:outside-click={ () => { showGroupPredict = false }}
+						on:outside-click={() => {
+							showGroupPredict = false;
+						}}
 					>
 						{#each groups as group_name}
-							<span style="-webkit-user-select: none; -moz-user-select: none; user-select: none;" on:click={() => { group = group_name; showGroupPredict = false; }}>{group_name}</span>
+							<span
+								style="-webkit-user-select: none; -moz-user-select: none; user-select: none;"
+								on:click={() => {
+									group = group_name;
+									showGroupPredict = false;
+								}}>{group_name}</span
+							>
 						{/each}
 					</div>
 				{/if}
