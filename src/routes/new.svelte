@@ -164,7 +164,8 @@
 				break;
 		}
 
-		window.location.href = type == 'group' ? '/groups' : `/${group.replace(' ', '').length > 0 ? `?g=${group}` : ''}`;
+		window.location.href =
+			type == 'group' ? '/groups' : `/${group.replace(' ', '').length > 0 ? `?g=${group}` : ''}`;
 	}
 
 	let groupInput;
