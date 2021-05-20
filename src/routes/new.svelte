@@ -164,7 +164,7 @@
 				break;
 		}
 
-		window.location.href = type == 'group' ? '/groups' : '/';
+		window.location.href = type == 'group' ? '/groups' : `/${group.replace(' ', '').length > 0 ? `?g=${group}` : ''}`;
 	}
 
 	let groupInput;
@@ -175,6 +175,10 @@
 		if (!group) return;
 		var resp = await supabase.rpc('find_groups', { term: group, req_offset: 0 });
 		groups = resp.data;
+	}
+
+	$: if (group.replace(' ', '') != '') {
+		updateGroups();
 	}
 </script>
 
@@ -190,8 +194,6 @@
 				<div class="left" id="marker">Group</div>
 				<input
 					type="text"
-					on:blur={updateGroups}
-					on:change={updateGroups}
 					on:click={() => {
 						showGroupPredict = true;
 					}}
