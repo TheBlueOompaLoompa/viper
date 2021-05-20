@@ -4,6 +4,7 @@
 	import Dropzone from 'svelte-file-dropzone';
 	import Button from '../components/Button.svelte';
 	import Loading from '../components/Loading.svelte';
+	import closable from 'svelte-closable';
 
 	import supabase from '$lib/db';
 
@@ -163,7 +164,22 @@
 				break;
 		}
 
-		window.location.href = type == 'group' ? '/groups' : '/';
+		window.location.href =
+			type == 'group' ? '/groups' : `/${group.replace(' ', '').length > 0 ? `?g=${group}` : ''}`;
+	}
+
+	let groupInput;
+	let showGroupPredict = false;
+	let groups = [];
+
+	async function updateGroups() {
+		if (!group) return;
+		var resp = await supabase.rpc('find_groups', { term: group, req_offset: 0 });
+		groups = resp.data;
+	}
+
+	$: if (group.replace(' ', '') != '') {
+		updateGroups();
 	}
 </script>
 
@@ -177,7 +193,36 @@
 				<div class="left" id="marker">Title</div>
 				<input type="text" placeholder="A Fantastic Title" bind:value={title} />
 				<div class="left" id="marker">Group</div>
-				<input type="text" placeholder="Leave this empty for a public post." bind:value={group} />
+				<input
+					type="text"
+					on:click={() => {
+						showGroupPredict = true;
+					}}
+					bind:this={groupInput}
+					id="group"
+					placeholder="Leave this empty for a public post."
+					bind:value={group}
+				/>
+				{#if showGroupPredict}
+					<div
+						class="flex flex-col items-center"
+						style="border-width: 1px; border-color: var(--theme-color-outline); background-color: var(--theme-color-background); box-shadow: 0px 4px 4px var(--theme-color-accent-mid); max-height: 200px; max-width: 800px; width: 84%; height: 200px; position: absolute; transform: translateY(111px); overflow-y:scroll; border-radius: 6px; padding: 6px;"
+						use:closable={{ exclude: [groupInput] }}
+						on:outside-click={() => {
+							showGroupPredict = false;
+						}}
+					>
+						{#each groups as group_name}
+							<span
+								style="-webkit-user-select: none; -moz-user-select: none; user-select: none;"
+								on:click={() => {
+									group = group_name;
+									showGroupPredict = false;
+								}}>{group_name}</span
+							>
+						{/each}
+					</div>
+				{/if}
 			{/if}
 
 			{#if type == 'text'}
