@@ -1,11 +1,10 @@
 <script lang="typescript">
 	export const ssr = false;
 
-	import { fly } from 'svelte/transition';
-	import Post from '../components/Post.svelte';
 	import Loading from '../components/Loading.svelte';
 	import Button from '../components/Button.svelte';
 	import Gear from 'svelte-bootstrap-icons/lib/Gear';
+	import Posts from '../components/Posts.svelte';
 
 	let loading = true;
 
@@ -147,33 +146,10 @@
 		<Gear style="float: right; margin-top: 10px; margin-right: 10px;" on:click={throwShade} />
 	{/if}
 
-	<posts class="flex flex-col items-center">
-		{#if !window.location.href.includes('?g=')}
-			<h2>Home</h2>
-		{:else}
-			<h2>{decodeURI(window.location.href.split('?g=')[1])}</h2>
-		{/if}
-
-		{#if posts.length < 1}
-			<p>There aren't any posts here, maybe your should <a href="/new">make your own!</a> ;)</p>
-		{/if}
-
-		{#each posts as post, i}
-			<div
-				class="trans"
-				in:fly={{ x: -200, duration: 1000, delay: (i - greatestPost + postFetchCount) * 200 }}
-			>
-				<Post {post} cache={usernameCache} img={images[post['id']]} />
-			</div>
-		{/each}
-	</posts>
+	<Posts {posts} {usernameCache} {images} options={{title: 'Home', greatestPost, postFetchCount}} />
 {/if}
 
 <style>
-	posts {
-		overscroll-behavior: contain;
-	}
-
 	shade {
 		position: absolute;
 		top: 50px;
@@ -190,11 +166,5 @@
 		border-radius: 6px;
 
 		z-index: 4;
-	}
-
-	.trans {
-		display: flex;
-		justify-content: center;
-		width: 100%;
 	}
 </style>
