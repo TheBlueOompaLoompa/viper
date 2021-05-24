@@ -1,71 +1,29 @@
 import vfetch from '$lib/vfetch';
 
-export let images = {};
-
-export let usernameCache = {};
-
-export let posts = [];
-
-export let loading = true;
-
-export const postFetchCount = 5;
-
-export let greatestPost = postFetchCount - 1;
-let scrollLoadDisabled = false;
-
-async function fetchImage(post) {
+export async function fetchImage(post, images) {
 	if (post['type'] == 1 && !images[post['id']]) {
 		images[post['id']] = await vfetch.fetchImage(post);
 	}
+
+	return images;
 }
 
-async function cacheUsername(post) {
+export async function cacheUsername(post, usernameCache) {
 	if (!Object.keys(usernameCache)[post['uid']]) {
 		usernameCache[post['uid']] = await vfetch.getUsernameFromPost(post);
 	}
+
+	return usernameCache;
 }
 
-export async function fetchPosts() {
-	if (window.location.href.includes('?g=')) {
-		const group = decodeURI(window.location.href.split('?g=')[1]);
-		posts = await vfetch.groupPosts(0, postFetchCount - 1, group);
+export async function fetchPosts(start, end, group) {
+	var posts;
+
+	if (group) {
+		posts = await vfetch.groupPosts(start, end, group);
 	} else {
-		posts = await vfetch.posts(0, postFetchCount - 1);
+		posts = await vfetch.posts(start, end);
 	}
 
-	for (var i = 0; i < posts.length; i++) {
-		await fetchImage(posts[i]);
-		await cacheUsername(posts[i]);
-	}
-
-	window.onscroll = async function () {
-		const scrollLoadPad = 200;
-
-		if (
-			window.innerHeight + window.scrollY + scrollLoadPad >= document.body.scrollHeight &&
-			!scrollLoadDisabled
-		) {
-			scrollLoadDisabled = true;
-
-			if (window.location.href.includes('?g=')) {
-				const group = decodeURI(window.location.href.split('?g=')[1]);
-				posts = [
-					...posts,
-					...(await vfetch.groupPosts(greatestPost + 1, greatestPost + postFetchCount, group))
-				];
-			} else {
-				posts = [
-					...posts,
-					...(await vfetch.posts(greatestPost + 1, greatestPost + postFetchCount))
-				];
-			}
-
-			greatestPost += postFetchCount;
-
-			scrollLoadDisabled = false;
-		}
-	};
-
-	loading = false;
-	return { posts, usernameCache, images };
+	return posts;
 }
