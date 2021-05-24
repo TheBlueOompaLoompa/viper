@@ -1,10 +1,8 @@
 <script lang="ts">
 	import Navbar from '../components/Navbar.svelte';
 	import Button from '../components/Button.svelte';
-	import PageTransitions from '../components/PageTransitions.svelte';
 
 	import { onMount } from 'svelte';
-	import { page } from '$app/stores';
 
 	import supabase from '$lib/db';
 	import vfetch from '$lib/vfetch';
@@ -49,9 +47,7 @@
 </svelte:head>
 
 <main>
-	<PageTransitions refresh={$page.path}>
-		<slot />
-	</PageTransitions>
+	<slot />
 </main>
 
 {#if showNav}
