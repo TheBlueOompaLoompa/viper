@@ -2,99 +2,79 @@
 	export const ssr = false;
 
 	import Loading from '../components/Loading.svelte';
-	import Button from '../components/Button.svelte';
-	import Gear from 'svelte-bootstrap-icons/lib/Gear';
 	import Posts from '../components/Posts.svelte';
 
 	import { onMount } from 'svelte';
 	import vfetch from '$lib/vfetch';
-	import { fetchPosts, greatestPost, postFetchCount } from '$lib/postfetch';
+	import { fetchPosts, fetchImage, cacheUsername } from '$lib/postfetch';
 
 	let page = '';
+	
+	let posts = [];
+	let images = {};
+	let usernameCache = {};
+
+	const postFetchCount = 5;
+
+	async function go(isScroll) {
+		if(!isScroll){
+			posts = await fetchPosts(0, postFetchCount - 1);
+		}else {
+			posts = [...posts, ...await fetchPosts(greatestPost, greatestPost + postFetchCount - 1)];
+		}
+
+		greatestPost += postFetchCount;
+
+		for (var i = 0; i < posts.length; i++) {
+			images = await fetchImage(posts[i], images);
+			usernameCache = await cacheUsername(posts[i], usernameCache);
+		}
+
+		loading = false;
+	}
+	go(false);
+
+	let greatestPost = postFetchCount - 1;
+
+	let scrollLoadDisabled = false;
 
 	onMount(async () => {
 		page = window.location.href;
 
 		setInterval(() => {
 			if (window.location.href != page) {
-				fetchPosts();
+				go(false);
 			}
 			page = window.location.href;
 		}, 100);
-		await fetchPosts();
+
+		window.onscroll = async function () {
+			const scrollLoadPad = 200;
+
+			if (
+				window.innerHeight + window.scrollY + scrollLoadPad >= document.body.scrollHeight &&
+				!scrollLoadDisabled
+			) {
+				scrollLoadDisabled = true;
+
+				await go(true);
+
+				scrollLoadDisabled = false;
+			}
+		};
 	});
 
-	let shadeThrown = false;
-
-	function throwShade() {
-		shadeThrown = !shadeThrown;
-	}
-
-	function addUser() {
-		let username = prompt(`What's their username?`);
-		let level = parseInt(
-			prompt('What permission level\n0: View Posts\n1: Comment\n2: Comment and Post\n 3: Moderator')
-		);
-
-		if (level > 3 || level < 0) {
-			alert('Their level has to be between 0 and 3!');
-			return;
-		}
-
-		vfetch.addUserToGroup(username, decodeURI(window.location.href.split('?g=')[1]), level);
-	}
-
-	function removeUser() {
-		let username = prompt(`What's their username?`);
-
-		vfetch.removeUserFromGroup(username, decodeURI(window.location.href.split('?g=')[1]));
-	}
+	let loading = true;
 </script>
 
-{#await fetchPosts()}
-	<Loading fullscreen={true} loading={true} />
-{:then data}
-	{#if window.location.href.includes('?g=')}
-		{#if shadeThrown}
-			<shade>
-				{#await vfetch.getUid() then uid}
-					{#await vfetch.getPermissionLevel(decodeURI(window.location.href.split('?g=')[1]), uid) then level}
-						{#if level == 4}
-							<Button text="Add User" style="margin-bottom: 15px;" on:click={addUser} />
-							<Button text="Remove User" on:click={removeUser} />
-						{/if}
-					{/await}
-				{/await}
-			</shade>
-		{/if}
-		<Gear style="float: right; margin-top: 10px; margin-right: 10px;" on:click={throwShade} />
-	{/if}
+
+<Loading fullscreen={true} {loading} />
+
+{#if !loading}
 	<Posts
-		posts={data.posts}
-		usernameCache={data.usernameCache}
-		images={data.images}
+		{posts}
+		{usernameCache}
+		{images}
 		options={{ title: 'Home', greatestPost, postFetchCount }}
 	/>
-{:catch}
-	<p>Error: failed to load posts</p>
-{/await}
-
-<style>
-	shade {
-		position: absolute;
-		top: 50px;
-		right: 20px;
-		max-width: 200px;
-		min-width: 200px;
-		width: 200px;
-		padding: 10px;
-
-		background-color: var(--theme-color-background);
-		filter: invert(0.07);
-
-		border: 1px solid var(--theme-color-outline);
-		border-radius: 6px;
-
-		z-index: 4;
-	}
-</style>
+{/if}
