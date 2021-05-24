@@ -27,7 +27,7 @@
 		"prettier": "~2.2.1",
 		"prettier-plugin-svelte": "^2.2.0",
 		"svelte": "^3.34.0",
-		"svelte-bootstrap-icons": "^1.4.1",
+		"svelte-bootstrap-icons": "^1.5.0",
 		"svelte-closable": "*",
 		"svelte-file-dropzone": "^0.0.15",
 		"svelte-preprocess": "^4.0.0",

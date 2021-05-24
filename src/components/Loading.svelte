@@ -7,13 +7,13 @@
 	{#if fullscreen}
 		<div class="center fullscreen" style="flex-direction: column;">
 			<div class="center fullscreen" style="flex-direction: row;">
-				<img src="load.svg" alt="loading" />
+				<img src="/load.svg" alt="loading" />
 			</div>
 		</div>
 	{:else}
 		<div class="center" style="flex-direction: column;">
 			<div class="center" style="flex-direction: row;">
-				<img src="load.svg" alt="loading" />
+				<img src="/load.svg" alt="loading" />
 			</div>
 		</div>
 	{/if}
