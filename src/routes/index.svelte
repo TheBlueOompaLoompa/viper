@@ -5,7 +5,6 @@
 	import Posts from '../components/Posts.svelte';
 
 	import { onMount } from 'svelte';
-	import vfetch from '$lib/vfetch';
 	import { fetchPosts, fetchImage, cacheUsername } from '$lib/postfetch';
 
 	let page = '';
