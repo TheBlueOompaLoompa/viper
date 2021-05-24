@@ -19,7 +19,11 @@
 	{#each posts as post, i}
 		<div
 			class="trans"
-			in:fly={{ x: -200, duration: 1000, delay: (i - options.greatestPost + options.postFetchCount) * 200 }}
+			in:fly={{
+				x: -200,
+				duration: 1000,
+				delay: (i - options.greatestPost + options.postFetchCount) * 200
+			}}
 		>
 			<Post {post} cache={usernameCache} img={images[post['id']]} />
 		</div>

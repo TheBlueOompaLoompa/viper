@@ -6,89 +6,13 @@
 	import Gear from 'svelte-bootstrap-icons/lib/Gear';
 	import Posts from '../components/Posts.svelte';
 
-	let loading = true;
-
 	import { onMount } from 'svelte';
 	import vfetch from '$lib/vfetch';
-
-	let posts = [];
-	let images = {};
-
-	let usernameCache = {};
-
-	async function fetchImage(post) {
-		if (post['type'] == 1 && !images[post['id']]) {
-			images[post['id']] = await vfetch.fetchImage(post);
-		}
-	}
-
-	async function cacheUsername(post) {
-		if (!Object.keys(usernameCache)[post['uid']]) {
-			usernameCache[post['uid']] = await vfetch.getUsernameFromPost(post);
-		}
-	}
-
-	$: posts.forEach(async (post) => {
-		fetchImage(post);
-		cacheUsername(post);
-	});
-
-	const postFetchCount = 5;
-
-	let greatestPost = postFetchCount - 1;
-	let scrollLoadDisabled = false;
-
-	async function fetchPosts() {
-		if (window.location.href.includes('?g=')) {
-			const group = decodeURI(window.location.href.split('?g=')[1]);
-			posts = await vfetch.groupPosts(0, postFetchCount - 1, group);
-		} else {
-			posts = await vfetch.posts(0, postFetchCount - 1);
-		}
-
-		window.onscroll = async function () {
-			const scrollLoadPad = 200;
-
-			if (
-				window.innerHeight + window.scrollY + scrollLoadPad >= document.body.scrollHeight &&
-				!scrollLoadDisabled
-			) {
-				scrollLoadDisabled = true;
-
-				if (window.location.href.includes('?g=')) {
-					const group = decodeURI(window.location.href.split('?g=')[1]);
-					posts = [
-						...posts,
-						...(await vfetch.groupPosts(greatestPost + 1, greatestPost + postFetchCount, group))
-					];
-				} else {
-					posts = [
-						...posts,
-						...(await vfetch.posts(greatestPost + 1, greatestPost + postFetchCount))
-					];
-				}
-
-				greatestPost += postFetchCount;
-
-				scrollLoadDisabled = false;
-			}
-		};
-
-		loading = false;
-	}
+	import { fetchPosts, greatestPost, postFetchCount } from '$lib/postfetch';
 
 	let page = '';
 
 	onMount(async () => {
-		setTimeout(() => {
-			if (loading) {
-				alert(
-					`Unable to load posts within 2 minutes, are you sure you're connected to the internet?`
-				);
-				window.location.reload();
-			}
-		}, 2 * 60000);
-
 		page = window.location.href;
 
 		setInterval(() => {
@@ -127,9 +51,9 @@
 	}
 </script>
 
-<Loading fullscreen={true} {loading} />
-
-{#if !loading}
+{#await fetchPosts()}
+	<Loading fullscreen={true} loading={true} />
+{:then data}
 	{#if window.location.href.includes('?g=')}
 		{#if shadeThrown}
 			<shade>
@@ -145,9 +69,15 @@
 		{/if}
 		<Gear style="float: right; margin-top: 10px; margin-right: 10px;" on:click={throwShade} />
 	{/if}
-
-	<Posts {posts} {usernameCache} {images} options={{title: 'Home', greatestPost, postFetchCount}} />
-{/if}
+	<Posts
+		posts={data.posts}
+		usernameCache={data.usernameCache}
+		images={data.images}
+		options={{ title: 'Home', greatestPost, postFetchCount }}
+	/>
+{:catch}
+	<p>Error: failed to load posts</p>
+{/await}
 
 <style>
 	shade {

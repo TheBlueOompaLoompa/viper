@@ -30,7 +30,7 @@
 		setInterval(() => {
 			if (!window.location.href.includes('sign') && !window.location.href.includes('setup'))
 				showNav = true;
-			pg = window.location.href.split('/')[3];
+			pg = window.location.href.split('/')[3] ? window.location.href.split('/')[3] : '';
 		}, 300);
 	});
 

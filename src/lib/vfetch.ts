@@ -55,7 +55,7 @@ export default {
 			.range(start, end);
 
 		if (error) {
-			alert('Failed to load posts. Are you connected to the internet?');
+			console.log('Failed to load posts. Are you connected to the internet?');
 			return;
 		}
 
