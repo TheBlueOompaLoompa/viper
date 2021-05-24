@@ -121,7 +121,7 @@
 			{#await vfetch.getPermissionLevel(decodeURIComponent(window.location.href.split('?g=')[1]), uid) then level}
 				{#if level == 4}
 					<Button text="Add User" style="margin-bottom: 15px;" on:click={addUser} />
-					<Button text="Remove User" style="margin-bottom: 15px;" on:click={removeUser} />
+					<Button text="Remove User" on:click={removeUser} />
 				{/if}
 				{#if level > 0 && level < 4}
 					<Button text="Leave Group" on:click={leaveGroup} />
