@@ -11,7 +11,7 @@
 
 	let page = '';
 	let loading = true;
-	
+
 	let posts = [];
 	let images = {};
 	let usernameCache = {};
@@ -25,10 +25,10 @@
 	async function go(isScroll) {
 		const group = decodeURI(window.location.href.split('?g=')[1]);
 
-		if(!isScroll){
+		if (!isScroll) {
 			posts = await fetchPosts(0, postFetchCount - 1, group);
 			lastResponse = posts;
-		}else {
+		} else {
 			lastResponse = await fetchPosts(greatestPost, greatestPost + postFetchCount - 1, group);
 			posts = [...posts, ...lastResponse];
 			greatestPost += postFetchCount;
@@ -92,7 +92,11 @@
 			return;
 		}
 
-		vfetch.addUserToGroup(username, decodeURIComponent(window.location.href).split('?g=')[1], level);
+		vfetch.addUserToGroup(
+			username,
+			decodeURIComponent(window.location.href).split('?g=')[1],
+			level
+		);
 	}
 
 	function removeUser() {
@@ -130,12 +134,19 @@
 <Loading fullscreen={true} {loading} />
 
 {#if !loading}
-	<Gear style="position: absolute; right: 0px; margin-top: 10px; margin-right: 10px;" on:click={throwShade} />
+	<Gear
+		style="position: absolute; right: 0px; margin-top: 10px; margin-right: 10px;"
+		on:click={throwShade}
+	/>
 	<Posts
 		{posts}
 		{usernameCache}
 		{images}
-		options={{ title: decodeURIComponent(window.location.href).split('?g=')[1], greatestPost, postFetchCount }}
+		options={{
+			title: decodeURIComponent(window.location.href).split('?g=')[1],
+			greatestPost,
+			postFetchCount
+		}}
 	/>
 {/if}
 

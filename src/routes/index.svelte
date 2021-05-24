@@ -9,7 +9,7 @@
 	import { fetchPosts, fetchImage, cacheUsername } from '$lib/postfetch';
 
 	let page = '';
-	
+
 	let posts = [];
 	let images = {};
 	let usernameCache = {};
@@ -17,10 +17,10 @@
 	const postFetchCount = 5;
 
 	async function go(isScroll) {
-		if(!isScroll){
+		if (!isScroll) {
 			posts = await fetchPosts(0, postFetchCount - 1);
-		}else {
-			posts = [...posts, ...await fetchPosts(greatestPost, greatestPost + postFetchCount - 1)];
+		} else {
+			posts = [...posts, ...(await fetchPosts(greatestPost, greatestPost + postFetchCount - 1))];
 		}
 
 		greatestPost += postFetchCount;
@@ -66,7 +66,6 @@
 
 	let loading = true;
 </script>
-
 
 <Loading fullscreen={true} {loading} />
 
