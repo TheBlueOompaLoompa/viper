@@ -35,7 +35,9 @@
 		}
 
 		for (var i = 0; i < posts.length; i++) {
+			// @ts-ignore
 			usernameCache = await cacheUsername(posts[i], usernameCache);
+			// @ts-ignore
 			images = await fetchImage(posts[i], images);
 		}
 
