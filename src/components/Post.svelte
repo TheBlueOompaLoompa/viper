@@ -69,7 +69,7 @@
 	.post img {
 		max-width: 100%;
 		border-radius: 6px;
-		max-height: 700px;
+		max-height: 580px;
 	}
 
 	a:visited {
