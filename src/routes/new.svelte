@@ -5,6 +5,7 @@
 	import Button from '../components/Button.svelte';
 	import Loading from '../components/Loading.svelte';
 	import closable from 'svelte-closable';
+	import imageCompression from 'browser-image-compression';
 
 	import supabase from '$lib/db';
 
@@ -129,6 +130,8 @@
 				if (outval.error) {
 					alert('Failed to post');
 				} else {
+					const options = { maxSizeMB: 1.5 };
+					iFiles.accepted[0] = await imageCompression(iFiles.accepted[0], options);
 					outval = await supabase.storage
 						.from('media')
 						.upload(outval.data[0]['id'], iFiles.accepted[0]);
