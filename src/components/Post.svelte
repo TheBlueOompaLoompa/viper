@@ -32,7 +32,7 @@
 		<p>{post['content']}</p>
 	{:else if post['type'] == 1}
 		<Loading {loading} />
-		<img class={imgClass} loading="lazy" alt={post['title']} src={img} on:load={hideLoad} />
+		<img class={imgClass} alt={post['title']} src={img} on:load={hideLoad} />
 	{/if}
 	<PostTime timestamp={post['timestamp']} />
 </div>
@@ -69,7 +69,7 @@
 	.post img {
 		max-width: 100%;
 		border-radius: 6px;
-		max-height: 700px;
+		max-height: 580px;
 	}
 
 	a:visited {
