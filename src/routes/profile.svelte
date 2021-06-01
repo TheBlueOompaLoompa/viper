@@ -5,31 +5,9 @@
 	import Button from '../components/Button.svelte';
 
 	import { onMount } from 'svelte';
+	import { fetchImage, cacheUsername } from '$lib/postfetch';
 	import vfetch from '$lib/vfetch';
 	import supabase from '$lib/db';
-
-	let posts = [];
-	let images = {};
-	let usernameCache = {};
-
-	let loading = true;
-
-	async function fetchImage(post) {
-		if (post['type'] == 1 && !images[post['id']]) {
-			images[post['id']] = await vfetch.fetchImage(post);
-		}
-	}
-
-	async function cacheUsername(post) {
-		if (!Object.keys(usernameCache)[post['uid']]) {
-			usernameCache[post['uid']] = await vfetch.getUsernameFromPost(post);
-		}
-	}
-
-	$: posts.forEach(async (post) => {
-		fetchImage(post);
-		cacheUsername(post);
-	});
 
 	let user = {
 		id: undefined,
@@ -38,41 +16,62 @@
 
 	let page = '';
 
-	async function fetchPosts(uid: string) {
-		posts = await vfetch.userPosts(0, 34, uid);
+	let posts = [];
+	let images = {};
+	let usernameCache = {};
+
+	const postFetchCount = 5;
+
+	let greatestPost = postFetchCount - 1;
+
+	let scrollLoadDisabled = false;
+
+	let loading = true;
+
+	async function go(isScroll) {
+		user.id = window.location.href.includes('?p=') ? window.location.href.split('?p=')[1] : supabase.auth.user().id;
+		if (!isScroll) {
+			posts = await vfetch.userPosts(0, postFetchCount - 1, user.id);
+		} else {
+			posts = [...posts, ...(await vfetch.userPosts(greatestPost, greatestPost + postFetchCount - 1, user.id))];
+		}
+
+		greatestPost += postFetchCount;
+
+		for (var i = 0; i < posts.length; i++) {
+			images = await fetchImage(posts[i], images);
+			usernameCache = await cacheUsername(posts[i], usernameCache);
+		}
 
 		loading = false;
 	}
+	go(false);
 
 	onMount(async () => {
-		if (window.location.href.includes('?p=')) {
-			user = await vfetch.getUser(window.location.href.split('?p=')[1]);
-		} else {
-			user = await vfetch.getUser();
-		}
-
-		usernameCache[user['id']] = user['username'];
-
-		setTimeout(() => {
-			if (loading) {
-				alert(
-					`Unable to load posts within 20 seconds, are you sure you're connected to the internet?`
-				);
-				window.location.reload();
-			}
-		}, 20000);
-
+		user = await vfetch.getUser(user.id);
 		page = window.location.href;
 
 		setInterval(() => {
 			if (window.location.href != page) {
-				fetchPosts(user.id);
+				go(false);
 			}
 			page = window.location.href;
 		}, 100);
-		await fetchPosts(user.id);
 
-		loading = false;
+		window.onscroll = async function () {
+			const scrollLoadPad = 200;
+
+			if (
+				window.innerHeight + window.scrollY + scrollLoadPad >= document.body.scrollHeight &&
+				!scrollLoadDisabled
+			) {
+				scrollLoadDisabled = true;
+
+				await go(true);
+
+				scrollLoadDisabled = false;
+			}
+		};
 	});
 
 	let shadeThrown = false;
@@ -104,7 +103,7 @@
 	<Gear style="float: right; margin-top: 10px; margin-right: 10px;" on:click={throwShade} />
 
 	<posts class="center" style="display: flex; flex-direction:column;">
-		<h3>@{user.username}</h3>
+		<h3 style="transform:translateY(-15px);">@{user.username}</h3>
 
 		{#if posts.length < 1}
 			<p>This user hasn't made any posts yet.</p>

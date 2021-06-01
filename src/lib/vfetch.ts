@@ -33,7 +33,6 @@ export default {
 			.from('posts')
 			.select('*')
 			.filter('uid', 'eq', id)
-			.is('group_id', null)
 			.order('timestamp', { ascending: false })
 			.range(start, end);
 

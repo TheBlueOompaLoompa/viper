@@ -16,7 +16,7 @@ export async function cacheUsername(
 	post: post,
 	usernameCache: Record<string, string>
 ): Promise<Record<string, unknown>> {
-	if (!Object.keys(usernameCache)[post['uid']]) {
+	if (!Object.keys(usernameCache).includes(post['uid'])) {
 		usernameCache[post['uid']] = await vfetch.getUsernameFromPost(post);
 	}
 
