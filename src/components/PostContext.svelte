@@ -2,6 +2,7 @@
 	import supabase from '$lib/db';
 	import Button from './Button.svelte';
 	import Dots from 'svelte-bootstrap-icons/lib/ThreeDotsVertical';
+	import closable from 'svelte-closable';
 
 	let showContext = false;
 	export let post;
@@ -60,7 +61,12 @@
 <container>
 	<Dots on:click={toggleContext} />
 	{#if showContext}
-		<context-menu>
+		<context-menu 
+	            use:closable={{ }}
+		    on:outside-click={() => {
+		        showContext = false;
+		    }}
+		>
 			<Button text="Share" on:click={share} />
 			{#if isOwner}
 				<div style="margin: 15px;" />
