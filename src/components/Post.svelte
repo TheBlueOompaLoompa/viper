@@ -19,14 +19,19 @@
 	}
 </script>
 
-<div class="flex flex-col post {post['type'] != 1 ? 'text' : ''}">
+<div
+	class="flex flex-col post {post['type'] != 1 ? 'text' : ''}"
+	style="max-height: {window.innerHeight - 42}px;"
+>
 	<div class="flex flex-row items-center justify-between w-full">
 		<h5 style="margin-bottom: 10px; margin-top: 6px; text-align: left; margin-right: 5%;">
 			{post['title']}
 		</h5>
 		<PostContext {post} />
 	</div>
-	<a href="/profile?p={post['uid']}" style="width: 100%;"><span class="gray">@{username}</span></a>
+	<div style="width: 100%;">
+		<a href="/profile?p={post['uid']}"><span class="gray">@{username}</span></a>
+	</div>
 
 	{#if post['type'] == 0}
 		<p>{post['content']}</p>
@@ -69,7 +74,7 @@
 	.post img {
 		max-width: 100%;
 		border-radius: 6px;
-		max-height: 580px;
+		height: 100%;
 	}
 
 	a:visited {
