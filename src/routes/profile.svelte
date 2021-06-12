@@ -29,11 +29,16 @@
 	let loading = true;
 
 	async function go(isScroll) {
-		user.id = window.location.href.includes('?p=') ? window.location.href.split('?p=')[1] : supabase.auth.user().id;
+		user.id = window.location.href.includes('?p=')
+			? window.location.href.split('?p=')[1]
+			: supabase.auth.user().id;
 		if (!isScroll) {
 			posts = await vfetch.userPosts(0, postFetchCount - 1, user.id);
 		} else {
-			posts = [...posts, ...(await vfetch.userPosts(greatestPost, greatestPost + postFetchCount - 1, user.id))];
+			posts = [
+				...posts,
+				...(await vfetch.userPosts(greatestPost, greatestPost + postFetchCount - 1, user.id))
+			];
 		}
 
 		greatestPost += postFetchCount;

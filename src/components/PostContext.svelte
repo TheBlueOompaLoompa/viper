@@ -61,11 +61,11 @@
 <container>
 	<Dots on:click={toggleContext} />
 	{#if showContext}
-		<context-menu 
-	            use:closable={{ }}
-		    on:outside-click={() => {
-		        showContext = false;
-		    }}
+		<context-menu
+			use:closable={{}}
+			on:outside-click={() => {
+				showContext = false;
+			}}
 		>
 			<Button text="Share" on:click={share} />
 			{#if isOwner}
