@@ -108,11 +108,11 @@
 		placeholder="Users, posts, groups, etc..."
 	/>
 </div>
-<center style="margin-top: 6px;">
+<center style="margin-top: 6px; margin-bottom: 30px;">
 	<Tabs tabs={['Posts', 'Groups', 'Users']} c_class={"w-wide"} bind:active={searchType} />
 </center>
 {#if searchType == 'Posts'}
-	<posts style="display: flex; flex-direction:column; margin-top: 30px;">
+	<posts style="display: flex; flex-direction:column;">
 		{#each posts as post, i}
 			<div class="trans">
 				<Post {post} cache={usernameCache} img={images[post['id']]} />
