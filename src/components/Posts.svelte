@@ -6,8 +6,24 @@
 	export let options;
 
 	import Post from '../components/Post.svelte';
+	import XSquare from 'svelte-bootstrap-icons/lib/XSquare';
 	import { fly } from 'svelte/transition';
+
+	let explode;
+
+	function explodeImg(id) {
+		explode = id;
+	}
 </script>
+
+{#if explode}
+	<div style="position: fixed; top: 0px; left: 0px; bottom: 0px; right: 0px; background-color: #000000af;">
+		<XSquare on:click={() => { explodeImg(undefined); }} style="position: fixed; right: 10px; top: 10px; width: 30px; height: 30px; z-index: 1;"></XSquare>
+		<explode style="margin-top: 40px; margin-bottom: 42px;">
+			<img src={images[explode]} alt="ExplodedImage" style="border-radius: 6px;">
+		</explode>
+	</div>
+{/if}
 
 <posts class="flex flex-col items-center">
 	<h2>{options.title}</h2>
@@ -25,7 +41,7 @@
 				delay: (i - options.greatestPost + options.postFetchCount) * 200
 			}}
 		>
-			<Post {post} cache={usernameCache} img={images[post['id']]} />
+			<Post {post} cache={usernameCache} img={images[post['id']]} {explodeImg} />
 		</div>
 	{/each}
 </posts>
@@ -39,5 +55,21 @@
 		display: flex;
 		justify-content: center;
 		width: 100%;
+	}
+
+	explode {
+		position: fixed;
+		top: 0px;
+		bottom: 0px;
+		left: 0px;
+		right: 0px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	explode img {
+		max-height: 100%;
+		max-width: 100%;
 	}
 </style>
