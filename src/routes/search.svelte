@@ -34,24 +34,26 @@
 
 	let first = true;
 	async function onUpdateSearch() {
-		switch(searchType) {
+		switch (searchType) {
 			case 'Posts':
 				if (first) {
 					first = false;
 					thing();
 				}
 				try {
-					posts = (await supabase.rpc('post_search', { term: search.replace(' ', ' or '), req_offset: 0 }))
-						.data;
+					posts = (
+						await supabase.rpc('post_search', { term: search.replace(' ', ' or '), req_offset: 0 })
+					).data;
 				} catch (e) {
 					alert(e);
 				}
 				break;
 			case 'Groups':
 				try {
-					groups = (await supabase.rpc('group_search', { term: search.replace(' ', ' or '), req_offset: 0 }))
-						.data;
-					console.log(groups)
+					groups = (
+						await supabase.rpc('group_search', { term: search.replace(' ', ' or '), req_offset: 0 })
+					).data;
+					console.log(groups);
 				} catch (e) {
 					alert(e);
 				}
@@ -65,7 +67,6 @@
 				}
 				break;
 		}
-		
 	}
 
 	$: {
@@ -109,7 +110,7 @@
 	/>
 </div>
 <center style="margin-top: 6px; margin-bottom: 30px;">
-	<Tabs tabs={['Posts', 'Groups', 'Users']} c_class={"w-wide"} bind:active={searchType} />
+	<Tabs tabs={['Posts', 'Groups', 'Users']} c_class={'w-wide'} bind:active={searchType} />
 </center>
 {#if searchType == 'Posts'}
 	<posts style="display: flex; flex-direction:column;">
@@ -121,9 +122,11 @@
 	</posts>
 {:else if searchType == 'Groups'}
 	{#each groups as group}
-	<a href={'/group/?g=' + encodeURIComponent(group)} style="width: 100%; display: flex; justify-content: center;"
-		><Button text={group} wide={true} /></a
-	>
+		<a
+			href={'/group/?g=' + encodeURIComponent(group)}
+			style="width: 100%; display: flex; justify-content: center;"
+			><Button text={group} wide={true} /></a
+		>
 	{/each}
 {:else}
 	{#each users as user}

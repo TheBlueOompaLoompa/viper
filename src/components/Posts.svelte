@@ -17,10 +17,17 @@
 </script>
 
 {#if explode}
-	<div style="position: fixed; top: 0px; left: 0px; bottom: 0px; right: 0px; background-color: #000000af;">
-		<XSquare on:click={() => { explodeImg(undefined); }} style="position: fixed; right: 10px; top: 10px; width: 30px; height: 30px; z-index: 1;"></XSquare>
+	<div
+		style="position: fixed; top: 0px; left: 0px; bottom: 0px; right: 0px; background-color: #000000af;"
+	>
+		<XSquare
+			on:click={() => {
+				explodeImg(undefined);
+			}}
+			style="position: fixed; right: 10px; top: 10px; width: 30px; height: 30px; z-index: 1;"
+		/>
 		<explode style="margin-top: 40px; margin-bottom: 42px;">
-			<img src={images[explode]} alt="ExplodedImage" style="border-radius: 6px;">
+			<img src={images[explode]} alt="ExplodedImage" style="border-radius: 6px;" />
 		</explode>
 	</div>
 {/if}

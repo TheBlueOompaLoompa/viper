@@ -39,8 +39,18 @@
 		<p>{post['content']}</p>
 	{:else if post['type'] == 1}
 		<Loading {loading} />
-		<div style="display: flex; justify-content: center; align-items: center; overflow: hidden; border-radius: 6px;">
-			<img class={imgClass} alt={post['title']} src={img} on:load={hideLoad} on:click={() => { explodeImg(post['id']); }} />
+		<div
+			style="display: flex; justify-content: center; align-items: center; overflow: hidden; border-radius: 6px;"
+		>
+			<img
+				class={imgClass}
+				alt={post['title']}
+				src={img}
+				on:load={hideLoad}
+				on:click={() => {
+					explodeImg(post['id']);
+				}}
+			/>
 		</div>
 	{/if}
 	<PostTime timestamp={post['timestamp']} />

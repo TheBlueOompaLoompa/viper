@@ -5,11 +5,11 @@
 	export let c_class = '';
 
 	function getSide(idx) {
-		if(idx == 0) {
+		if (idx == 0) {
 			return 'l';
-		}else if(idx >= tabs.length - 1){
-			return 'r'
-		}else {
+		} else if (idx >= tabs.length - 1) {
+			return 'r';
+		} else {
 			return '';
 		}
 	}
@@ -21,7 +21,12 @@
 
 <tabs class={c_class} {style}>
 	{#each tabs as tab, idx}
-		<tab class={(active == tab ? 'a-tab ' + getSide(idx) : getSide(idx))} on:click={() => {setTab(tab)}}>{tab}</tab>
+		<tab
+			class={active == tab ? 'a-tab ' + getSide(idx) : getSide(idx)}
+			on:click={() => {
+				setTab(tab);
+			}}>{tab}</tab
+		>
 	{/each}
 </tabs>
 
