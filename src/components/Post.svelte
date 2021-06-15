@@ -7,6 +7,8 @@
 	export let cache;
 	export let img;
 
+	export let explodeImg;
+
 	let username = 'Loading...';
 	$: username = cache[post['uid']] ? cache[post['uid']] : 'Loading...';
 
@@ -37,7 +39,9 @@
 		<p>{post['content']}</p>
 	{:else if post['type'] == 1}
 		<Loading {loading} />
-		<img class={imgClass} alt={post['title']} src={img} on:load={hideLoad} />
+		<div style="display: flex; justify-content: center; align-items: center; overflow: hidden; border-radius: 6px;">
+			<img class={imgClass} alt={post['title']} src={img} on:load={hideLoad} on:click={() => { explodeImg(post['id']); }} />
+		</div>
 	{/if}
 	<PostTime timestamp={post['timestamp']} />
 </div>
@@ -72,9 +76,7 @@
 	}
 
 	.post img {
-		max-width: 100%;
 		border-radius: 6px;
-		height: 100%;
 	}
 
 	a:visited {
