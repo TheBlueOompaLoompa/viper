@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Gear from 'svelte-bootstrap-icons/lib/Gear';
-	import Post from '../components/Post.svelte';
+	import Posts from '../components/Posts.svelte';
 	import Loading from '../components/Loading.svelte';
 	import Button from '../components/Button.svelte';
 
@@ -29,11 +29,16 @@
 	let loading = true;
 
 	async function go(isScroll) {
-		user.id = window.location.href.includes('?p=') ? window.location.href.split('?p=')[1] : supabase.auth.user().id;
+		user.id = window.location.href.includes('?p=')
+			? window.location.href.split('?p=')[1]
+			: supabase.auth.user().id;
 		if (!isScroll) {
 			posts = await vfetch.userPosts(0, postFetchCount - 1, user.id);
 		} else {
-			posts = [...posts, ...(await vfetch.userPosts(greatestPost, greatestPost + postFetchCount - 1, user.id))];
+			posts = [
+				...posts,
+				...(await vfetch.userPosts(greatestPost, greatestPost + postFetchCount - 1, user.id))
+			];
 		}
 
 		greatestPost += postFetchCount;
@@ -100,19 +105,25 @@
 			<Button text="Logout" on:click={signOut} />
 		</shade>
 	{/if}
-	<Gear style="float: right; margin-top: 10px; margin-right: 10px;" on:click={throwShade} />
+	<Gear
+		style="position: absolute; right: 0px; margin-top: 10px; margin-right: 10px;"
+		on:click={throwShade}
+	/>
 
-	<posts class="center" style="display: flex; flex-direction:column;">
-		<h3 style="transform:translateY(-15px);">@{user.username}</h3>
+	<Posts
+		{posts}
+		{usernameCache}
+		{images}
+		options={{
+			title: `@${user.username}`,
+			greatestPost,
+			postFetchCount
+		}}
+	/>
 
-		{#if posts.length < 1}
-			<p>This user hasn't made any posts yet.</p>
-		{/if}
-
-		{#each posts as post}
-			<Post {post} cache={usernameCache} img={images[post['id']]} />
-		{/each}
-	</posts>
+	{#if posts.length < 1}
+		<p>This user hasn't made any posts yet.</p>
+	{/if}
 {/if}
 
 <style>

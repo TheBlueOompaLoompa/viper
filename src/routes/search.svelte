@@ -3,10 +3,14 @@
 	import vfetch from '$lib/vfetch';
 
 	import Post from '../components/Post.svelte';
+	import Tabs from '../components/Tabs.svelte';
+	import Button from '../components/Button.svelte';
 
 	let search = '';
 
-	let results = [];
+	let posts = [];
+	let groups = [];
+	let users = [];
 
 	function thing() {
 		window.onscroll = async function () {
@@ -17,8 +21,8 @@
 				scrollLoadDisabled = true;
 				offset += 5;
 
-				results = [
-					...results,
+				posts = [
+					...posts,
 					...(await supabase.rpc('srch', { term: search.replace(' ', ' or '), req_offset: offset }))
 						.data
 				];
@@ -30,15 +34,38 @@
 
 	let first = true;
 	async function onUpdateSearch() {
-		if (first) {
-			first = false;
-			thing();
-		}
-		try {
-			results = (await supabase.rpc('srch', { term: search.replace(' ', ' or '), req_offset: 0 }))
-				.data;
-		} catch (e) {
-			alert(e);
+		switch (searchType) {
+			case 'Posts':
+				if (first) {
+					first = false;
+					thing();
+				}
+				try {
+					posts = (
+						await supabase.rpc('post_search', { term: search.replace(' ', ' or '), req_offset: 0 })
+					).data;
+				} catch (e) {
+					alert(e);
+				}
+				break;
+			case 'Groups':
+				try {
+					groups = (
+						await supabase.rpc('group_search', { term: search.replace(' ', ' or '), req_offset: 0 })
+					).data;
+					console.log(groups);
+				} catch (e) {
+					alert(e);
+				}
+				break;
+			case 'Users':
+				try {
+					users = (await supabase.from('users').select('id,username')).data;
+					console.log(users);
+				} catch (e) {
+					alert(e);
+				}
+				break;
 		}
 	}
 
@@ -65,10 +92,12 @@
 	}
 
 	var i = 0;
-	$: for (i = 0; i < results.length; i++) {
-		fetchImage(results[i]);
-		cacheUsername(results[i]);
+	$: for (i = 0; i < posts.length; i++) {
+		fetchImage(posts[i]);
+		cacheUsername(posts[i]);
 	}
+
+	let searchType = 'Posts';
 </script>
 
 <div class="center" style="flex-direction: column;">
@@ -80,13 +109,32 @@
 		placeholder="Users, posts, groups, etc..."
 	/>
 </div>
-<posts class="center" style="display: flex; flex-direction:column; margin-top: 30px;">
-	{#each results as post, i}
-		<div class="trans">
-			<Post {post} cache={usernameCache} img={images[post['id']]} />
+<center style="margin-top: 6px; margin-bottom: 30px;">
+	<Tabs tabs={['Posts', 'Groups', 'Users']} c_class={'w-wide'} bind:active={searchType} />
+</center>
+{#if searchType == 'Posts'}
+	<posts style="display: flex; flex-direction:column;">
+		{#each posts as post, i}
+			<div class="trans">
+				<Post {post} cache={usernameCache} img={images[post['id']]} />
+			</div>
+		{/each}
+	</posts>
+{:else if searchType == 'Groups'}
+	{#each groups as group}
+		<a
+			href={'/group/?g=' + encodeURIComponent(group)}
+			style="width: 100%; display: flex; justify-content: center;"
+			><Button text={group} wide={true} /></a
+		>
+	{/each}
+{:else}
+	{#each users as user}
+		<div style="display: flex; justify-content: center; align-items: center;">
+			<a href="/profile?p={user.id}">@{user.username}</a>
 		</div>
 	{/each}
-</posts>
+{/if}
 
 <style>
 	.trans {
