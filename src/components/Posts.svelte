@@ -24,9 +24,9 @@
 			on:click={() => {
 				explodeImg(undefined);
 			}}
-			style="position: fixed; right: 10px; top: 10px; width: 30px; height: 30px; z-index: 1;"
+			style="position: fixed; right: 10px; top: 10px; width: 30px; height: 30px; z-index: 2;"
 		/>
-		<explode style="margin-top: 40px; margin-bottom: 42px;">
+		<explode>
 			<img src={images[explode]} alt="ExplodedImage" style="border-radius: 6px;" />
 		</explode>
 	</div>
@@ -65,17 +65,19 @@
 	}
 
 	explode {
-		position: fixed;
-		top: 0px;
-		bottom: 0px;
-		left: 0px;
-		right: 0px;
 		display: flex;
 		justify-content: center;
 		align-items: center;
+
+		position: fixed;
+		top: 0px;
+		left: 0px;
+		width: 100%;
+		height: calc(100% - 42px);
 	}
 
 	explode img {
+		object-fit: scale-down;
 		max-height: 100%;
 		max-width: 100%;
 	}
