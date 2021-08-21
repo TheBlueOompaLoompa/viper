@@ -1,0 +1,8 @@
+html, body {
+	font-family: sans-serif;
+	background: var(--theme-color-background);
+}
+
+.active * :not(img) {
+	filter: invert(0.5);
+}
