@@ -1,0 +1,28 @@
+/* Light */
+
+html, body {
+	--theme-color-background: rgb(238, 238, 238);
+
+	--theme-color-font: rgb(12, 12, 12);
+	--theme-color-font-alt: rgb(88, 88, 88);
+}
+
+/* Dark */
+
+html, body {
+	--theme-color-background: rgb(25, 25, 25);
+
+	--theme-color-font: white;
+	--theme-color-font-alt: rgb(150, 150, 150);;
+}
+
+/* Both */
+
+html, body {
+	--theme-color-main: #A1FA57;
+	--theme-color-outline: #5BDB4D;
+
+	--theme-color-accent-top: #61F27E;
+	--theme-color-accent-mid: #4DDB92;
+	--theme-color-accent-low: #57FAD4;
+}
