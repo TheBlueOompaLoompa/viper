@@ -16,6 +16,7 @@
     "@typescript-eslint/parser": "^4.19.0",
     "eslint": "^7.22.0",
     "eslint-plugin-svelte3": "^3.2.0",
+    "svelte-bootstrap-icons": "^1.5.1",
     "svelte-check": "^2.0.0",
     "svelte-preprocess": "^4.0.0",
     "tslib": "^2.0.0",
