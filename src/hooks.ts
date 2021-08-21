@@ -2,6 +2,13 @@ import * as cookie from 'cookie';
 import * as admin from 'firebase-admin';
 import * as serviceAccount from './serviceAccount.json';
 
+import { readFileSync } from 'fs';
+
+const color = readFileSync('./static/colors.css', 'utf-8');
+
+const lightColor = color.split('/* Dark */')[0] + color.split('/* Both */')[1];
+const darkColor = color.split('/* Dark */')[1]
+
 const params = {  type: serviceAccount.type,  projectId: serviceAccount.project_id,  privateKeyId: serviceAccount.private_key_id,  privateKey: serviceAccount.private_key,  clientEmail: serviceAccount.client_email,  clientId: serviceAccount.client_id,  authUri: serviceAccount.auth_uri,  tokenUri: serviceAccount.token_uri,  authProviderX509CertUrl: serviceAccount.auth_provider_x509_cert_url,  clientC509CertUrl: serviceAccount.client_x509_cert_url}
 
 const app = admin.initializeApp({
@@ -17,16 +24,22 @@ async function verifyToken(token: string) {
 }
 
 export async function handle({ request, resolve }) {
+    console.log(request)
     const response = await resolve(request);
 
+    const cookies = request.headers.cookie ? cookie.parse(request.headers.cookie) : undefined;
+
     try{
-        var user = JSON.parse(cookie.parse(request.headers.cookie)['user']);
+        var user = JSON.parse(cookies['user']);
     }catch(e) {
         var user;
     }
 
     let verified = false;
 
+    if(cookies && cookies['theme'] == 'dark') response.body = response.body.replace(`/* colorcss */`, darkColor);
+    else response.body = response.body.replace(`/* colorcss */`, lightColor);
+    
     if(user) {
         verified = await verifyToken(user.stsTokenManager.accessToken)
 
