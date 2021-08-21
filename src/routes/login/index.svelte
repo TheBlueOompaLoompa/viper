@@ -4,7 +4,7 @@
     let login;
 
     onMount(async () => {
-        const { auth } = await import('../firebase');
+        const { auth } = await import('../../firebase');
         const { GoogleAuthProvider, signInWithPopup } = await import('firebase/auth')
 
         login = function() {
