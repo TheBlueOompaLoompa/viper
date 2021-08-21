@@ -2663,6 +2663,11 @@ supports-color@^7.1.0:
   dependencies:
     has-flag "^4.0.0"
 
+svelte-bootstrap-icons@^1.5.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/svelte-bootstrap-icons/-/svelte-bootstrap-icons-1.5.1.tgz#c6e4da9c6f03ee4fdd96c755b1dcdeb9b58255f1"
+  integrity sha512-jVORzHqfPwqU/20Vd04PtpmggTMgR5Gj1W2x/yzeuVVkKRMZfInb/IxFjTDkvdcRvA78jws+9Abi46v0eQuwfw==
+
 svelte-check@^2.0.0:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/svelte-check/-/svelte-check-2.2.4.tgz#103140eeb4bbe65721e023ab210566041abe7224"
