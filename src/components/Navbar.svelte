@@ -24,13 +24,11 @@
 	onMount(() => {
 		setInterval(() => {
 			if(window.location.pathname != last) {
-				console.log(window.location.pathname)
 				Object.keys(active).forEach(page => {
 					active[page] = '';
 				});
 
 				active[window.location.pathname] = 'active';
-				console.log(active)
 
 				const user = localStorage.getItem('user');
 
