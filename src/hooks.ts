@@ -44,6 +44,8 @@ export async function handle({ request, resolve }) {
 
         response.headers['Set-Cookie'] = `verified=${verified};`;
 
+
+        console.log(verified)
         // User shouldn't be able to login again after already logging in
         if(request.path.startsWith('/login') && verified) {
             return {
@@ -53,6 +55,7 @@ export async function handle({ request, resolve }) {
                 }
             }
         }else if(request.path.startsWith('/profile') && !verified) {
+            console.log('pf')
             return {
                 status: 301,
                 headers: {
