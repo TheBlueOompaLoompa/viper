@@ -24,7 +24,6 @@ async function verifyToken(token: string) {
 }
 
 export async function handle({ request, resolve }) {
-    console.log(request)
     const response = await resolve(request);
 
     const cookies = request.headers.cookie ? cookie.parse(request.headers.cookie) : undefined;
