@@ -52,6 +52,13 @@ export async function handle({ request, resolve }) {
                     Location: '/'
                 }
             }
+        }else if(request.path.startsWith('/profile') && !verified) {
+            return {
+                status: 301,
+                headers: {
+                    Location: '/login'
+                }
+            }
         }
     }
 

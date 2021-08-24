@@ -9,12 +9,6 @@
 		}else {
 			document.cookie = 'theme=white';
 		}
-
-		setInterval(() => {
-			if(window.location.pathname == '/profile') {
-				window.location.href = '/login';
-			}
-		}, 30);
 	});
 </script>
 
