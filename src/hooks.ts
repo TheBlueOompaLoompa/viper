@@ -42,8 +42,7 @@ export async function handle({ request, resolve }) {
     if(user) {
         verified = await verifyToken(user.stsTokenManager.accessToken)
 
-        response.headers['Set-Cookie'] = `verified=${verified};`;
-
+        response.headers['Set-Cookie'] = `verified=${verified}; SameSite=Lax; Secure;`;
 
         console.log(verified)
         // User shouldn't be able to login again after already logging in
