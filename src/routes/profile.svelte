@@ -1,12 +1,18 @@
 <script lang="ts">
+import { prefetch } from '$app/navigation';
+
 	import Gear from 'svelte-bootstrap-icons/lib/Gear';
 
 	function openSettings() {
 		window.location.href = '/settings';
 	}
+
+	function pref() {
+		prefetch('/settings')
+	}
 </script>
 
-<div id="settings">
+<div id="settings" on:focus={pref} on:mouseover={pref}>
 	<Gear on:click={openSettings} />
 </div>
 

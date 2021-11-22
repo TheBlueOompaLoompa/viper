@@ -44,12 +44,12 @@
 
 <bar>
 	<div id="maxw">
-		<a class={active['/']} href="/"><div><House/></div></a>
-		<a class={active['/new']} href="/new"><div><PlusSquare/></div></a>
-		<a class={active['/groups']} href="/groups"><div><People/></div></a>
-		<a class={active['/dm']} href="/dm"><div><Chat/></div></a>
-		<a class={active['/search']} href="/search"><div><Search/></div></a>
-		<a class={active['/profile']} href="/profile"><div>
+		<a sveltekit:prefetch class={active['/']} href="/"><div><House/></div></a>
+		<a sveltekit:prefetch class={active['/new']} href="/new"><div><PlusSquare/></div></a>
+		<a sveltekit:prefetch class={active['/groups']} href="/groups"><div><People/></div></a>
+		<a sveltekit:prefetch class={active['/dm']} href="/dm"><div><Chat/></div></a>
+		<a sveltekit:prefetch class={active['/search']} href="/search"><div><Search/></div></a>
+		<a sveltekit:prefetch class={active['/profile']} href="/profile"><div>
 			{#if iconURL}
 			<img src={iconURL} alt="user icon">
 			{:else}
