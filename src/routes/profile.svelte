@@ -1,5 +1,6 @@
 <script lang="ts">
-import { prefetch } from '$app/navigation';
+	import { prefetch } from '$app/navigation';
+	import { onMount } from 'svelte';
 
 	import Gear from 'svelte-bootstrap-icons/lib/Gear';
 
@@ -10,11 +11,27 @@ import { prefetch } from '$app/navigation';
 	function pref() {
 		prefetch('/settings')
 	}
+
+	let isAuth = false;
+
+	onMount(async () => {
+		if(localStorage.getItem('user')) {
+			isAuth = true;
+		}
+	});
 </script>
 
 <div id="settings" on:focus={pref} on:mouseover={pref}>
+	{#if isAuth}
 	<Gear on:click={openSettings} />
+	{:else}
+	<button on:click={() => {location.href = '/login'}}>Login</button>
+	{/if}
 </div>
+
+<center>
+	
+</center>
 
 <style>
 	#settings {
