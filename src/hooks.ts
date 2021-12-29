@@ -1,6 +1,9 @@
 import * as cookie from 'cookie';
 import * as admin from 'firebase-admin';
 import * as serviceAccount from './serviceAccount.json';
+import database from '$lib/db';
+
+const db = new database('mongodb://127.0.0.1:27017');
 
 import { readFileSync } from 'fs';
 
@@ -44,21 +47,22 @@ export async function handle({ request, resolve }) {
 
         response.headers['Set-Cookie'] = `verified=${verified}; SameSite=Lax; Secure;`;
 
-        console.log(verified)
+        if(!request.path.startsWith('/login') && !verified) {
+            return {
+                status: 301,
+                headers: {
+                    Location: '/login'
+                }
+            }
+        }
+
+        //console.log(verified)
         // User shouldn't be able to login again after already logging in
         if(request.path.startsWith('/login') && verified) {
             return {
                 status: 301,
                 headers: {
                     Location: '/'
-                }
-            }
-        }else if(request.path.startsWith('/profile') && !verified) {
-            console.log('pf')
-            return {
-                status: 301,
-                headers: {
-                    Location: '/login'
                 }
             }
         }
