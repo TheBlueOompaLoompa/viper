@@ -19,10 +19,14 @@
 
 	let last = '';
 
-	let iconURL;
+	let iconURL: string;
+	let isAuth = true;
+	let user;
 
 	onMount(() => {
 		setInterval(() => {
+			if(localStorage.getItem('user')) isAuth = true;
+			else isAuth = false;
 			if(window.location.pathname != last) {
 				Object.keys(active).forEach(page => {
 					active[page] = '';
@@ -30,7 +34,7 @@
 
 				active[window.location.pathname] = 'active';
 
-				const user = localStorage.getItem('user');
+				user = localStorage.getItem('user');
 
 				if(user) {
 					iconURL = JSON.parse(user).photoURL;
@@ -47,13 +51,14 @@
 		<a sveltekit:prefetch class={active['/']} href="/"><div><House/></div></a>
 		<a sveltekit:prefetch class={active['/new']} href="/new"><div><PlusSquare/></div></a>
 		<a sveltekit:prefetch class={active['/groups']} href="/groups"><div><People/></div></a>
-		<a sveltekit:prefetch class={active['/dm']} href="/dm"><div><Chat/></div></a>
+		<!--<a sveltekit:prefetch  class={active['/dm']} href="/dm"><div><Chat/></div></a>-->
 		<a sveltekit:prefetch class={active['/search']} href="/search"><div><Search/></div></a>
-		<a sveltekit:prefetch class={active['/profile']} href="/profile"><div>
-			{#if iconURL}
+		<a sveltekit:prefetch class={active['/profile']} href={isAuth ? '/profile': '/login'}><div>
+			{#if isAuth}
 			<img src={iconURL} alt="user icon">
 			{:else}
 			<Person/>
+			<hint>Login</hint>
 			{/if}
 		</div></a>
 	</div>
