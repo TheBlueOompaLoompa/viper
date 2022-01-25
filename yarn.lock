@@ -897,15 +897,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sveltejs/adapter-static@npm:^1.0.0-next.16":
-  version: 1.0.0-next.24
-  resolution: "@sveltejs/adapter-static@npm:1.0.0-next.24"
-  dependencies:
-    tiny-glob: ^0.2.9
-  checksum: 70ca3e33d2430efeb64160d5edb1b152cde9d426c291090f5410c55fa1350b63828cec5c9a8916082b31469a827a8e7223a1c8cf00c5498ec1bfdf9185c07725
-  languageName: node
-  linkType: hard
-
 "@sveltejs/kit@npm:next":
   version: 1.0.0-next.216
   resolution: "@sveltejs/kit@npm:1.0.0-next.216"
@@ -2398,6 +2389,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"fs-extra@npm:^10.0.0":
+  version: 10.0.0
+  resolution: "fs-extra@npm:10.0.0"
+  dependencies:
+    graceful-fs: ^4.2.0
+    jsonfile: ^6.0.1
+    universalify: ^2.0.0
+  checksum: 5285a3d8f34b917cf2b66af8c231a40c1623626e9d701a20051d3337be16c6d7cac94441c8b3732d47a92a2a027886ca93c69b6a4ae6aee3c89650d2a8880c0a
+  languageName: node
+  linkType: hard
+
 "fs-minipass@npm:^2.0.0":
   version: 2.1.0
   resolution: "fs-minipass@npm:2.1.0"
@@ -2630,7 +2632,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"graceful-fs@npm:^4.1.2, graceful-fs@npm:^4.1.3, graceful-fs@npm:^4.2.6":
+"graceful-fs@npm:^4.1.2, graceful-fs@npm:^4.1.3, graceful-fs@npm:^4.1.6, graceful-fs@npm:^4.2.0, graceful-fs@npm:^4.2.6":
   version: 4.2.9
   resolution: "graceful-fs@npm:4.2.9"
   checksum: 68ea4e07ff2c041ada184f9278b830375f8e0b75154e3f080af6b70f66172fabb4108d19b3863a96b53fc068a310b9b6493d86d1291acc5f3861eb4b79d26ad6
@@ -2991,6 +2993,19 @@ __metadata:
   version: 1.0.1
   resolution: "json-stable-stringify-without-jsonify@npm:1.0.1"
   checksum: cff44156ddce9c67c44386ad5cddf91925fe06b1d217f2da9c4910d01f358c6e3989c4d5a02683c7a5667f9727ff05831f7aa8ae66c8ff691c556f0884d49215
+  languageName: node
+  linkType: hard
+
+"jsonfile@npm:^6.0.1":
+  version: 6.1.0
+  resolution: "jsonfile@npm:6.1.0"
+  dependencies:
+    graceful-fs: ^4.1.6
+    universalify: ^2.0.0
+  dependenciesMeta:
+    graceful-fs:
+      optional: true
+  checksum: 7af3b8e1ac8fe7f1eccc6263c6ca14e1966fcbc74b618d3c78a0a2075579487547b94f72b7a1114e844a1e15bb00d440e5d1720bfc4612d790a6f285d5ea8354
   languageName: node
   linkType: hard
 
@@ -4141,6 +4156,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"slash@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "slash@npm:4.0.0"
+  checksum: da8e4af73712253acd21b7853b7e0dbba776b786e82b010a5bfc8b5051a1db38ed8aba8e1e8f400dd2c9f373be91eb1c42b66e91abb407ff42b10feece5e1d2d
+  languageName: node
+  linkType: hard
+
 "slice-ansi@npm:^4.0.0":
   version: 4.0.0
   resolution: "slice-ansi@npm:4.0.0"
@@ -4449,6 +4471,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"sveltejs-adapter-ipfs@npm:^0.2.1":
+  version: 0.2.1
+  resolution: "sveltejs-adapter-ipfs@npm:0.2.1"
+  dependencies:
+    fs-extra: ^10.0.0
+    slash: ^4.0.0
+    tiny-glob: ^0.2.9
+  checksum: 2678619c6bbed20b1515cc8f603099d66a251b7b3547f71467282f2c6ad14bec2d0cbc56711a583c2af7b82ce42af9987a166a439636557df5054392e2ab1118
+  languageName: node
+  linkType: hard
+
 "table@npm:^6.0.9":
   version: 6.8.0
   resolution: "table@npm:6.8.0"
@@ -4637,6 +4670,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"universalify@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "universalify@npm:2.0.0"
+  checksum: 2406a4edf4a8830aa6813278bab1f953a8e40f2f63a37873ffa9a3bc8f9745d06cc8e88f3572cb899b7e509013f7f6fcc3e37e8a6d914167a5381d8440518c44
+  languageName: node
+  linkType: hard
+
 "uri-js@npm:^4.2.2":
   version: 4.4.1
   resolution: "uri-js@npm:4.4.1"
@@ -4673,7 +4713,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "viper@workspace:."
   dependencies:
-    "@sveltejs/adapter-static": ^1.0.0-next.16
     "@sveltejs/kit": next
     "@typescript-eslint/eslint-plugin": ^4.19.0
     "@typescript-eslint/parser": ^4.19.0
@@ -4689,6 +4728,7 @@ __metadata:
     svelte-bootstrap-icons: ^1.5.1
     svelte-check: ^2.0.0
     svelte-preprocess: ^4.0.0
+    sveltejs-adapter-ipfs: ^0.2.1
     tslib: ^2.0.0
     typescript: ^4.0.0
   languageName: unknown

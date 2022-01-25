@@ -10,7 +10,6 @@
     "lint": "eslint --ignore-path .gitignore ."
   },
   "devDependencies": {
-    "@sveltejs/adapter-static": "^1.0.0-next.16",
     "@sveltejs/kit": "next",
     "@typescript-eslint/eslint-plugin": "^4.19.0",
     "@typescript-eslint/parser": "^4.19.0",
@@ -31,7 +30,8 @@
     "mongodb": "^4.1.0",
     "rxfire": "^4.0.0",
     "rxjs": "^7.3.0",
-    "svelte": "^3.42.1"
+    "svelte": "^3.42.1",
+    "sveltejs-adapter-ipfs": "^0.2.1"
   },
   "cacheDirectories": [
     "node_modules"

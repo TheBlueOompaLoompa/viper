@@ -35,7 +35,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         [null, {
           "packageLocation": "./",
           "packageDependencies": [
-            ["@sveltejs/adapter-static", "npm:1.0.0-next.24"],
             ["@sveltejs/kit", "virtual:007f685865c3cedc503b22e6d34691c3abbe83af72a824fd9e5c66b0c29f11440dd66e9930a5e6c53e334e3f277d90edb8f49f7f763c6066f88cfd2ef282bacb#npm:1.0.0-next.216"],
             ["@typescript-eslint/eslint-plugin", "virtual:007f685865c3cedc503b22e6d34691c3abbe83af72a824fd9e5c66b0c29f11440dd66e9930a5e6c53e334e3f277d90edb8f49f7f763c6066f88cfd2ef282bacb#npm:4.33.0"],
             ["@typescript-eslint/parser", "virtual:007f685865c3cedc503b22e6d34691c3abbe83af72a824fd9e5c66b0c29f11440dd66e9930a5e6c53e334e3f277d90edb8f49f7f763c6066f88cfd2ef282bacb#npm:4.33.0"],
@@ -51,6 +50,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["svelte-bootstrap-icons", "npm:1.7.2"],
             ["svelte-check", "virtual:007f685865c3cedc503b22e6d34691c3abbe83af72a824fd9e5c66b0c29f11440dd66e9930a5e6c53e334e3f277d90edb8f49f7f763c6066f88cfd2ef282bacb#npm:2.2.11"],
             ["svelte-preprocess", "virtual:007f685865c3cedc503b22e6d34691c3abbe83af72a824fd9e5c66b0c29f11440dd66e9930a5e6c53e334e3f277d90edb8f49f7f763c6066f88cfd2ef282bacb#npm:4.10.1"],
+            ["sveltejs-adapter-ipfs", "npm:0.2.1"],
             ["tslib", "npm:2.3.1"],
             ["typescript", "patch:typescript@npm%3A4.5.4#~builtin<compat/typescript>::version=4.5.4&hash=493e53"]
           ],
@@ -1534,16 +1534,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@rollup/pluginutils", "npm:4.1.2"],
             ["estree-walker", "npm:2.0.2"],
             ["picomatch", "npm:2.3.1"]
-          ],
-          "linkType": "HARD",
-        }]
-      ]],
-      ["@sveltejs/adapter-static", [
-        ["npm:1.0.0-next.24", {
-          "packageLocation": "./.yarn/cache/@sveltejs-adapter-static-npm-1.0.0-next.24-211537c14a-70ca3e33d2.zip/node_modules/@sveltejs/adapter-static/",
-          "packageDependencies": [
-            ["@sveltejs/adapter-static", "npm:1.0.0-next.24"],
-            ["tiny-glob", "npm:0.2.9"]
           ],
           "linkType": "HARD",
         }]
@@ -3339,6 +3329,18 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
+      ["fs-extra", [
+        ["npm:10.0.0", {
+          "packageLocation": "./.yarn/cache/fs-extra-npm-10.0.0-4f8c704115-5285a3d8f3.zip/node_modules/fs-extra/",
+          "packageDependencies": [
+            ["fs-extra", "npm:10.0.0"],
+            ["graceful-fs", "npm:4.2.9"],
+            ["jsonfile", "npm:6.1.0"],
+            ["universalify", "npm:2.0.0"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
       ["fs-minipass", [
         ["npm:2.1.0", {
           "packageLocation": "./.yarn/cache/fs-minipass-npm-2.1.0-501ef87306-1b8d128dae.zip/node_modules/fs-minipass/",
@@ -4009,6 +4011,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/json-stable-stringify-without-jsonify-npm-1.0.1-b65772b28b-cff44156dd.zip/node_modules/json-stable-stringify-without-jsonify/",
           "packageDependencies": [
             ["json-stable-stringify-without-jsonify", "npm:1.0.1"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["jsonfile", [
+        ["npm:6.1.0", {
+          "packageLocation": "./.yarn/cache/jsonfile-npm-6.1.0-20a4796cee-7af3b8e1ac.zip/node_modules/jsonfile/",
+          "packageDependencies": [
+            ["jsonfile", "npm:6.1.0"],
+            ["graceful-fs", "npm:4.2.9"],
+            ["universalify", "npm:2.0.0"]
           ],
           "linkType": "HARD",
         }]
@@ -5295,6 +5308,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["slash", "npm:3.0.0"]
           ],
           "linkType": "HARD",
+        }],
+        ["npm:4.0.0", {
+          "packageLocation": "./.yarn/cache/slash-npm-4.0.0-ce4bbc4a80-da8e4af737.zip/node_modules/slash/",
+          "packageDependencies": [
+            ["slash", "npm:4.0.0"]
+          ],
+          "linkType": "HARD",
         }]
       ]],
       ["slice-ansi", [
@@ -5681,6 +5701,18 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
+      ["sveltejs-adapter-ipfs", [
+        ["npm:0.2.1", {
+          "packageLocation": "./.yarn/cache/sveltejs-adapter-ipfs-npm-0.2.1-2eadb29b01-2678619c6b.zip/node_modules/sveltejs-adapter-ipfs/",
+          "packageDependencies": [
+            ["sveltejs-adapter-ipfs", "npm:0.2.1"],
+            ["fs-extra", "npm:10.0.0"],
+            ["slash", "npm:4.0.0"],
+            ["tiny-glob", "npm:0.2.9"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
       ["table", [
         ["npm:6.8.0", {
           "packageLocation": "./.yarn/cache/table-npm-6.8.0-7f881347d4-5b07fe462e.zip/node_modules/table/",
@@ -5902,6 +5934,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
+      ["universalify", [
+        ["npm:2.0.0", {
+          "packageLocation": "./.yarn/cache/universalify-npm-2.0.0-03b8b418a8-2406a4edf4.zip/node_modules/universalify/",
+          "packageDependencies": [
+            ["universalify", "npm:2.0.0"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
       ["uri-js", [
         ["npm:4.4.1", {
           "packageLocation": "./.yarn/cache/uri-js-npm-4.4.1-66d11cbcaf-7167432de6.zip/node_modules/uri-js/",
@@ -5944,7 +5985,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./",
           "packageDependencies": [
             ["viper", "workspace:."],
-            ["@sveltejs/adapter-static", "npm:1.0.0-next.24"],
             ["@sveltejs/kit", "virtual:007f685865c3cedc503b22e6d34691c3abbe83af72a824fd9e5c66b0c29f11440dd66e9930a5e6c53e334e3f277d90edb8f49f7f763c6066f88cfd2ef282bacb#npm:1.0.0-next.216"],
             ["@typescript-eslint/eslint-plugin", "virtual:007f685865c3cedc503b22e6d34691c3abbe83af72a824fd9e5c66b0c29f11440dd66e9930a5e6c53e334e3f277d90edb8f49f7f763c6066f88cfd2ef282bacb#npm:4.33.0"],
             ["@typescript-eslint/parser", "virtual:007f685865c3cedc503b22e6d34691c3abbe83af72a824fd9e5c66b0c29f11440dd66e9930a5e6c53e334e3f277d90edb8f49f7f763c6066f88cfd2ef282bacb#npm:4.33.0"],
@@ -5960,6 +6000,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["svelte-bootstrap-icons", "npm:1.7.2"],
             ["svelte-check", "virtual:007f685865c3cedc503b22e6d34691c3abbe83af72a824fd9e5c66b0c29f11440dd66e9930a5e6c53e334e3f277d90edb8f49f7f763c6066f88cfd2ef282bacb#npm:2.2.11"],
             ["svelte-preprocess", "virtual:007f685865c3cedc503b22e6d34691c3abbe83af72a824fd9e5c66b0c29f11440dd66e9930a5e6c53e334e3f277d90edb8f49f7f763c6066f88cfd2ef282bacb#npm:4.10.1"],
+            ["sveltejs-adapter-ipfs", "npm:0.2.1"],
             ["tslib", "npm:2.3.1"],
             ["typescript", "patch:typescript@npm%3A4.5.4#~builtin<compat/typescript>::version=4.5.4&hash=493e53"]
           ],
