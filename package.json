@@ -32,5 +32,12 @@
     "rxfire": "^4.0.0",
     "rxjs": "^7.3.0",
     "svelte": "^3.42.1"
-  }
+  },
+  "cacheDirectories": [
+    "node_modules"
+  ],
+  "workspaces": [
+    "client"
+  ],
+  "packageManager": "yarn@3.1.1"
 }
