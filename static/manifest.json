@@ -1,6 +1,7 @@
 {
   "name": "Viper",
   "short_name": "Viper",
+  "description": "Viper is a social media app focused on privacy. No spooky AIs."
   "lang": "en-US",
   "start_url": "/",
   "display": "standalone",
