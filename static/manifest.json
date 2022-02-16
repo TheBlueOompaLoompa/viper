@@ -6,10 +6,29 @@
   "display": "standalone",
   "orientation": "portrait",
   "theme_color": "#A1FA57",
+  "categories": ["social"],
   "icons": [
     {
       "src": "/favicon.png",
       "sizes": "256x256"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "New",
+      "url": "/new"
+    },
+    {
+      "name": "Search",
+      "url": "/search"
+    },
+    {
+      "name": "Groups",
+      "url": "/groups"
+    },
+    {
+      "name": "About",
+      "url": "/about"
     }
   ]
 }
