@@ -1,0 +1,3 @@
+disallow: /groups*
+disallow: /group*
+disallow: /profile*
