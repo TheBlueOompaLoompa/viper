@@ -25,6 +25,7 @@
   "license": "GPL-3.0",
   "dependencies": {
     "cookie": "^0.4.1",
+    "ethers": "^5.5.3",
     "firebase": "9.0.0-beta.7",
     "firebase-admin": "^9.11.1",
     "mongodb": "^4.1.0",
