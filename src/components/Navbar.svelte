@@ -29,6 +29,12 @@
 
 		background-color: var(--theme-color-background);
 	}
+	
+	@supports (-webkit-touch-callout: none) {
+	        nav {
+                         padding-bottom: 15px;
+	        }
+        }
 
 	a,
 	a:visited {
