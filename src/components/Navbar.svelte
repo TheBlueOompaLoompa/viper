@@ -31,9 +31,10 @@
 	}
 	
 	@supports (-webkit-touch-callout: none) {
-	        nav {
-                         padding-bottom: 15px;
-	        }
+		nav {
+			padding-bottom: 15px;
+			height: calc(2.5em + 15px);
+		}
         }
 
 	a,
