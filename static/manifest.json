@@ -13,7 +13,10 @@
     {
       "src": "/favicon.png",
       "sizes": "256x256"
-    }
+    },
+    {
+      "src": "logo.svg",
+      "sizes": "any"
   ],
   "shortcuts": [
     {
