@@ -8,6 +8,7 @@
   "orientation": "portrait",
   "theme_color": "#A1FA57",
   "categories": ["social"],
+  "prefer_related_applications": false,
   "icons": [
     {
       "src": "/favicon.png",
