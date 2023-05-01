@@ -1,0 +1,121 @@
+<script lang="ts">
+	export const ssr = false;
+    import { Person, House, Search, PlusSquare, Chat, People } from 'svelte-bootstrap-icons';
+	import { onMount } from 'svelte';
+	import supabase from '$lib/supabase';
+	export let page: string;
+
+	onMount(async () => {
+		const { data, error } = await supabase.auth.getUser();
+		const profileTag = document.getElementById('profile') as unknown as HTMLAnchorElement;
+
+		if(data != null && data.user != null) {
+			profileTag.setAttribute('href', `/profile?id=${data.user.id}`);
+		}else {
+			profileTag.setAttribute('href', '/auth');
+		}
+	})
+</script>
+
+<nav>
+	<div>
+		<a id="home"    class={page == '' ? 'active' : ''}          href="/"><House/><span>Home</span></a>
+		<a id="new"     class={page == 'new' ? 'active' : ''}       href="/new"><PlusSquare/><span>New</span></a>
+		<a id="groups"  class={page == 'groups' ? 'active' : ''}    href="/groups"><People/><span>Groups</span></a>
+		<a id="dm"      class={page == 'dm' ? 'active' : ''}        href="/dm"><Chat/><span>Messages</span></a>
+		<a id="search"  class={page == 'search' ? 'active' : ''}    href="/search"><Search/><span>Search</span></a>
+		<a id="profile" class={page == 'profile' ? 'active' : ''}><Person/><span>Profile</span></a>
+	</div>
+</nav>
+
+<style>
+	nav {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+
+        position: fixed;
+        
+        bottom: 0px;
+
+		box-shadow: 0px -2px 4px var(--theme-color-accent-mid);
+		background-color: var(--theme-color-background);
+
+		overflow: hidden;
+
+		left: 0px;
+		right: 0px;
+		height: 2.5rem;
+	}
+
+    nav div {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-evenly;
+        
+        width: 100%;
+        max-width: 640px;
+    }
+
+	a span {
+		display: none;
+	}
+
+    @media (min-width: 700px) {
+        nav, nav div {
+            flex-direction: column;
+            width: 2.5rem;
+			height: 100%;
+        }
+
+		nav {
+			justify-content: start;
+		}
+
+		nav div {
+			max-height: 400px;
+		}
+    }
+
+	a,
+	a:visited {
+		display: flex;
+		align-items: center;
+        justify-content: center;
+		height: 2rem;
+		width: 2rem;
+		color: #d1d5db;
+		text-decoration: none;
+	}
+
+	@media (min-width: 1000px) {
+		nav, nav div {
+            flex-direction: column;
+            left: 0px;
+            width: 8rem;
+            height: 100%;
+        }
+
+		a {
+			display: flex;
+			flex-direction: row;
+			width: 90%;
+			border-radius: 0.4rem;
+		}
+
+		a span {
+			display: inline-block;
+			margin-left: .8rem;
+			margin-right: auto;
+		}
+	}
+	
+	@supports (-webkit-touch-callout: none) {
+		nav {
+			padding-bottom: 15px;
+			height: calc(2.5em + 15px);
+		}
+    }
+</style>
