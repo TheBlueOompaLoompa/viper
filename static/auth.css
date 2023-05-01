@@ -1,0 +1,27 @@
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+main div {
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+.bad {
+    border-color: crimson;
+    box-shadow: 0px 4px 4px crimson;
+}
+
+input {
+    height: 2.75rem;
+    border-radius: 0.375rem;
+    padding: 1rem;
+}
+
+h3 {
+    margin: 0px;
+}
