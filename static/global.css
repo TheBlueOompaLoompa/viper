@@ -86,6 +86,10 @@ input {
 	box-shadow: 0px 4px 4px var(--theme-color-accent-mid);
 
 	font-size: medium;
+
+	height: 1rem;
+	padding: .6rem;
+	border-radius: 0.375rem;
 }
 
 textarea {
@@ -135,21 +139,4 @@ textarea {
 	--icon-size: 20px;
 	min-width: var(--icon-size);
 	min-height: var(--icon-size);
-}
-
-.active {
-	background-color: var(--theme-color-main);
-	padding: 5px;
-	width: 21px;
-	height: 21px;
-	border-style: solid;
-	border-color: var(--theme-color-outline);
-	border-width: 1px;
-	border-radius: 100%;
-
-	box-shadow: 0px 1px 4px var(--theme-color-accent-mid);
-}
-
-.active * {
-	filter: invert(0.5);
 }

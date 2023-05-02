@@ -7,9 +7,9 @@
     let showNav = false;
 
     onMount(() => {
-        page = window.location.href.split('/')[window.location.href.split('/').length-1];
+        page = window.location.pathname.split('/')[window.location.pathname.split('/').length-1];
         setInterval(() => {
-            page = window.location.href.split('/')[window.location.href.split('/').length-2].split('?')[0];
+            page = window.location.pathname.split('/')[window.location.pathname.split('/').length-2].split('?')[0];
             showNav = true;
         }, 10);
     });
