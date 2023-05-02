@@ -6,11 +6,11 @@
 	export let page: string;
 
 	onMount(async () => {
-		const { data, error } = await supabase.auth.getUser();
+		const { data, error } = await supabase.auth.getSession()
 		const profileTag = document.getElementById('profile') as unknown as HTMLAnchorElement;
 
-		if(data != null && data.user != null) {
-			profileTag.setAttribute('href', `/profile?id=${data.user.id}`);
+		if(data.session != null && !error) {
+			profileTag.setAttribute('href', `/profile?id=${data.session?.user.id}`);
 		}else {
 			profileTag.setAttribute('href', '/auth');
 		}

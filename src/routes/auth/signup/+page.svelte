@@ -13,10 +13,18 @@
     }
 
     async function signup() {   
-        await supabase.auth.signUp({
+        const { data, error } = await supabase.auth.signUp({
             email,
             password
-        })
+        });
+
+        if(error) {
+            console.error(error);
+            return;
+        }
+
+        await supabase.from('users')
+            .insert([{ id: data.user?.id, username }])
     }
 
     function enterSubmit(e: KeyboardEvent) {

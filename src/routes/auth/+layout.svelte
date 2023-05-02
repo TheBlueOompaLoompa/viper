@@ -3,9 +3,9 @@
 	import { onMount } from "svelte";
 
     onMount(async() => {
-        const { data, error } = await supabase.auth.getSession()
+        const { data, error } = await supabase.auth.getSession();
 
-        if(data != null) location.href = '/';
+        if(data.session != null && !error) location.href = '/';
     });
 </script>
 
