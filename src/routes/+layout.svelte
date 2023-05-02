@@ -1,6 +1,4 @@
 <script lang="ts">
-    export const prerender = true;
-    
     import Navbar from '$lib/components/Navbar.svelte';
 	import supabase from '$lib/supabase';
 	import { onMount } from 'svelte';

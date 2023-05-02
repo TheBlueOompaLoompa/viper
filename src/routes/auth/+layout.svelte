@@ -1,6 +1,4 @@
 <script>
-    export const prerender = true;
-    
 	import supabase from "$lib/supabase";
 	import { onMount } from "svelte";
 
