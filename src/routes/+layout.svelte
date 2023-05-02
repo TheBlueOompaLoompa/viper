@@ -9,7 +9,7 @@
     onMount(() => {
         page = window.location.href.split('/')[window.location.href.split('/').length-1];
         setInterval(() => {
-            page = window.location.href.split('/')[window.location.href.split('/').length-1].split('?')[0];
+            page = window.location.href.split('/')[window.location.href.split('/').length-2].split('?')[0];
             showNav = true;
         }, 10);
     });
