@@ -1,41 +1,30 @@
 {
 	"name": "viper",
 	"version": "0.0.1",
+	"private": true,
 	"scripts": {
-		"dev": "svelte-kit dev",
-		"build": "npm run build:tailwind && svelte-kit build",
-		"build:tailwind": "postcss ./src/assets/css/tailwind.css -o static/assets/css/tailwindoutput.css",
-		"preview": "svelte-kit preview",
-		"lint": "prettier --check . && eslint --ignore-path .gitignore .",
-		"format": "prettier --write .",
-		"deploy": "npm run build && firebase deploy"
+		"dev": "vite dev",
+		"build": "vite build",
+		"preview": "vite preview",
+		"lint": "eslint",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
 	},
 	"devDependencies": {
-		"@supabase/supabase-js": "^1.11.9",
-		"@sveltejs/adapter-static": "1.0.0-next.7",
-		"@sveltejs/kit": "next",
-		"@tailwindcss/jit": "^0.1.18",
-		"@typescript-eslint/eslint-plugin": "^4.19.0",
-		"@typescript-eslint/parser": "^4.19.0",
-		"autoprefixer": "^10.2.5",
-		"browser-image-compression": "^1.0.14",
-		"eslint": "^7.22.0",
-		"eslint-config-prettier": "^8.1.0",
-		"eslint-plugin-svelte3": "^3.2.0",
-		"localforage": "^1.9.0",
-		"postcss": "^8.2.15",
-		"postcss-cli": "^8.3.1",
-		"prettier": "~2.2.1",
-		"prettier-plugin-svelte": "^2.2.0",
-		"svelte": "^3.34.0",
-		"svelte-bootstrap-icons": "^1.5.0",
-		"svelte-closable": "*",
-		"svelte-file-dropzone": "^0.0.15",
-		"svelte-preprocess": "^4.0.0",
-		"tailwindcss": "^2.1.2",
-		"tslib": "^2.0.0",
-		"typescript": "^4.0.0",
-		"vite": "^2.2.3"
+		"@sveltejs/adapter-static": "^2.0.2",
+		"@sveltejs/kit": "^1.5.0",
+		"eslint": "^8.39.0",
+		"svelte": "^3.54.0",
+		"svelte-bootstrap-icons": "^2.3.1",
+		"svelte-check": "^3.0.1",
+		"tslib": "^2.4.1",
+		"typescript": "^5.0.0",
+		"vite": "^4.3.0"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"@supabase/supabase-js": "^2.21.0",
+		"localforage": "^1.10.0",
+		"svelte-closable": "^0.0.0"
+	}
 }

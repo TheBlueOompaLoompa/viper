@@ -12,7 +12,10 @@ html, body {
 	--theme-color-background: rgb(25, 25, 25);
 	--theme-color-font: white;	
 
-	font-family: sans-serif;
+	--padding-space: .5rem;
+	--image-radius: .5rem;
+
+	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 
 	margin: 0px;
 
