@@ -6,12 +6,14 @@
 		"dev": "vite dev",
 		"build": "vite build",
 		"preview": "vite preview",
+		"lint": "eslint",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
 	},
 	"devDependencies": {
-		"@sveltejs/adapter-auto": "^2.0.0",
+		"@sveltejs/adapter-static": "^2.0.2",
 		"@sveltejs/kit": "^1.5.0",
+		"eslint": "^8.39.0",
 		"svelte": "^3.54.0",
 		"svelte-bootstrap-icons": "^2.3.1",
 		"svelte-check": "^3.0.1",
