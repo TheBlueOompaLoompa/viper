@@ -37,11 +37,11 @@
         <h3>Username</h3>
         <input type="text" name="username" id="username" bind:value={username} on:keypress={enterSubmit}>
         <h3>Email</h3>
-        <input type="email" name="email" id="email" bind:value={email} on:keypress={enterSubmit}>
+        <input type="email" name="email" id="email" autocomplete="email" bind:value={email} on:keypress={enterSubmit}>
         <h3>Password</h3>
-        <input type="password" name="password" id="password" bind:value={password} on:change={checkEqual} on:keypress={enterSubmit}>
+        <input type="password" name="password" id="password" autocomplete="new-password" bind:value={password} on:change={checkEqual} on:keypress={enterSubmit}>
         <h3>Confirm Password</h3>
-        <input type="password" name="confirm password" id="confirm" bind:value={confirm} on:change={checkEqual} on:keypress={enterSubmit}>
+        <input type="password" name="confirm password" id="confirm" autocomplete="new-password" bind:value={confirm} on:change={checkEqual} on:keypress={enterSubmit}>
         <Button on:click={signup} text="Sign Up" wide={true}/>
     </div>
 </main>

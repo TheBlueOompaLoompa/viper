@@ -22,9 +22,9 @@
 <main>
     <div>
         <h3>Email</h3>
-        <input type="email" name="email" id="email" bind:value={email} on:keypress={enterSubmit}>
+        <input type="email" name="email" id="email" autocomplete="email" bind:value={email} on:keypress={enterSubmit}>
         <h3>Password</h3>
-        <input type="password" name="password" id="password" bind:value={password} on:keypress={enterSubmit}>
+        <input type="password" name="password" id="password" autocomplete="current-password" bind:value={password} on:keypress={enterSubmit}>
     </div>
     <Button on:click={signin} text="Log In" wide={true}/>
 </main>
