@@ -100,4 +100,9 @@
     a {
         text-decoration: none;
     }
+
+    h5 {
+        font-size: 1.25rem;
+        margin: 0px;
+    }
 </style>

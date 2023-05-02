@@ -15,7 +15,7 @@ html, body {
 	--padding-space: .5rem;
 	--image-radius: .5rem;
 
-	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+	font-family: sans-serif;
 
 	margin: 0px;
 
@@ -23,6 +23,10 @@ html, body {
 	color: var(--theme-color-font);
 
 	height: 100%;
+}
+
+h5, a, p, span {
+	font-family: sans-serif;
 }
 
 .center {
