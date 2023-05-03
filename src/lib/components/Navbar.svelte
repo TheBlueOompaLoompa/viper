@@ -1,6 +1,6 @@
 <script lang="ts">
 	export const ssr = false;
-    import { Person, House, Search, PlusSquare, Chat, People } from 'svelte-bootstrap-icons';
+    import { Person, House, Search, PlusSquare, Chat, People, Gear } from 'svelte-bootstrap-icons';
 	import { onMount } from 'svelte';
 	import supabase from '$lib/supabase';
 	export let page: string;
@@ -22,11 +22,12 @@
 <nav>
 	<div>
 		<a id="home"    class={page == '' ? 'active' : ''}          href="/"><House/><span>Home</span></a>
-		<a id="new"     class={page == 'new' ? 'active' : ''}       href="/new"><PlusSquare/><span>New</span></a>
-		<a id="groups"  class={page == 'groups' ? 'active' : ''}    href="/groups"><People/><span>Groups</span></a>
-		<a id="dm"      class={page == 'dm' ? 'active' : ''}        href="/dm"><Chat/><span>Messages</span></a>
 		<a id="search"  class={page == 'search' ? 'active' : ''}    href="/search"><Search/><span>Search</span></a>
-		<a id="profile" class={page == 'profile' ? 'active' : ''}><Person/><span>Profile</span></a>
+		<a id="groups"  class={page == 'groups' ? 'active' : ''}    href="/groups"><People/><span>Groups</span></a>
+		<a id="new"     class={page == 'new' ? 'active' : ''}       href="/new"><PlusSquare/><span>New</span></a>
+		<a id="dm"      class={page == 'dm' ? 'active' : ''}        href="/dm"><Chat/><span>Messages</span></a>
+		<a id="profile" class={page == 'profile' ? 'active' : ''}	><Person/><span>Profile</span></a>
+		<a id="settings"class={page == 'settings' ? 'active' : ''}	href="/settings"><Gear/><span>Settings</span></a>
 	</div>
 </nav>
 

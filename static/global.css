@@ -140,3 +140,24 @@ textarea {
 	min-width: var(--icon-size);
 	min-height: var(--icon-size);
 }
+
+.feed-item {
+	display: flex;
+	flex-direction: column;
+
+	width: 88%;
+	max-width: 700px;
+	
+	border: 1px solid var(--theme-color-outline);
+	border-radius: 6px;
+
+	margin-bottom: 30px;
+
+	box-shadow: 0 4px 4px var(--theme-color-accent-mid);
+	overflow: hidden;
+
+	--padding: 8px;
+	padding-left: var(--padding);
+	padding-right: var(--padding);
+	padding-bottom: var(--padding);
+}

@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import Type from './Type.svelte';
 	import Dropzone from "svelte-file-dropzone/Dropzone.svelte";
 	import Button from '$lib/components/Button.svelte';
@@ -6,12 +6,17 @@
 	import imageCompression from 'browser-image-compression';
 	import supabase from '$lib/supabase';
 
-	let iFiles = {
+	type Files = {
+		accepted: File[]
+		rejected: File[]
+	}
+
+	let iFiles: Files = {
 		// Image files
 		accepted: [],
 		rejected: []
 	};
-	let vFiles = {
+	let vFiles: Files = {
 		// Video files
 		accepted: [],
 		rejected: []
@@ -20,26 +25,28 @@
 	let title = '';
 	let group = '';
 	let body = '';
-	let images = [];
+	let images: string[] = [];
 	let isVideoUploaded = false;
 	let isImageUploaded = false;
 	let videoElement = {
-		setAttribute: (a, b) => {
+		setAttribute: (a: string, b: string) => {
 			console.log(a, b);
 		},
-		removeAttribute: (a) => {
+		removeAttribute: (a: string) => {
 			console.log(a);
 		}
 	};
-	function handleImageFilesSelect(e) {
+	function handleImageFilesSelect(e: any) {
 		const { acceptedFiles, fileRejections } = e.detail;
 		iFiles.accepted = [...iFiles.accepted, ...acceptedFiles];
 		iFiles.rejected = [...iFiles.rejected, ...fileRejections];
 		for (let i = 0; i < acceptedFiles.length; i++) {
 			var reader = new FileReader();
 			reader.onload = function (ev) {
-				images = [ev.target.result, ...images];
-				console.log(images);
+				if(ev.target != null) {
+					images = [ev.target.result as string, ...images];
+					console.log(images);
+				}
 			};
 			reader.readAsDataURL(acceptedFiles[i]);
 		}
@@ -78,7 +85,7 @@
 	let loading = false;
 	async function post() {
 		loading = true;
-		let outval = {
+		let outval: any = {
 			data: undefined,
 			error: undefined
 		};
@@ -148,7 +155,7 @@
 	}
 	let groupInput;
 	let showGroupPredict = false;
-	let groups = [];
+	let groups: string[] = [];
 	async function updateGroups() {
 		if (!group) return;
 		var resp = await supabase.rpc('find_groups', { term: group, req_offset: 0 });
@@ -161,6 +168,7 @@
 
 {#if !loading}
 <main>
+	<h2>New</h2>
 	<div id="postbox">
 		<div class="flex flex-col justify-center items-center">
 			<div style="width: 98%;"><Type bind:value={type} /></div>
@@ -206,7 +214,7 @@
 			{:else if type == 'image'}
 				<div class="left" id="marker">Photos</div>
 				{#if !isImageUploaded}
-					<Dropzone accept={'image/*'} on:drop={handleImageFilesSelect} />
+					<Dropzone accept="image/*" on:drop={handleImageFilesSelect} />
 				{/if}
 
 				{#each images as image}

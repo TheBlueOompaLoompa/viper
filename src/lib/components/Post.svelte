@@ -52,9 +52,9 @@
     let explode = false;
 </script>
 
-<post>
-    <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;" on:click={() => window.location.href = `/post?p=${post.id}`} on:keypress={() => window.location.href = `/post?p=${post.id}`}>
-        <h5 style="margin-bottom: 10px; margin-top: 6px; text-align: left; margin-right: 5%;">{post.title}</h5><PostContext {post}/>
+<post class="feed-item">
+    <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+        <h5 style="margin-bottom: 10px; margin-top: 6px; text-align: left; margin-right: 5%;" on:click={() => window.location.href = `/post?p=${post.id}`} on:keypress={() => window.location.href = `/post?p=${post.id}`}>{post.title}</h5><PostContext {post}/>
     </div>
     <a href="/profile?id={post.uid}"><span class="gray">@{username}</span></a>
     {#if post.type == 0}
@@ -75,31 +75,6 @@
 {/if}
 
 <style>
-    post {
-        display: flex;
-        flex-direction: column;
-
-        width: 88%;
-        max-width: 700px;
-        
-        border: 1px solid var(--theme-color-outline);
-        border-radius: 6px;
-
-        margin-bottom: 30px;
-
-        box-shadow: 0 4px 4px var(--theme-color-accent-mid);
-        overflow: hidden;
-
-        --padding: 8px;
-		padding-left: var(--padding);
-		padding-right: var(--padding);
-		padding-bottom: var(--padding);
-		-webkit-user-select: none;
-		-moz-user-select: none;
-		-ms-user-select: none;
-		user-select: none;
-    }
-
     @media (min-width: 700px) {
         post {
             margin-left: 2.5rem;
@@ -146,7 +121,7 @@
 		border-style: solid;
 		border-color: var(--theme-color-outline);
 		border-width: 1px;
-		border-radius: 100%;
+		border-radius: 3px;
 
         display: flex;
         justify-content: center;

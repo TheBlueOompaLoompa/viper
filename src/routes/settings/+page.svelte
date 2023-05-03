@@ -1,3 +1,3 @@
 <main class="center">
-    <h2>Search</h2>
+    <h2>Settings</h2>
 </main>
