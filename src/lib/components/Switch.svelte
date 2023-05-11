@@ -28,7 +28,7 @@
     }
 
     handle {
-        --padding: .3rem;
+        --padding: .2rem;
         width: calc(var(--height) - var(--padding));
         height: calc(var(--height) - var(--padding));
         background-color: white;
@@ -50,6 +50,6 @@
 
     background.active handle {
         position: absolute;
-        transform: translateX(150%);
+        transform: translateX(calc(150% - var(--padding)));
     }
 </style>
