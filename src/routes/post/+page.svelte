@@ -1,7 +1,4 @@
 <script lang="ts">
-    export const prerender = false;
-    export const ssr = false;
-
 	import Post from "$lib/components/Post.svelte";
 	import supabase from "$lib/supabase";
 	import type { PostData } from "$lib/types";

@@ -1,19 +1,7 @@
 html, body {
-	--theme-color-main: #A1FA57;
-	--theme-color-outline: #5BDB4D;
-
-	--theme-color-accent-top: #61F27E;
-	--theme-color-accent-mid: #4DDB92;
-	--theme-color-accent-low: #57FAD4;
-
-	--theme-font-main: #000;
-	--theme-font-gray: rgb(150, 150, 150);
-
-	--theme-color-background: rgb(25, 25, 25);
-	--theme-color-font: white;	
-
 	--padding-space: .5rem;
 	--image-radius: .5rem;
+	--rounding: 1rem;
 
 	font-family: sans-serif;
 
@@ -29,6 +17,10 @@ h5, a, p, span {
 	font-family: sans-serif;
 }
 
+.hover-rotate:hover {
+	filter: hue-rotate(30deg);
+}
+
 .center {
 	display: flex;
 	justify-content: center;
@@ -41,35 +33,9 @@ h5, a, p, span {
 	max-width: 400px;
 }
 
-.button {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-
-	height: 45px;
-	border-radius: 6px;
-
-	background-color: var(--theme-color-main);
-
-	box-shadow: 0px 4px 4px var(--theme-color-accent-mid);
-
-	user-select: none;
-	-webkit-user-select: none;
-
-	margin-bottom: 6px;
-}
-
 .button:not(.w-wide) {
 	padding-left: 5px;
 	padding-right: 5px;
-}
-
-.button:hover {
-	background-color: var(--theme-color-accent-top);
-}
-
-.button:active {
-	background-color: var(--theme-color-accent-low);
 }
 
 .button span {

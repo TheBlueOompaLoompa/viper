@@ -1,0 +1,14 @@
+html, body {
+    --theme-color-main: #A1FA57;
+	--theme-color-outline: #5BDB4D;
+
+	--theme-color-accent-top: #61F27E;
+	--theme-color-accent-mid: #4DDB92;
+	--theme-color-accent-low: #57FAD4;
+
+	--theme-font-main: white;
+	--theme-font-gray: #6b6b6b;
+
+	--theme-color-background: #f9f9f9;
+	--theme-color-font: black;
+}

@@ -153,9 +153,9 @@
 		window.location.href =
 			type == 'group' ? '/groups' : `/${group.replace(' ', '').length > 0 ? `?g=${group}` : ''}`;
 	}
-	let groupInput;
+	let groupInput: HTMLInputElement;
 	let showGroupPredict = false;
-	let groups: string[] = [];
+	let groups: any[] = [];
 	async function updateGroups() {
 		if (!group) return;
 		var resp = await supabase.rpc('find_groups', { term: group, req_offset: 0 });
@@ -164,14 +164,20 @@
 	$: if (group.replace(' ', '') != '') {
 		updateGroups();
 	}
+
+	let predictPos = [0, 0];
+
+	$: if(groupInput) {
+		predictPos = [groupInput.getBoundingClientRect().bottom, groupInput.getBoundingClientRect().left, groupInput.getBoundingClientRect().width]
+	}
 </script>
 
 {#if !loading}
 <main>
 	<h2>New</h2>
 	<div id="postbox">
-		<div class="flex flex-col justify-center items-center">
-			<div style="width: 98%;"><Type bind:value={type} /></div>
+		<div class="boxarea">
+			<Type bind:value={type} />
 			{#if type != 'group'}
 				<div class="left" id="marker">Title</div>
 				<input type="text" placeholder="A Fantastic Title" bind:value={title} />
@@ -188,20 +194,24 @@
 				/>
 				{#if showGroupPredict}
 					<div
-						class="flex flex-col items-center"
-						style="border-width: 1px; border-color: var(--theme-color-outline); background-color: var(--theme-color-background); box-shadow: 0px 4px 4px var(--theme-color-accent-mid); max-height: 200px; max-width: 800px; width: 84%; height: 200px; position: absolute; transform: translateY(111px); overflow-y:scroll; border-radius: 6px; padding: 6px;"
+						class="predict"
+						style={`position: absolute; top: ${predictPos[0] + 6}px; left: ${predictPos[1] - 2}px; width: ${predictPos[2] - 10}px;`}
 						use:closable={{ exclude: [groupInput] }}
 						on:outside-click={() => {
 							showGroupPredict = false;
-						}}
-					>
-						{#each groups as group_name}
+						}}>
+						{#each groups as g}
 							<span
 								style="-webkit-user-select: none; -moz-user-select: none; user-select: none;"
 								on:click={() => {
-									group = group_name;
+									group = g.id;
 									showGroupPredict = false;
-								}}>{group_name}</span
+								}}
+								on:keypress={() => {
+									group = g.id;
+									showGroupPredict = false;
+								}}
+								>{g.id}</span
 							>
 						{/each}
 					</div>
@@ -210,7 +220,7 @@
 
 			{#if type == 'text'}
 				<div class="left" id="marker">Body</div>
-				<textarea style="width: 95%; resize:none;" rows="3" bind:value={body} />
+				<textarea style="resize:none;" rows="3" bind:value={body} />
 			{:else if type == 'image'}
 				<div class="left" id="marker">Photos</div>
 				{#if !isImageUploaded}
@@ -266,14 +276,20 @@
 
 	#postbox {
 		margin-top: 35px;
-		border-width: 1px;
-		border-style: solid;
+		border: solid 1px var(--theme-color-outline);
 		border-radius: 6px;
-		border-color: var(--theme-color-outline);
 		width: 86%;
 		max-width: 700px;
 		padding: 5px;
 		margin-bottom: 50px;
+	}
+
+	.boxarea {
+		display: flex;
+		flex-direction: column;
+		
+		width: 100%;
+		height: 100%;
 	}
     
 	textarea {
@@ -282,7 +298,6 @@
 
 	input {
 		margin-bottom: 7px;
-		width: 95%;
 		height: 20px;
 	}
 
@@ -297,6 +312,23 @@
 	img {
 		width: 90%;
 		margin: 5%;
+	}
+
+	.predict {
+		position: absolute;
+
+		display: flex;
+		flex-direction: column;
+		z-index: 1;
+		border: solid 1px var(--theme-color-outline);
+		background-color: var(--theme-color-background);
+
+		box-shadow: 0px 4px 4px var(--theme-color-accent-mid);
+		max-height: 200px;
+		height: 200px;
+		overflow-y:scroll;
+		border-radius: 6px;
+		padding: 6px;
 	}
 
 	/*video {

@@ -89,7 +89,7 @@
         justify-content: center;
 		height: 2rem;
 		width: 2rem;
-		color: #d1d5db;
+		color: var(--theme-font-gray);
 		text-decoration: none;
 	}
 
