@@ -40,6 +40,8 @@
 
         if(filter == 'profile') {
             request.eq('uid', window.location.search.split('id=')[1]);
+        }else if(filter == 'group') {
+            request.eq('group_id', window.location.search.split('id=')[1]);
         }
 
         const { data, error } = await request;
