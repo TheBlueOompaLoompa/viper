@@ -1,6 +1,7 @@
 html, body {
 	--padding-space: .5rem;
 	--image-radius: .5rem;
+	--rounding: 1rem;
 
 	font-family: sans-serif;
 
