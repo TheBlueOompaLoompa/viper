@@ -2,7 +2,7 @@
     export let value = false;
 </script>
 
-<background class={value ? 'active' : ''} on:click={() => value = !value} on:keypress={() => value = !value}>
+<background class="hover-rotate {value ? 'active' : ''}" on:click={() => value = !value} on:keypress={() => value = !value}>
     <handle></handle>
 </background>
 
