@@ -1,10 +1,13 @@
 <script lang="ts">
     import Navbar from '$lib/components/Navbar.svelte';
+	import { THEME, initSettings } from '$lib/settings';
 	import supabase from '$lib/supabase';
 	import { onMount } from 'svelte';
 
     let page  = '';
     let showNav = false;
+    let theme = '';
+
 
     onMount(() => {
         page = window.location.pathname.split('/')[window.location.pathname.split('/').length-1];
@@ -12,6 +15,9 @@
             page = window.location.pathname.split('/')[window.location.pathname.split('/').length-2].split('?')[0];
             showNav = true;
         }, 10);
+        initSettings();
+
+        THEME.subscribe(val => theme = val);
     });
 
     supabase.auth.onAuthStateChange((e) => {
@@ -23,6 +29,11 @@
 
 <svelte:head>
     <link rel="stylesheet" href="/global.css">
+    {#if theme == 'light'}
+    <link rel="stylesheet" href="/light-theme.css">
+    {:else}
+    <link rel="stylesheet" href="/dark-theme.css">
+    {/if}
 </svelte:head>
 
 <slot/>

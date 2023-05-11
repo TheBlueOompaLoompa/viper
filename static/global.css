@@ -1,17 +1,4 @@
 html, body {
-	--theme-color-main: #A1FA57;
-	--theme-color-outline: #5BDB4D;
-
-	--theme-color-accent-top: #61F27E;
-	--theme-color-accent-mid: #4DDB92;
-	--theme-color-accent-low: #57FAD4;
-
-	--theme-font-main: #000;
-	--theme-font-gray: rgb(150, 150, 150);
-
-	--theme-color-background: rgb(25, 25, 25);
-	--theme-color-font: white;	
-
 	--padding-space: .5rem;
 	--image-radius: .5rem;
 
