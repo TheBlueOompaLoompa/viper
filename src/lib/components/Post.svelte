@@ -41,11 +41,13 @@
                 console.error(error);
                 return;
             }
+
             src = window.URL.createObjectURL(data);
             post.content = src;
+
             PostsLoaded.update(val => {
                 return val + 1;
-            })
+            });
         }
     });
 
