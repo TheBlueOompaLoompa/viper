@@ -10,6 +10,7 @@
     let posts: PostData[] = [];
 
     const PostLoadCount = 10;
+    const PostLoadDistance = 30;
 
     let currentLatestPost = 0;
 
@@ -58,7 +59,7 @@
         scrollLoad();
 
         window.onscroll = () => {
-            if(document.querySelector('main')?.getBoundingClientRect().height < window.scrollY + window.innerHeight + 10 && !loading) {
+            if(document.querySelector('main')?.getBoundingClientRect().height < window.scrollY + window.innerHeight + PostLoadDistance && !loading) {
                 scrollLoad();
             }
         }
