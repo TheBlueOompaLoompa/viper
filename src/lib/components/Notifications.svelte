@@ -1,12 +1,25 @@
 <script lang="ts">
     import { XSquare } from 'svelte-bootstrap-icons';
     import { Notifications } from '$lib/stores';
-    import { fly } from 'svelte/transition';
+    import { fade, fly } from 'svelte/transition';
 	import type { Notification } from '$lib/types';
+	import { onMount } from 'svelte';
 
     let notifications: Notification[] = [];
 
     Notifications.subscribe(v => notifications = v);
+
+    onMount(() => {
+        const timeFrac = .01;
+        setInterval(() => {
+            for(let i = 0; i < notifications.length; i++) {
+                notifications[i].timer -= timeFrac;
+                if(notifications[i].timer <= 0) {
+                    close(i)
+                }
+            }
+        }, 1000*timeFrac);
+    });
 
     function close(i: number) {
         notifications.splice(i)
@@ -15,11 +28,12 @@
 </script>
 
 <notifications>
-    {#each notifications as {type, title, body}, i}
-    <notification class="{type}" transition:fly="{{ x: 200, duration: 500 }}">
+    {#each notifications as {type, title, body, start, timer}, i}
+    <notification class="{type}" transition:fly="{{ x: 200, duration: 200 }}">
         <div class="close" on:click={() => close(i)} on:keypress={() => close(i)}><XSquare/></div>
         <h4>{title}</h4>
         <p>{body}</p>
+        <timer style="width: {timer/start*100}%" transition:fade="{{ delay: 200, duration: 200 }}"/>
     </notification>
     {/each}
 </notifications>
@@ -47,6 +61,7 @@
         border-radius: var(--rounding);
         padding: 1rem;
         margin-bottom: .7rem;
+        overflow: hidden;
     }
 
     notification .close {
@@ -68,5 +83,17 @@
         background-color: red;
         box-shadow: 0px 2px 4px red;
         color: rgb(255, 255, 255);
+    }
+
+    notification timer {
+        position: absolute;
+        right: 0px;
+        bottom: calc(.7rem + .5rem);
+        display: block;
+
+        height: .2rem;
+        border-radius: .2rem;
+
+        background-color: var(--theme-color-accent-top);
     }
 </style>

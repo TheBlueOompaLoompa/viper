@@ -16,7 +16,9 @@ export type UserData = {
 export type Notification = {
     type: NotificationType,
     title: string,
-    body: string
+    body: string,
+    start: number,
+    timer: number
 };
 
 export enum NotificationType {

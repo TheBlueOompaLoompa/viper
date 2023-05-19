@@ -29,7 +29,7 @@
             if(!error) {
                 groups = data;
             }else {
-                notify('Failed to Load Groups!', 'The groups couldn\'t be loaded to list out.', NotificationType.Err);
+                notify('Failed to Load Groups!', 'The groups couldn\'t be loaded to list out.', 6, NotificationType.Err);
             }
         }
     });
