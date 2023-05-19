@@ -1,5 +1,6 @@
 <script lang="ts">
     import Navbar from '$lib/components/Navbar.svelte';
+    import Notifications from '$lib/components/Notifications.svelte';
 	import { THEME, initSettings } from '$lib/settings';
 	import supabase from '$lib/supabase';
 	import { onMount } from 'svelte';
@@ -35,6 +36,8 @@
     <link rel="stylesheet" href="/dark-theme.css">
     {/if}
 </svelte:head>
+
+<Notifications/>
 
 <slot/>
 

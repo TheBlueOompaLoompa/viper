@@ -6,6 +6,7 @@
 	import PostContext from "$lib/components/PostContext.svelte";
 	import PostTime from "$lib/components/PostTime.svelte";
     import { XSquare } from 'svelte-bootstrap-icons';
+	import Loading from "./Loading.svelte";
 
     export let post: PostData;
 
@@ -45,6 +46,8 @@
             src = window.URL.createObjectURL(data);
             post.content = src;
 
+            loaded = true;
+
             PostsLoaded.update(val => {
                 return val + 1;
             });
@@ -52,6 +55,8 @@
     });
 
     let explode = false;
+
+    let loaded = false;
 </script>
 
 <post class="feed-item">
@@ -63,7 +68,11 @@
     <p>{post.content}</p>
     {:else if post.type == 1}
     <div style="display: flex; justify-content: center; align-items: center; overflow: hidden; border-radius: 6px;">
-    <img {src} on:click={() => explode = true} on:keypress={() => explode = true}>
+        {#if loaded}
+        <img {src} alt="" on:click={() => explode = true} on:keypress={() => explode = true}>
+        {:else}
+        <Loading/>
+        {/if}
     </div>
     {/if}
     <PostTime timestamp={post.timestamp} />
@@ -72,7 +81,7 @@
 {#if explode}
 <div class="explode">
     <div class="close" on:click={() => explode = false} on:keypress={() => explode = false}><XSquare/></div>
-    <img {src}>
+    <img {src} alt="">
 </div>
 {/if}
 

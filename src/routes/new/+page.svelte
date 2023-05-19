@@ -5,6 +5,7 @@
 	import closable from 'svelte-closable';
 	import imageCompression from 'browser-image-compression';
 	import supabase from '$lib/supabase';
+	import Loading from '$lib/components/Loading.svelte';
 
 	type Files = {
 		accepted: File[]
@@ -115,17 +116,22 @@
 						uid: data.user.id,
 						group_id: group.length > 0 ? group : null
 					}
-				]);
+				]).select();
+
 				if (outval.error) {
 					alert('Failed to post');
 				} else {
 					const options = { maxSizeMB: 1.5 };
 					iFiles.accepted[0] = await imageCompression(iFiles.accepted[0], options);
+					console.log(outval.data)
+					
 					outval = await supabase.storage
 						.from('media')
 						.upload(outval.data[0]['id'], iFiles.accepted[0]);
 					if (outval.error) {
-						alert('Failed to upload your image for the post. The image will be empty.');
+						alert('Failed to upload image.');
+					}else {
+						window.location.href = `/post?p=${outval.data[0]['id']}`;
 					}
 				}
 				break;
@@ -249,11 +255,13 @@
 	</div>
 </main>
 
-{#if type != 'video'}
+	{#if type != 'video'}
 	<submit class="flex flex-row justify-center fixed bottom-16 w-full">
 		<Button wide={true} text="Post" on:click={post} />
-    </submit>
-{/if}
+	</submit>
+	{/if}
+{:else}
+<Loading fullscreen={true}/>
 {/if}
 
 <style>

@@ -3,10 +3,14 @@
     import Button from "$lib/components/Button.svelte";
     import Posts from "$lib/components/Posts.svelte";
 	import { onMount } from "svelte";
+	import notify from "$lib/notify";
+	import { NotificationType } from "$lib/types";
+	import Loading from "$lib/components/Loading.svelte";
 
     let groups: any = [];
     let isGroup = false;
     let groupName = '';
+    let loading = false;
 
     onMount(async () => {
         console.log(location.href)
@@ -14,12 +18,18 @@
             isGroup = true;
             groupName = decodeURI(location.href.split('id=')[1]);
         }else {
-            const {data, error} = await supabase
-            .from('groups')
-            .select('*');
-        
+            loading = true;
+
+            const { data, error } = await supabase
+                .from('groups')
+                .select('*');
+
+            loading = false;
+            
             if(!error) {
                 groups = data;
+            }else {
+                notify('Failed to Load Groups!', 'The groups couldn\'t be loaded to list out.', NotificationType.Err);
             }
         }
     });
@@ -31,12 +41,15 @@
 
 <main class="center" style="flex-direction: column;">
     {#if !isGroup}
-    <h2>Groups</h2>
-    {#each groups as group}
-    <Button text={group.id} wide={true} on:click={() => goto(group.id)}/>
-    {/each}
+        <h2>Groups</h2>
+        {#if loading}
+        <Loading/>
+        {/if}
+        {#each groups as group}
+        <Button text={group.id} wide={true} on:click={() => goto(group.id)}/>
+        {/each}
     {:else}
-    <h2>{groupName}</h2>
-    <Posts filter="group"/>
+        <h2>{groupName}</h2>
+        <Posts filter="group"/>
     {/if}
 </main>

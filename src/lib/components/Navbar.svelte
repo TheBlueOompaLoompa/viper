@@ -5,8 +5,6 @@
 	import supabase from '$lib/supabase';
 	export let page: string;
 
-	$: console.log(page)
-
 	onMount(async () => {
 		const { data, error } = await supabase.auth.getSession()
 		const profileTag = document.getElementById('profile') as unknown as HTMLAnchorElement;
@@ -91,6 +89,7 @@
 		width: 2rem;
 		color: var(--theme-font-gray);
 		text-decoration: none;
+		border-radius: 100%;
 	}
 
 	.active {
@@ -98,10 +97,7 @@
 		padding: 5px;
 		width: 21px;
 		height: 21px;
-		border-style: solid;
-		border-color: var(--theme-color-outline);
-		border-width: 1px;
-		border-radius: 100%;
+		border: solid 1px var(--theme-color-outline);
 
 		box-shadow: 0px 1px 4px var(--theme-color-accent-mid);
 	}
