@@ -10,7 +10,7 @@
     let posts: PostData[] = [];
 
     const PostLoadCount = 10;
-    const PostLoadDistance = 30;
+    const PostLoadDistance = 100;
 
     let currentLatestPost = 0;
 
