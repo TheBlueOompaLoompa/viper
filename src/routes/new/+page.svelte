@@ -123,15 +123,13 @@
 				} else {
 					const options = { maxSizeMB: 1.5 };
 					iFiles.accepted[0] = await imageCompression(iFiles.accepted[0], options);
-					console.log(outval.data)
-					
 					outval = await supabase.storage
 						.from('media')
 						.upload(outval.data[0]['id'], iFiles.accepted[0]);
 					if (outval.error) {
 						alert('Failed to upload image.');
 					}else {
-						window.location.href = `/post?p=${outval.data[0]['id']}`;
+						window.location.href = `/post?p=${outval.data['path']}`;
 					}
 				}
 				break;
