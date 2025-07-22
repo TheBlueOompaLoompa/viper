@@ -1,3 +1,4 @@
+user-agent: *
 disallow: /groups*
 disallow: /group*
 disallow: /profile*
